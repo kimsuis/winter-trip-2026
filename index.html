@@ -171,6 +171,12 @@ h3.subarea { font-size: 14px; color: var(--muted); margin: 14px 0 8px; }
 table.legs td.tt { white-space: nowrap; font-variant-numeric: tabular-nums; font-weight: 600; }
 table.legs td { font-size: 13px; }
 .chip.bad { background: var(--bad-soft, #f8e3e1); color: var(--bad, #a8322d); }
+
+.pick-btn { font: inherit; font-size: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); padding: 3px 10px; border-radius: 999px; cursor: pointer; white-space: nowrap; }
+.pick-btn[aria-pressed="true"] { background: var(--pass-soft); color: var(--pass); border-color: var(--pass); font-weight: 650; }
+.cand-h .pick-btn { margin-left: auto; }
+.picked { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.picked .chip { font-size: 13px; padding: 6px 10px; white-space: normal; }
 /* CDJ */
 .cdj-head { display: grid; grid-template-columns: 160px 1fr; gap: 14px; align-items: center; }
 .cdj-head img { width: 100%; border-radius: 12px; border: 1px solid var(--line); display: block; }
@@ -226,6 +232,10 @@ table.legs td { font-size: 13px; }
     <a class="card stat" href="#move"><div class="k">교통</div><div class="v">항공 예약 전 · 패스 5일권</div><div class="s">12/19 에어부산 08:20 · 1/1 귀국 · 패스 12/21~25</div></a>
     <a class="card stat" href="#gigs"><div class="k">공연</div><div class="v">결제 4 · 관심 9</div><div class="s">CDJ 2일 · tuki.×스이세이 · ロクデナシ 결제함</div></a>
   </div>
+
+  <h2>내가 고른 곳 <span class="note" id="picked-count"></span></h2>
+  <div id="picked-box" class="picked"></div>
+  <div class="cdj-tools"><button type="button" id="picked-copy">고른 목록 복사 (Claude·친구에게 보내기)</button><span class="note" id="picked-msg" style="align-self:center"></span></div>
 
   <h2>다음 할 일</h2>
   <div class="todo" id="home-todo"></div>
@@ -330,6 +340,7 @@ table.legs td { font-size: 13px; }
     <button type="button" data-spotflag="passOnly" aria-pressed="false">패스 범위만</button>
     <button type="button" data-spotflag="goodOnly" aria-pressed="false">잘 맞는 곳만</button>
     <button type="button" data-spotflag="hideVisited" aria-pressed="false">가 본 지역 숨기기</button>
+    <button type="button" data-spotflag="pickedOnly" aria-pressed="false">★ 고른 곳만</button>
     <span class="note" id="spot-count" style="align-self:center"></span>
   </div>
   <div id="spot-list"></div>
@@ -2047,12 +2058,18 @@ table.legs td { font-size: 13px; }
   const REGION = { yoko: '요코하마 (12/19~20)', south: '남부 도호쿠 · 미야기·야마가타·후쿠시마', north: '북부 도호쿠 · 이와테·아키타·아오모리', west: '니가타·나가노·북간토', kanto: '도쿄·간토 근교 (12/26~31)' };
   const FITCLS = { '매우 잘 맞음': 'ok', '잘 맞음': 'info', '조건부': 'warn', '백업': '' };
   const PASSCLS = { '패스 범위': 'pass', '일부 패스 밖': '', '패스 밖': '' };
-  const spotState = { region: 'all', passOnly: false, goodOnly: false, hideVisited: false };
+  const spotState = { region: 'all', passOnly: false, goodOnly: false, hideVisited: false, pickedOnly: false };
+  // '가고 싶어요' 체크 (이 브라우저에 저장)
+  let PICKS = {};
+  try { PICKS = JSON.parse(localStorage.getItem('trip-picks') || '{}'); } catch (e) {}
+  const savePicks = () => { try { localStorage.setItem('trip-picks', JSON.stringify(PICKS)); } catch (e) {} renderPicked(); };
+  const pickBtn = (key, label) => `<button type="button" class="pick-btn" data-pick="${key}" aria-pressed="${!!PICKS[key]}" title="가고 싶어요">${PICKS[key] ? '★ 가고 싶어요' : '☆ 가고 싶어요'}</button>`;
   function spotCard(s) {
     return `<article class="spot" id="spot-${s.id}">
       ${s.img ? `<img src="${s.img}" alt="${esc(s.name)}" loading="lazy">` : '<div class="noimg">사진 없음</div>'}
       <div class="body">
         <div class="top"><h3>${esc(s.name)}</h3><span class="chip ${FITCLS[s.fit] || ''}">${esc(s.fit)}</span></div>
+        <div>${pickBtn('s:' + s.id)}</div>
         <div class="jp">${esc(s.jp)} · ${esc(s.sub)}</div>
         <p><b>뭐 하는 곳</b> ${esc(s.what)}</p>
         <p><b>할 것</b> ${esc(s.todo)}</p>
@@ -2066,7 +2083,7 @@ table.legs td { font-size: 13px; }
   }
   function renderSpots() {
     const f = spotState;
-    const list = SPOTS.filter(s => (f.region === 'all' || s.region === f.region) && (!f.passOnly || s.pass === '패스 범위') && (!f.goodOnly || s.fit === '매우 잘 맞음' || s.fit === '잘 맞음') && (!f.hideVisited || !s.visited));
+    const list = SPOTS.filter(s => (f.region === 'all' || s.region === f.region) && (!f.passOnly || s.pass === '패스 범위') && (!f.goodOnly || s.fit === '매우 잘 맞음' || s.fit === '잘 맞음') && (!f.hideVisited || !s.visited) && (!f.pickedOnly || PICKS['s:' + s.id]));
     const html = Object.keys(REGION).filter(r => f.region === 'all' || f.region === r).map(r => {
       const inR = list.filter(s => s.region === r); if (!inR.length) return '';
       const subs = [...new Set(inR.map(s => s.sub))];
@@ -2075,7 +2092,7 @@ table.legs td { font-size: 13px; }
     document.getElementById('spot-list').innerHTML = html || '<p class="note">조건에 맞는 곳이 없어요.</p>';
     document.getElementById('spot-count').textContent = `${list.length}곳 / 전체 ${SPOTS.length}곳`;
     document.querySelectorAll('[data-spotarea]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.spotarea === f.region)));
-    ['passOnly', 'goodOnly', 'hideVisited'].forEach(k => { const b = document.querySelector(`[data-spotflag="${k}"]`); if (b) b.setAttribute('aria-pressed', String(f[k])); });
+    ['passOnly', 'goodOnly', 'hideVisited', 'pickedOnly'].forEach(k => { const b = document.querySelector(`[data-spotflag="${k}"]`); if (b) b.setAttribute('aria-pressed', String(f[k])); });
   }
   document.querySelectorAll('[data-spotarea]').forEach(b => b.addEventListener('click', () => { spotState.region = b.dataset.spotarea; renderSpots(); }));
   document.querySelectorAll('[data-spotflag]').forEach(b => b.addEventListener('click', () => { const k = b.dataset.spotflag; spotState[k] = !spotState[k]; renderSpots(); }));
@@ -2107,7 +2124,7 @@ table.legs td { font-size: 13px; }
     const steps = t && t.steps && t.steps.length ? t.steps : c.steps;
     const photos = (c.spots || []).filter(id => SPOT[id]);
     return `<div class="cand ${c.tag || ''}">
-      <div class="cand-h"><span class="ck">${c.k}</span><b>${esc(c.title)}</b>${c.tag ? `<span class="chip ${c.tag === 'go' ? 'gig' : 'info'}">${TAGTXT[c.tag]}</span>` : ''}${t ? `<span class="chip ${FEASCLS[t.feasible] || ''}">시간표 확인 · ${esc(t.feasible || '')}</span>` : '<span class="chip">시간 추정</span>'}</div>
+      <div class="cand-h"><span class="ck">${c.k}</span><b>${esc(c.title)}</b>${pickBtn('c:' + day + '|' + c.k)}${c.tag ? `<span class="chip ${c.tag === 'go' ? 'gig' : 'info'}">${TAGTXT[c.tag]}</span>` : ''}${t ? `<span class="chip ${FEASCLS[t.feasible] || ''}">시간표 확인 · ${esc(t.feasible || '')}</span>` : '<span class="chip">시간 추정</span>'}</div>
       ${t && t.verdict ? `<div class="verdict">${esc(t.verdict)}</div>` : ''}
       <ol class="steps">${steps.map(([tm, x]) => `<li><span class="t">${esc(tm)}</span><span>${esc(x)}</span></li>`).join('')}</ol>
       ${c.cost || c.note ? `<div class="note">${c.cost ? '비용: ' + esc(c.cost) : ''}${c.cost && c.note ? ' · ' : ''}${esc(c.note || '')}</div>` : ''}
@@ -2161,6 +2178,37 @@ table.legs td { font-size: 13px; }
     }, true);
     view(-1);
   })();
+  // ===== 고른 곳 (한눈에) =====
+  function pickedList() {
+    const out = [];
+    Object.keys(PICKS).filter(k => PICKS[k]).forEach(k => {
+      if (k.startsWith('s:')) { const s = SPOT[k.slice(2)]; if (s) out.push({ kind: '관광', label: s.name, sub: s.sub, key: k }); }
+      else if (k.startsWith('c:')) { const [d, ck] = k.slice(2).split('|'); const day = DAYS.find(x => x.d === d); const c = day && day.cands.find(x => x.k === ck); if (c) out.push({ kind: '일정 ' + d, label: ck + ' ' + c.title, sub: '', key: k }); }
+    });
+    return out.sort((a, b) => a.kind < b.kind ? -1 : 1);
+  }
+  function renderPicked() {
+    const l = pickedList();
+    document.getElementById('picked-count').textContent = l.length ? l.length + '개' : '';
+    document.getElementById('picked-box').innerHTML = l.length ? l.map(x => `<span class="chip ok">${esc(x.kind)} · ${esc(x.label)}</span>`).join(' ') : '<p class="note">관광 탭 카드나 일정 탭 후보에서 ☆ 가고 싶어요를 누르면 여기에 모여요. 체크는 이 기기 브라우저에만 저장돼요.</p>';
+    document.querySelectorAll('[data-pick]').forEach(b => { const on = !!PICKS[b.dataset.pick]; b.setAttribute('aria-pressed', String(on)); b.textContent = on ? '★ 가고 싶어요' : '☆ 가고 싶어요'; });
+  }
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-pick]'); if (!b) return;
+    e.preventDefault(); e.stopPropagation();
+    const k = b.dataset.pick; if (PICKS[k]) delete PICKS[k]; else PICKS[k] = 1;
+    savePicks();
+    if (spotState.pickedOnly) renderSpots();
+  }, true);
+  document.getElementById('picked-copy').addEventListener('click', async () => {
+    const l = pickedList();
+    const text = '[겨울 여행 · 가고 싶은 곳]\n' + (l.length ? l.map(x => '- ' + x.kind + ': ' + x.label + (x.sub ? ' (' + x.sub + ')' : '')).join('\n') : '(아직 없음)');
+    const msg = document.getElementById('picked-msg');
+    try { await navigator.clipboard.writeText(text); msg.textContent = '복사했어요. 채팅에 붙여 넣으세요.'; }
+    catch (err) { window.prompt('아래 내용을 복사하세요', text); }
+  });
+  renderPicked();
+
   show(location.hash.slice(1));
 })();
 </script>
