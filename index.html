@@ -1,0 +1,2138 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>겨울 일본 여행</title>
+<style>
+:root {
+  --bg: #f6f5f2; --surface: #ffffff; --surface-2: #f0eee9; --line: #e2dfd8;
+  --text: #1d1c1a; --muted: #6b6862; --accent: #1f5f8b; --accent-soft: #e3eef6;
+  --ok: #2f7a4a; --ok-soft: #e4f2e8; --warn: #a3590b; --warn-soft: #fbeedd;
+  --gig: #6b3fa0; --gig-soft: #efe7f8; --pass: #b8860b; --pass-soft: #fbf3dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141413; --surface: #1d1d1b; --surface-2: #252522; --line: #33322e;
+    --text: #ecebe7; --muted: #a29f97; --accent: #7db7e0; --accent-soft: #1d2f3c;
+    --ok: #7cc595; --ok-soft: #1c3024; --warn: #e6a95e; --warn-soft: #3a2a17;
+    --gig: #c2a2ec; --gig-soft: #2c2238; --pass: #e6c25e; --pass-soft: #352d14;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141413; --surface: #1d1d1b; --surface-2: #252522; --line: #33322e;
+  --text: #ecebe7; --muted: #a29f97; --accent: #7db7e0; --accent-soft: #1d2f3c;
+  --ok: #7cc595; --ok-soft: #1c3024; --warn: #e6a95e; --warn-soft: #3a2a17;
+  --gig: #c2a2ec; --gig-soft: #2c2238; --pass: #e6c25e; --pass-soft: #352d14;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.6 system-ui, -apple-system, "Segoe UI", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif; }
+a { color: var(--accent); }
+.wrap { max-width: 980px; margin: 0 auto; padding-left: 16px; padding-right: 16px; }
+header.hero { padding-top: 24px; padding-bottom: 6px; }
+.hero h1 { margin: 0; font-size: 24px; letter-spacing: -0.02em; }
+.hero p { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+nav.tabs { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); }
+nav.tabs .wrap { display: flex; gap: 4px; overflow-x: auto; padding-top: 8px; padding-bottom: 8px; }
+nav.tabs button { font: inherit; font-size: 14px; border: 0; background: none; color: var(--text); padding: 6px 14px; border-radius: 999px; cursor: pointer; white-space: nowrap; }
+nav.tabs button:hover { background: var(--surface-2); }
+nav.tabs button[aria-selected="true"] { background: var(--text); color: var(--bg); font-weight: 600; }
+main { padding-bottom: 64px; }
+.panel { display: none; padding-top: 20px; }
+.panel.on { display: block; }
+h2 { font-size: 18px; margin: 24px 0 10px; letter-spacing: -0.01em; }
+.panel > h2:first-child { margin-top: 0; }
+h3 { font-size: 15px; margin: 0 0 6px; }
+.note { color: var(--muted); font-size: 13px; }
+.grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.stat .k { font-size: 13px; color: var(--muted); }
+.stat .v { font-size: 19px; font-weight: 650; margin-top: 2px; }
+.stat .s { font-size: 13px; color: var(--muted); }
+a.card { text-decoration: none; color: inherit; display: block; }
+a.card:hover { border-color: var(--accent); }
+.chip { display: inline-block; font-size: 12px; line-height: 1; padding: 4px 8px; border-radius: 999px; background: var(--surface-2); color: var(--muted); white-space: nowrap; vertical-align: 1px; }
+.chip.ok { background: var(--ok-soft); color: var(--ok); }
+.chip.warn { background: var(--warn-soft); color: var(--warn); }
+.chip.gig { background: var(--gig-soft); color: var(--gig); }
+.chip.pass { background: var(--pass-soft); color: var(--pass); }
+.chip.info { background: var(--accent-soft); color: var(--accent); }
+.more { font-size: 13px; margin-top: 8px; display: inline-block; cursor: pointer; }
+/* 한눈에 타임라인 */
+.mini { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); overflow: hidden; }
+.mini .row { display: grid; grid-template-columns: 70px 1fr auto; gap: 10px; padding: 8px 12px; border-bottom: 1px solid var(--line); align-items: baseline; }
+.mini .row:last-child { border-bottom: 0; }
+.mini .row.passday { box-shadow: inset 4px 0 0 var(--pass); }
+.mini .d { font-weight: 650; font-size: 14px; }
+.mini .d small { color: var(--muted); font-weight: 400; }
+.mini .t { font-size: 14px; }
+.mini .t b { color: var(--gig); font-weight: 600; }
+.mini .s { font-size: 12px; color: var(--muted); white-space: nowrap; }
+/* 일정 상세 */
+.days { display: flex; flex-direction: column; gap: 8px; }
+.day { display: grid; grid-template-columns: 86px 1fr; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.day.passday { border-left: 4px solid var(--pass); }
+.day .d { font-weight: 650; }
+.day .d small { display: block; font-weight: 400; color: var(--muted); font-size: 12px; }
+.day .what { display: flex; flex-direction: column; gap: 4px; }
+.day .gigline { color: var(--gig); font-weight: 600; }
+.day .stay, .day .opt { font-size: 13px; color: var(--muted); }
+/* 표 */
+.scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 12px; color: var(--muted); font-weight: 600; background: var(--surface-2); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.num { white-space: nowrap; font-weight: 600; }
+td.price, th.price { white-space: nowrap; font-variant-numeric: tabular-nums; text-align: right; }
+tr.dim td { color: var(--muted); }
+tr.sum td { font-weight: 650; background: var(--surface-2); }
+/* 할 일 */
+.todo { display: flex; flex-direction: column; gap: 8px; }
+.todo .item { display: grid; grid-template-columns: 120px 1fr; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; }
+.todo .when { font-weight: 650; font-size: 14px; }
+.todo .when small { display: block; font-weight: 400; font-size: 12px; color: var(--muted); }
+.todo .item.done { opacity: .5; }
+/* 지도 */
+.maps { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.maps figure { margin: 0; background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.maps img { display: block; width: 100%; height: auto; }
+.maps figcaption { background: var(--surface); color: var(--muted); font-size: 13px; padding: 8px 12px; border-top: 1px solid var(--line); }
+ul.tight { margin: 4px 0 0; padding-left: 18px; }
+ul.tight li { margin: 2px 0; }
+
+/* 일정 하위 보기 */
+.subnav { display: flex; gap: 6px; overflow-x: auto; padding: 2px 0 10px; }
+.subnav button { font: inherit; font-size: 13px; border: 1px solid var(--line); background: var(--surface); color: var(--text); padding: 6px 10px; border-radius: 10px; cursor: pointer; white-space: nowrap; line-height: 1.25; text-align: center; }
+.subnav button small { display: block; font-size: 11px; color: var(--muted); }
+.subnav button.pass { border-color: var(--pass); }
+.subnav button[aria-selected="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+.subnav button[aria-selected="true"] small { color: var(--bg); opacity: .75; }
+#plan-overview .mini .row { cursor: pointer; }
+#plan-overview .mini .row:hover { background: var(--surface-2); }
+.daynav { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+.daynav button { font: inherit; font-size: 13px; border: 1px solid var(--line); background: var(--surface); color: var(--text); padding: 6px 12px; border-radius: 999px; cursor: pointer; }
+.daynav button:disabled { opacity: .35; cursor: default; }
+.daynav span { font-weight: 650; }
+#plan-days .day { font-size: 16px; }
+
+.alt { font-size: 14px; border-radius: 8px; padding: 6px 10px; background: var(--surface-2); }
+.alt .tag { display: inline-block; font-size: 12px; font-weight: 650; margin-right: 6px; padding: 2px 8px; border-radius: 999px; background: var(--surface); color: var(--muted); }
+.alt.go .tag { background: var(--gig-soft); color: var(--gig); }
+.alt.nogo .tag { background: var(--accent-soft); color: var(--accent); }
+
+/* 관광 */
+.spots { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); }
+.spot { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
+.spot img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; background: var(--surface-2); }
+.spot .body { padding: 10px 14px 12px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.spot .top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.spot h3 { margin: 0; font-size: 16px; }
+.spot .jp { font-size: 12px; color: var(--muted); margin-top: -2px; }
+.spot p { margin: 0; font-size: 13.5px; line-height: 1.55; }
+.spot p b { display: inline-block; min-width: 64px; color: var(--muted); font-weight: 600; font-size: 12px; }
+.spot p.memo { color: var(--muted); }
+.spot .foot { margin-top: auto; padding-top: 6px; display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 13px; }
+
+/* 일정 v3 */
+.day2 { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+.day2.passday { border-left: 4px solid var(--pass); }
+.day2 header { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+.day2 header h3 { margin: 0; font-size: 18px; }
+.fixed { display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border-radius: 10px; background: var(--ok-soft); margin-bottom: 12px; }
+.fixed.empty { background: var(--surface-2); }
+.fx { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; font-weight: 600; }
+.fx .ic { width: 22px; text-align: center; }
+.cands-h { font-size: 13px; color: var(--muted); font-weight: 650; margin: 4px 0 6px; }
+.cands { display: flex; flex-direction: column; gap: 10px; }
+.cand { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+.cand.go { border-left: 4px solid var(--gig); }
+.cand.nogo { border-left: 4px solid var(--accent); }
+.cand-h { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ck { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 6px; background: var(--text); color: var(--bg); font-size: 13px; font-weight: 700; }
+ol.steps { list-style: none; margin: 8px 0 6px; padding: 0; display: flex; flex-direction: column; gap: 3px; }
+ol.steps li { display: grid; grid-template-columns: 52px 1fr; gap: 8px; font-size: 14px; }
+ol.steps .t { color: var(--muted); font-variant-numeric: tabular-nums; }
+details.fold { margin-top: 6px; border-top: 1px dashed var(--line); padding-top: 6px; }
+details.fold summary { cursor: pointer; font-size: 13px; color: var(--accent); }
+.mini-spots { display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); margin-top: 8px; }
+a.mini-spot { display: grid; grid-template-columns: 96px 1fr; gap: 8px; text-decoration: none; color: var(--text); background: var(--surface-2); border-radius: 8px; overflow: hidden; font-size: 13px; line-height: 1.4; }
+a.mini-spot img, a.mini-spot .noimg { width: 96px; height: 100%; min-height: 72px; object-fit: cover; }
+a.mini-spot > span { padding: 6px 8px 6px 0; }
+.day2 .stay { margin-top: 10px; font-size: 13px; color: var(--muted); }
+.noimg { display: grid; place-items: center; background: var(--surface-2); color: var(--muted); font-size: 12px; aspect-ratio: 16 / 10; }
+h2.region { margin-top: 26px; }
+h3.subarea { font-size: 14px; color: var(--muted); margin: 14px 0 8px; }
+.spot.flash { outline: 3px solid var(--pass); }
+@media (max-width: 560px) { ol.steps li { grid-template-columns: 44px 1fr; } }
+/* CDJ */
+.cdj-head { display: grid; grid-template-columns: 160px 1fr; gap: 14px; align-items: center; }
+.cdj-head img { width: 100%; border-radius: 12px; border: 1px solid var(--line); display: block; }
+.dayhead { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin: 22px 0 8px; }
+.dayhead h2 { margin: 0; }
+.lineup { display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+.artist { cursor: pointer; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.artist img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; background: var(--surface-2); }
+.artist .nm { font-size: 13px; padding: 6px 8px; line-height: 1.35; }
+.artist.pick { border: 2px solid var(--gig); }
+.artist.must { border: 2px solid var(--ok); }
+.artist.must .nm { color: var(--ok); font-weight: 650; }
+.artist.must .nm::before { content: "꼭 · "; }
+.artist.pick .nm { color: var(--gig); font-weight: 650; }
+.lineup.off .artist { opacity: .75; }
+.lineup.compact { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+.lineup.compact .artist img { display: none; }
+.cdj-tools { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.cdj-tools button { font: inherit; font-size: 13px; border: 1px solid var(--line); background: var(--surface); color: var(--text); padding: 6px 12px; border-radius: 999px; cursor: pointer; }
+.cdj-tools button[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+@media (max-width: 560px) { .cdj-head { grid-template-columns: 1fr; } .cdj-head img { max-width: 220px; } }@media (max-width: 560px) {
+  .day, .todo .item { grid-template-columns: 1fr; gap: 4px; }
+  .mini .row { grid-template-columns: 58px 1fr; }
+  .mini .s { grid-column: 2; white-space: normal; }
+}
+</style>
+</head>
+<body>
+<header class="wrap hero">
+  <h1>겨울 일본 여행 · 12/19 ~ 1/1</h1>
+  <p>김해 ↔ 나리타 · 12/26까지 친구와 2인, 이후 혼자 · 마지막 정리 2026-10-26</p>
+</header>
+
+<nav class="tabs" aria-label="보드 메뉴"><div class="wrap" role="tablist">
+  <button role="tab" data-tab="home">한눈에</button>
+  <button role="tab" data-tab="budget">예산</button>
+  <button role="tab" data-tab="todo">할 일</button>
+  <button role="tab" data-tab="plan">일정</button>
+  <button role="tab" data-tab="spots">관광</button>
+  <button role="tab" data-tab="stay">숙소</button>
+  <button role="tab" data-tab="move">교통</button>
+  <button role="tab" data-tab="gigs">공연</button>
+  <button role="tab" data-tab="cdj">CDJ</button>
+</div></nav>
+
+<main class="wrap">
+
+<!-- ===== 한눈에 ===== -->
+<section class="panel" id="home" role="tabpanel">
+  <div class="grid">
+    <a class="card stat" href="#budget"><div class="k">예산 (1인)</div><div class="v">약 51만 원 + $108.5 + 약 18만 엔</div><div class="s">항공 · 숙박 · 패스 · 교통 · 공연 (추정 포함, 식비 제외)</div></a>
+    <a class="card stat" href="#stay"><div class="k">숙소</div><div class="v">필요한 숙소 다 잡음</div><div class="s">센다이·우쓰노미야 중 하나 취소 · 12/31은 예비</div></a>
+    <a class="card stat" href="#move"><div class="k">교통</div><div class="v">항공 예약 전 · 패스 5일권</div><div class="s">12/19 에어부산 08:20 · 1/1 귀국 · 패스 12/21~25</div></a>
+    <a class="card stat" href="#gigs"><div class="k">공연</div><div class="v">결제 4 · 관심 9</div><div class="s">CDJ 2일 · tuki.×스이세이 · ロクデナシ 결제함</div></a>
+  </div>
+
+  <h2>다음 할 일</h2>
+  <div class="todo" id="home-todo"></div>
+  <a class="more" href="#todo">할 일 전체 보기 →</a>
+
+  <h2>일정 요약</h2>
+  <div class="mini">
+    <div class="row"><div class="d">12/19 <small>토</small></div><div class="t">입국 · 공연 1개: <b>미세스</b> → 후지이 카제 → りりあ。 → YOASOBI</div><div class="s">신요코하마</div></div>
+    <div class="row"><div class="d">12/20 <small>일</small></div><div class="t">요코하마 · <b>tuki.×스이세이 17:30</b></div><div class="s">신요코하마</div></div>
+    <div class="row passday"><div class="d">12/21 <small>월</small></div><div class="t">센다이로 이동 · 빛의 페이젠트</div><div class="s">센다이</div></div>
+    <div class="row passday"><div class="d">12/22 <small>화</small></div><div class="t"><b>tayori 19:00</b> 도요스 (2순위 ヒグチアイ 요코하마)</div><div class="s">도쿄 1박?</div></div>
+    <div class="row passday"><div class="d">12/23 <small>수</small></div><div class="t">다자와코·뇨토 온천 설경 노천탕</div><div class="s">센다이</div></div>
+    <div class="row passday"><div class="d">12/24 <small>목</small></div><div class="t">모가미강 고타쓰 배 등 · 이브 페이젠트</div><div class="s">센다이</div></div>
+    <div class="row passday"><div class="d">12/25 <small>금</small></div><div class="t"><b>UVERworld 14:00</b> 부도칸 → <b>なるみや 18:00</b> 요코하마</div><div class="s">센다이</div></div>
+    <div class="row"><div class="d">12/26 <small>토</small></div><div class="t"><b>CDJ Day1</b> 스이세이·Creepy Nuts·NOMELON NOLEMON · 친구와 헤어짐</div><div class="s">도다코엔</div></div>
+    <div class="row"><div class="d">12/27 <small>일</small></div><div class="t">시부야 스카이 → <b>ロクデナシ 17:00</b></div><div class="s">도다코엔</div></div>
+    <div class="row"><div class="d">12/28 <small>월</small></div><div class="t">당일치기: 에노시마 노을·일루미네이션 / 조시·이누보사키</div><div class="s">도다코엔</div></div>
+    <div class="row"><div class="d">12/29 <small>화</small></div><div class="t"><b>CDJ Day3</b> Eve·tuki.·amazarashi·TAKU INOUE</div><div class="s">도다코엔</div></div>
+    <div class="row"><div class="d">12/30 <small>수</small></div><div class="t">회복·굿즈·짐 정리</div><div class="s">도다코엔</div></div>
+    <div class="row"><div class="d">12/31 <small>목</small></div><div class="t">에노시마 석양 (안 갔으면) · 일찍 복귀</div><div class="s">도다코엔 (예비)</div></div>
+    <div class="row"><div class="d">1/1 <small>금</small></div><div class="t">나리타 11:25 → 김해 13:55 (또는 10:15)</div><div class="s">—</div></div>
+  </div>
+  <p class="note">노란 줄 = JR EAST PASS 사용일. 자세한 이동·대안은 <a href="#plan">일정</a> 탭.</p>
+</section>
+
+<!-- ===== 예산 ===== -->
+<section class="panel" id="budget" role="tabpanel">
+  <h2>1인 예산</h2>
+  <p class="note" style="margin-top:-4px">2인실은 반씩. 원·엔·달러는 결제 통화 그대로 적음 (환율 변환 안 함). "추정"은 실제 결제 전 금액.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>항목</th><th>내용</th><th class="price">금액</th><th>상태</th></tr></thead>
+    <tbody>
+      <tr><td class="num">항공</td><td>12/19 에어부산 편도 228,900 + 1/1 귀국 편도 (에어부산 289,278 / 제주 281,785)</td><td class="price">약 510,685~518,178원</td><td><span class="chip warn">예약 전</span></td></tr>
+      <tr><td class="num">숙박</td><td>新横浜国際ホテル 2박 (2인 $217)</td><td class="price">$108.5</td><td><span class="chip ok">결제함</span></td></tr>
+      <tr><td></td><td>東横INN 仙台西口広瀬通 5박 (2인 54,100엔) <span class="note">또는 宇都宮 23,375엔</span></td><td class="price">27,050엔</td><td><span class="chip ok">예약함</span> 현장 결제</td></tr>
+      <tr class="dim"><td></td><td>12/22 도쿄 1박 (2인 10,800엔, 센다이 거점일 때만)</td><td class="price">5,400엔</td><td>후보</td></tr>
+      <tr><td></td><td>東横INN 戸田公園 5박 (혼자)</td><td class="price">38,700엔</td><td><span class="chip ok">예약함</span> 현장 결제</td></tr>
+      <tr><td></td><td>東横INN 戸田公園 12/31 1박 추가 (혼자)</td><td class="price">9,500엔</td><td><span class="chip warn">예비</span> 확정 아님</td></tr>
+      <tr><td class="num">패스</td><td>JR EAST PASS 5일권 (12/21~25)</td><td class="price">35,000엔</td><td>구매 전</td></tr>
+      <tr><td class="num">패스 밖 교통</td><td>12/19 나리타→신요코하마 · 12/26 센다이→도쿄→마쿠하리 · 지하철 · 12/27~31 시내·마쿠하리·나리타 · 뇨토 버스</td><td class="price">약 2만~2.5만 엔</td><td>추정</td></tr>
+      <tr><td class="num">공연</td><td>CDJ 12/26 + 12/29</td><td class="price">28,550엔</td><td><span class="chip ok">결제함</span></td></tr>
+      <tr><td></td><td>tuki.×星街すいせい</td><td class="price">9,900엔</td><td><span class="chip ok">결제함</span></td></tr>
+      <tr><td></td><td>ロクデナシ</td><td class="price">9,380엔</td><td><span class="chip ok">결제함</span></td></tr>
+      <tr class="dim"><td></td><td>Mrs. GREEN APPLE (당첨 시) / りりあ。 / tayori / なるみや / 山田庵巳 3,500+드링크</td><td class="price">미확인</td><td>가격 채우기</td></tr>
+      <tr class="sum"><td>합계</td><td>확인된 금액 + 추정 (공연 미확인분 제외)</td><td class="price">약 51.1만~51.8만 원<br>+ $108.5<br>+ 약 17.8만~18.3만 엔</td><td></td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">엔 합계 = 숙박 75,250 + 패스 35,000 + 교통 2만~2.5만 (추정) + 공연 47,830 (결제 완료분) (도쿄 1박 넣으면 +5,400, 미세스·tayori·なるみや 등 추가 공연은 별도). 식비·굿즈·기념품은 아직 안 넣음.</p>
+
+  <h2>친구 몫 (12/26까지)</h2>
+  <ul class="tight note" style="color:var(--text)">
+    <li>항공: 12/26 이후 일정에 따라 귀국편 따로 (같이 1/1이면 약 51만 원대)</li>
+    <li>숙박 반: 新横浜 $108.5 + 센다이 27,050엔 (또는 우쓰노미야 23,375엔)</li>
+    <li>JR EAST PASS 5일권 35,000엔 · 12/26 이후 일정이 다르면 귀국편 따로</li>
+  </ul>
+</section>
+
+<!-- ===== 할 일 ===== -->
+<section class="panel" id="todo" role="tabpanel">
+  <h2>할 일 · 마감</h2>
+  <div class="todo" id="todo-list">
+    <div class="item" data-due="2026-10-26" data-key="1"><div class="when">지금</div><div>항공권 예약: 12/19 김해→나리타 + 1/1 나리타→김해 (편도 2장, 2인). 위탁 수하물 포함 여부 확인 · 여권 영문 이름 그대로 · 친구 귀국일 확인</div></div>
+    <div class="item done"><div class="when">10/26 완료</div><div>CDJ 12/26·12/29 결제 · tuki.×星街すいせい 결제 · ロクデナシ 결제</div></div>
+    <div class="item done"><div class="when">10/26 완료</div><div>新横浜国際ホテル 2박 KB 쿠폰 결제 (US$217) → 확인 메일에서 취소 규정 확인</div></div>
+    <div class="item" data-due="2026-11-03" data-key="7"><div class="when">11/3 23:59</div><div>ヒグチアイ × 奥華子 12/22 피아 2차 선행 마감 (tayori 2순위라 tayori 표 상황 보고)</div></div>
+    <div class="item" data-due="2026-11-21" data-key="3"><div class="when">11/21 10:00<small>일본 시간 · 승차 1개월 전</small></div><div>JR EAST PASS 구매 + 신칸센 좌석 지정 시작 (12/21 도쿄→센다이부터 하루씩 열림). 12/26 센다이→도쿄는 패스 밖이라 따로 표 사기</div></div>
+    <div class="item" data-due="2026-12-10" data-key="4"><div class="when">12월 초</div><div>CDJ 타임테이블 확인 → 12/26 山田庵巳 원맨(19:30) 갈지 결정. 가면 STAXFRED 메일 예약 (9월 원맨 매진)</div></div>
+    <div class="item" data-due="2026-12-20" data-key="5"><div class="when">12/20까지</div><div>12/19·12/22·12/25 관심 공연 표 구한 것 보고 최종 결정 (공연 탭 순위) · 12/22 도쿄 1박 잡을지 (센다이 거점일 때)</div></div>
+    <div class="item" data-due="2026-12-21" data-key="6"><div class="when">12/21 12:00</div><div>센다이 / 우쓰노미야 중 안 쓸 숙소 취소 (둘 다 체크인 당일 12:00까지 무료)</div></div>
+  </div>
+</section>
+
+<!-- ===== 일정 ===== -->
+<section class="panel" id="plan" role="tabpanel">
+  <h2>일정</h2>
+  <div class="subnav" id="plan-sub" role="tablist" aria-label="일정 보기"></div>
+  <p class="note" id="plan-hint">노란 줄 = JR EAST PASS 사용일 (12/21~25). 날짜를 누르면 그날 세부 일정: 초록 칸 = 확정·고정 일정, 그 아래 후보 A·B·C… (보라 = 공연 갈 때, 파랑 = 안 갈 때, 사진은 접어 둠). 관광지 사진·설명은 <a href="#spots">관광 탭</a>. 이동 시간·요금은 추정.</p>
+  <div id="plan-overview"></div>
+  <div class="daynav" id="plan-daynav" hidden><button type="button" data-step="-1">← 전날</button><span id="plan-daylabel"></span><button type="button" data-step="1">다음 날 →</button></div>
+  <div id="plan-days"></div>
+</section>
+
+<!-- ===== 관광 ===== -->
+<section class="panel" id="spots" role="tabpanel">
+  <h2>관광 후보</h2>
+  <p class="note" style="margin-top:-4px">JR EAST PASS 범위 전체와 도쿄 근교를 세부 지역별로 조사 (취향·12월 운영 여부 기준, 2026-10-27). 평가: <span class="chip ok">매우 잘 맞음</span> <span class="chip info">잘 맞음</span> <span class="chip warn">조건부</span> <span class="chip">백업</span> · 요금·시간 "추정"은 실제 확인 전. 사진은 위키미디어 공용·공식 사이트.</p>
+  <div class="cdj-tools">
+    <button type="button" data-spotarea="all" aria-pressed="true">전체</button>
+    <button type="button" data-spotarea="yoko" aria-pressed="false">요코하마</button>
+    <button type="button" data-spotarea="south" aria-pressed="false">남부 도호쿠</button>
+    <button type="button" data-spotarea="north" aria-pressed="false">북부 도호쿠</button>
+    <button type="button" data-spotarea="west" aria-pressed="false">니가타·나가노·북간토</button>
+    <button type="button" data-spotarea="kanto" aria-pressed="false">도쿄·간토 근교</button>
+  </div>
+  <div class="cdj-tools" style="margin-top:6px">
+    <button type="button" data-spotflag="passOnly" aria-pressed="false">패스 범위만</button>
+    <button type="button" data-spotflag="goodOnly" aria-pressed="false">잘 맞는 곳만</button>
+    <button type="button" data-spotflag="hideVisited" aria-pressed="false">가 본 지역 숨기기</button>
+    <span class="note" id="spot-count" style="align-self:center"></span>
+  </div>
+  <div id="spot-list"></div>
+  <p class="note" style="margin-top:14px">뺀 곳: 랜드마크 타워 스카이가든 (공사로 휴업 중) · 야마데라·마쓰시마·긴잔·히라이즈미 (이미 가 봄) · 성·박물관 위주 코스</p>
+</section>
+
+<!-- ===== 숙소 ===== -->
+<section class="panel" id="stay" role="tabpanel">
+  <h2>숙소</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>박</th><th>숙소</th><th>상태</th><th class="price">금액</th><th>무료 취소</th></tr></thead>
+    <tbody>
+      <tr><td class="num">12/19~21<br><span class="note">2박 · 2인</span></td><td><a href="https://hotel.travel.rakuten.co.jp/hotelinfo/plan/921" target="_blank" rel="noopener">新横浜国際ホテル</a> 금연 트윈<div class="note">신요코하마역 도보 1~3분 · K아레나 20~25분</div></td><td><span class="chip ok">결제함</span></td><td class="price">US$217<div class="note">KB 쿠폰 적용 · 1인 $108.5</div></td><td>확인 메일 참고<div class="note">취소하면 쿠폰은 사용 처리</div></td></tr>
+      <tr><td class="num">12/21~26<br><span class="note">5박 · 2인</span></td><td>東横INN 仙台西口広瀬通 금연 트윈 110cm×2<div class="note">역 4분 · 24시간 세탁 · 조식</div></td><td><span class="chip ok">예약함</span></td><td class="price">54,100엔</td><td>체크인 당일 12:00<div class="note">2박째부터 그날 10:00</div></td></tr>
+      <tr><td class="num">12/21~26<br><span class="note">5박 · 2인</span></td><td><a href="https://www.toyoko-inn.com/korea/search/result/room_plan/?hotel=00056&amp;start=2026-12-21&amp;end=2026-12-26&amp;room=1&amp;people=2&amp;smoking=noSmoking&amp;tab=roomType&amp;sort=recommend" target="_blank" rel="noopener">東横INN 宇都宮駅前1</a> 트윈 110cm×2<div class="note">도쿄 50분 · 센다이 75~85분 · 위와 둘 중 하나 취소</div></td><td><span class="chip ok">예약함</span> <span class="chip">예비</span></td><td class="price">46,750엔</td><td>체크인 당일 12:00</td></tr>
+      <tr class="dim"><td class="num">12/22<br><span class="note">1박 · 2인</span></td><td><a href="https://www.toyoko-inn.com/korea/search/result/room_plan/?hotel=00176&amp;start=2026-12-22&amp;end=2026-12-23&amp;room=1&amp;people=2&amp;smoking=noSmoking&amp;tab=roomType&amp;sort=recommend" target="_blank" rel="noopener">東横INN 東京駅新大橋前</a><div class="note">tayori용 · 센다이 거점일 때만</div></td><td><span class="chip warn">후보</span></td><td class="price">10,800엔</td><td>체크인 당일 12:00</td></tr>
+      <tr><td class="num">12/26~31<br><span class="note">5박 · 혼자</span></td><td>東横INN 埼玉戸田公園駅西口 금연 싱글<div class="note">시부야 30분 · 마쿠하리 80분 · 나리타 1시간 45분</div></td><td><span class="chip ok">예약함</span></td><td class="price">38,700엔</td><td>체크인 당일 12:00<div class="note">2박째부터 그날 10:00</div></td></tr>
+      <tr><td class="num">12/31~1/1<br><span class="note">1박 · 혼자</span></td><td>東横INN 埼玉戸田公園駅西口 (같은 호텔 1박 추가)<div class="note">1/1 귀국일 때만 필요</div></td><td><span class="chip warn">예비</span> 확정 아님</td><td class="price">9,500엔</td><td>체크인 당일 12:00</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">예약번호는 숙소.md에만 있음. 센다이 vs 우쓰노미야: 우쓰노미야는 도쿄 공연(12/22·12/25)에 가깝고 더 싸지만, 하야부사·고마치가 서지 않아 도호쿠 당일치기가 편도 40~60분 길어짐.</p>
+</section>
+
+<!-- ===== 교통 ===== -->
+<section class="panel" id="move" role="tabpanel">
+  <h2>항공 <span class="chip warn">예약 전</span></h2>
+  <div class="scroll"><table>
+    <thead><tr><th>항공사</th><th>12/19 김해 → 나리타</th><th>1/1 나리타 → 김해</th><th class="price">1인 합계</th></tr></thead>
+    <tbody>
+      <tr><td><b>에어부산 + 에어부산</b> <span class="chip info">추천</span></td><td>08:20 → 10:25 (228,900)</td><td>11:25 → 13:55 (289,278)</td><td class="price">약 518,178원</td></tr>
+      <tr><td>에어부산 + 제주항공</td><td>08:20 → 10:25 (228,900)</td><td>10:15 → 13:00 (281,785)</td><td class="price">약 510,685원<div class="note">1/1 6시 반 출발</div></td></tr>
+      
+    </tbody>
+  </table></div>
+  <p class="note">편도 가격은 10/26 구글 항공권 조회 (12/31 귀국 왕복 536,060원보다 쌈). 수하물 별도일 수 있음. 인천·하네다·후쿠오카 경유는 KTX·신칸센 비용 때문에 더 비쌈 (항공.md).</p>
+
+  <h2>JR EAST PASS 5일권 <span class="chip pass">12/21~25</span></h2>
+  <div class="grid">
+    <div class="card"><h3>기본</h3><ul class="tight">
+      <li><b>35,000엔</b> · 연속 5일 · 일본 외 여권만</li>
+      <li>2인분 필요 (친구도 같은 기간이면)</li>
+      <li>신칸센 좌석 지정 무료 · 승차 1개월 전 10:00(일본 시간)부터</li>
+      <li>패스 없이 타면 이 5일에 약 7만 엔 이상 (추정)</li></ul></div>
+    <div class="card"><h3>이번 일정에서 포함</h3><ul class="tight">
+      <li>도쿄 ↔ 오미야 ↔ 우쓰노미야 ↔ 센다이</li>
+      <li>아키타·야마가타 신칸센 (다자와코, 자오 쪽)</li>
+      <li>나루코·리쿠우토선, 리조트 시라카미</li>
+      <li>요코하마·도쿄 시내 JR, 게이요선, N'EX</li></ul></div>
+    <div class="card"><h3>포함 안 됨 (따로 냄)</h3><ul class="tight">
+      <li>도카이도 신칸센 (신요코하마 ↔ 도쿄)</li>
+      <li>뇨토 온천 버스 · 자오 버스·로프웨이</li>
+      <li>도쿄메트로·도에이 (도요스, 신코엔지)</li>
+      <li>패스 기간 밖: 12/19·12/20·12/26~1/1</li></ul></div>
+  </div>
+  <div class="maps" style="margin-top:10px">
+    <figure><img src="https://www.jreast.co.jp/multi/pass/img/eastpass/map_available-area_en.png" alt="JR EAST PASS 무제한 이용 구역 지도"><figcaption>무제한 이용 구역 (초록) · 신칸센은 색으로 구분 · 출처 JR동일본</figcaption></figure>
+    <figure><img src="https://www.jreast.co.jp/multi/pass/img/eastpass/otoku_eastpass_map_en.png" alt="JR EAST PASS 주요 노선도"><figcaption>주요 신칸센 노선 · 출처 JR동일본</figcaption></figure>
+  </div>
+  <p class="note">지도는 공식 사이트 이미지를 불러옴 (인터넷 필요). <a href="https://www.jreast.co.jp/en/multi/pass/eastpass.html" target="_blank" rel="noopener">공식 안내</a></p>
+
+  <h2>패스 밖 이동 (추정)</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>날짜</th><th>구간</th><th class="price">비용</th><th>메모</th></tr></thead>
+    <tbody>
+      <tr><td class="num">12/19</td><td>나리타 → 신요코하마</td><td class="price">약 2,000~4,400엔</td><td>게이세이+JR / N'EX</td></tr>
+      <tr><td class="num">12/26</td><td>센다이 (우쓰노미야) → 도쿄 → 가이힌마쿠하리</td><td class="price">약 12,000 (5,600)엔</td><td>신칸센 + 게이요선</td></tr>
+      <tr><td class="num">12/22</td><td>도쿄역 ↔ 도요스</td><td class="price">약 400엔</td><td>유라쿠초선</td></tr>
+      <tr><td class="num">12/27~30</td><td>도다코엔 ↔ 시부야·마쿠하리 등</td><td class="price">약 3,000~4,000엔</td><td>마쿠하리는 린카이선 경유 시 일부 비JR</td></tr>
+      <tr><td class="num">1/1</td><td>도다코엔 → 나리타</td><td class="price">약 1,500~3,500엔</td><td>N'EX 약 3,000 / 게이세이가 쌈</td></tr>
+    </tbody>
+  </table></div>
+  <h2>막차·이동 메모</h2>
+  <ul class="tight">
+    <li>도쿄 → 센다이 막차: 21:24 やまびこ223 (→23:27), 21:36 はやぶさ43 (→23:06) · 2026-09 시간표 기준, 12월 재확인</li>
+    <li>도쿄 → 센다이 첫차: 06:32 はやぶさ1 (→08:03)</li>
+    <li>도요스 PIT → 도쿄역: 도보 + 유라쿠초선 + JR 약 30~35분, 퇴장 혼잡 포함 40분 이상</li>
+    <li>CDJ 종료 후 가이힌마쿠하리역 입장에만 20~30분 걸릴 수 있음</li>
+  </ul>
+</section>
+
+<!-- ===== 공연 ===== -->
+<section class="panel" id="gigs" role="tabpanel">
+  <h2>날짜별 관심 공연 (순위는 직접 정한 것)</h2>
+  <p class="note" style="margin-top:-4px">같은 날 공연은 시간이 겹쳐서 보통 하나만 가능. 위에서부터 표를 구하면 그걸로, 못 구하면 다음 순위로.</p>
+
+  <h3 style="margin-top:16px">12/19 (토) · 입국일 (나리타 10:25 도착)</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>순위</th><th>공연</th><th>장소 · 개장/시작</th><th>메모</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>Mrs. GREEN APPLE Ringo Jam Tour “SHADOWS”</td><td>피아 아레나 MM (요코하마) · 16:00/17:00</td><td>15,000엔 · 표 구하기 어려움</td></tr>
+      <tr><td class="num">2</td><td>Fujii Kaze Prema World Tour 도쿄 1일차</td><td>도쿄돔 · 16:00/18:00</td><td>신요코하마에서 약 40분</td></tr>
+      <tr><td class="num">3</td><td>りりあ。 OneMan Live「りりあ。の側に。」</td><td>시모키타자와 ADRIFT · 17:30/18:00</td><td><span class="chip gig">🎫</span> 사이트에 티켓 표시</td></tr>
+      <tr><td class="num">4</td><td>Spotify On Stage Tokyo 2026 with YOASOBI</td><td>도쿄 가든시어터 (아리아케) · 17:00/18:00</td><td></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 style="margin-top:16px">12/20 (일)</h3>
+  <div class="scroll"><table><tbody>
+    <tr><td class="num">확정</td><td>tuki. × 星街すいせい「星降る晩餐会」</td><td>K아레나 요코하마 · 16:00/17:30</td><td><span class="chip ok">결제함 9,900엔</span></td></tr>
+  </tbody></table></div>
+
+  <h3 style="margin-top:16px">12/22 (화) · 패스 2일차</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>순위</th><th>공연</th><th>장소 · 개장/시작</th><th>메모</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>tayori LIVE “Mirage” 도쿄</td><td>도요스 PIT · 18:00/19:00</td><td>센다이 당일 복귀는 앙코르 포기해야 함 → 도쿄 1박 또는 우쓰노미야 거점</td></tr>
+      <tr><td class="num">2</td><td>ヒグチアイ × 奥華子「毎日がクリスマス2026」</td><td>요코하마 아카렌가 창고 1호관 3F 홀 · 18:45</td><td>투맨 · 피아 2차 선행 <b>11/3 23:59</b>까지</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 style="margin-top:16px">12/25 (금) · 패스 5일차 · <span style="color:var(--ok)">둘 다 가능</span></h3>
+  <div class="scroll"><table>
+    <thead><tr><th>순위</th><th>공연</th><th>장소 · 개장/시작</th><th>메모</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>なるみや Live Tour 2026【夢見行脚】神奈川追加公演</td><td>요코하마 랜드마크 홀 · 17:15/18:00</td><td><span class="chip gig">🎫</span></td></tr>
+      <tr><td class="num">2</td><td>UVERworld “危ない” TOUR ～PREMIUM LIVE on Xmas～</td><td>일본 부도칸 · <b>낮 13:00/14:00</b> · 밤 18:00/19:00</td><td><b>낮 공연</b>이면 16시 반쯤 끝 → 구단시타 → 사쿠라기초 약 50분 → なるみや 18:00 가능 (추정)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 style="margin-top:16px">12/26 (토) · CDJ Day1 <span class="chip ok">결제함</span></h3>
+  <p style="margin:4px 0">꼭 볼 팀: <b>星街すいせい</b> · <b>Creepy Nuts</b> · <b>NOMELON NOLEMON</b> → <a href="#cdj">CDJ 탭</a>에서 초록 테두리</p>
+
+  <h3 style="margin-top:16px">12/27 (일)</h3>
+  <div class="scroll"><table><tbody>
+    <tr><td class="num">확정</td><td>ロクデナシ「Twilight」Extra Show</td><td>LINE CUBE SHIBUYA · 16:00/17:00</td><td><span class="chip ok">결제함 9,380엔</span></td></tr>
+  </tbody></table></div>
+
+  <h3 style="margin-top:16px">12/28 (월)</h3>
+  <p class="note" style="margin:4px 0">아직 관심 공연 없음</p>
+
+  <h3 style="margin-top:16px">12/29 (화) · CDJ Day3 <span class="chip ok">결제함</span></h3>
+  <p style="margin:4px 0">꼭 볼 팀: <b>Eve</b> · <b>tuki.</b> · <b>amazarashi</b> · <b>TAKU INOUE × 超かぐや姫!</b> → <a href="#cdj">CDJ 탭</a>에서 초록 테두리</p>
+
+  <h3 style="margin-top:16px">그 밖에 알아본 것</h3>
+  <ul class="tight note">
+    <li>UVERworld 요코하마 아레나 12/21(월) 18:30 (신요코하마 바로 앞). 12/21은 센다이 이동일이라 보려면 이동을 미뤄야 함</li>
+    <li>山田庵巳: 12/25 원주쿠 크로코다일 19:00 · 12/26 신코엔지 STAXFRED 원맨 19:30</li>
+  </ul>
+  <p class="note">CDJ 타임테이블은 아직 미발표 (보통 12월 초). 공연 정보는 직접 만든 공연 사이트(localhost:8765)와 공식·티켓 사이트 기준, 10/26 확인.</p>
+</section>
+<!-- ===== CDJ ===== -->
+<section class="panel" id="cdj" role="tabpanel">
+  <div class="cdj-head">
+    <img src="https://countdownjapan.s3.ap-northeast-1.amazonaws.com/2526/img/upload/2026/09/29080431/CDJ2627_visual_1000_1000.png" alt="COUNTDOWN JAPAN 26/27 키 비주얼">
+    <div>
+      <h2 style="margin:0">COUNTDOWN JAPAN 26/27</h2>
+      <ul class="tight">
+        <li>마쿠하리 멧세 (가이힌마쿠하리역 도보 약 10분) · 4스테이지 · 5일 179팀 예정</li>
+        <li><b>내 날: 12/26 (토) · 12/29 (화)</b> <span class="chip ok">결제함 28,550엔</span></li>
+        <li>입장 9:30 / 시작 12:00 · 끝 약 20:40 (Day1 기준)</li>
+        <li><b>타임테이블 미발표</b> (보통 12월 초) · 지금은 1차 발표 97팀</li>
+        <li>입장 시 얼굴 인증·사진 신분증 필요하다는 정보 → 여권 지참</li>
+      </ul>
+      <div class="cdj-tools">
+        <button type="button" data-cdj="mine" aria-pressed="true">내 날만</button>
+        <button type="button" data-cdj="all" aria-pressed="false">5일 전체</button>
+        <button type="button" data-cdjview="photo" aria-pressed="true">사진</button>
+        <button type="button" data-cdjview="list" aria-pressed="false">이름만</button>
+      </div>
+    </div>
+  </div>
+  <div id="cdj-days"></div>
+  <p class="note" style="margin-top:14px"><b>초록 = 꼭 볼 팀 (직접 말한 것)</b>. 다른 카드를 누르면 관심 팀으로 표시돼요 (보라 테두리). 다시 누르면 해제. 표시는 이 브라우저에만 저장됨 · 사진·명단은 공식 사이트(countdownjapan.jp, 2026-10-26 기준)에서 불러옴, 인터넷 필요. 이름은 오십음 순.</p>
+</section>
+
+</main><script>
+(function () {
+  const tabs = [...document.querySelectorAll('nav.tabs button')];
+  const ids = tabs.map(b => b.dataset.tab);
+  function show(id) {
+    if (!ids.includes(id)) id = 'home';
+    tabs.forEach(b => b.setAttribute('aria-selected', String(b.dataset.tab === id)));
+    document.querySelectorAll('.panel').forEach(p => p.classList.toggle('on', p.id === id));
+    if (location.hash.slice(1) !== id) history.replaceState(null, '', '#' + id);
+    window.scrollTo(0, 0);
+  }
+  tabs.forEach(b => b.addEventListener('click', () => show(b.dataset.tab)));
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (a && ids.includes(a.getAttribute('href').slice(1))) { e.preventDefault(); show(a.getAttribute('href').slice(1)); }
+  });
+  window.addEventListener('hashchange', () => show(location.hash.slice(1)));
+
+  // 지난 마감 흐리게 + 한눈에에 다음 할 일 3개 복사
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const items = [...document.querySelectorAll('#todo-list .item')];
+  items.forEach(el => {
+    if (el.dataset.due && new Date(el.dataset.due + 'T23:59:59') < today) el.classList.add('done');
+  });
+  const home = document.getElementById('home-todo');
+  items.filter(el => !el.classList.contains('done')).slice(0, 3).forEach(el => home.appendChild(el.cloneNode(true)));
+
+  // CDJ 라인업
+  const IMG = 'https://fesapp.jp/nx/app/cdj2627/images/artists/detail/';
+  const CDJ = [
+    { d: '12/26', w: '토', mine: true, note: 'Day1 · 이벤트홀 미사용', a: [["KANA-BOON","kanaboon"],["Creepy Nuts","creepynuts"],["Juice=Juice","juicejuice"],["超特急","chotokkyu"],["NELKE","nelke"],["NOMELON NOLEMON","nomelonnolemon"],["harha","harha"],["羊文学","hitsujibungaku"],["FRUITS ZIPPER","fruitszipper"],["フレデリック","frederic"],["FLOW","flow"],["星街すいせい","hoshimachisuisei"],["MAZZEL","mazzel"],["MAISONdes","maisondes"],["luv","luv"],["レトロリロン","retroriron"],["Reol","reol"],["Rol3ert","ro13ert"]] },
+    { d: '12/27', w: '일', mine: false, note: 'Day2 · 이날은 ロクデナシ', a: [["Aooo","aooo"],["Wienners","wienners"],["HY","hy"],["Awich","awich"],["CUTIE STREET","cutiestreet"],["Cloudy","cloudy"],["KOTORI","kotori"],["35.7","357"],["サンボマスター","sambomaster"],["sumika","sumika"],["CHiCO with HoneyWorks","chico"],["超ときめき♡宣伝部","tokisen"],["東京スカパラダイスオーケストラ","tokyoskaparadiseorchestra"],["FUNKY MONKEY BΛBY'S","funkymonkeybabys"],["Penthouse","penthouse"],["ヤバイTシャツ屋さん","yabaitshirtsyasan"],["LANA","lana"]] },
+    { d: '12/29', w: '화', mine: true, note: 'Day3', a: [["アイナ・ジ・エンド","ainatheend"],["amazarashi","amazarashi"],["Eve","eve"],["OddRe:","oddre"],["9mm Parabellum Bullet","9mmparabellumbullet"],["CLAN QUEEN","clanqueen"],["Chevon","chevon"],["SiM","sim"],["syudou","syudou"],["SPARK!!SOUND!!SHOW!!","sparksoundshow"],["TAKU INOUE × 超かぐや姫!","takuinoue"],["tuki.","tuki"],["PEOPLE 1","people1"],["マキシマム ザ ホルモン","maximumthehormone"],["MAN WITH A MISSION","manwithamission"],["muque","muque"],["MAYSON's PARTY","maysonsparty"],["礼賛","raisan"]] },
+    { d: '12/30', w: '수', mine: false, note: 'Day4', a: [["iLiFE!","ilife"],["indigo la End","indigolaend"],["AEN","aen"],["ENHYPEN","enhypen"],["クレイジーウォウウォ!!","crazywowo"],["go!go!vanillas","gogovanillas"],["コレサワ","koresawa"],["Saucy Dog","saucydog"],["スキマスイッチ","sukimaswitch"],["鈴木愛理","suzukiairi"],["This is LAST","thisislast"],["DISH//","dish"],["TRACK15","track15"],["ねぎ塩豚丼","negisiotondon"],["マカロニえんぴつ","macaronienpitsu"],["マルシィ","marcy"],["Mega Shinnosuke","megashinnosuke"],["MON7A","monta"],["緑黄色社会","ryokuoushokushakai"],["LEX","lex"]] },
+    { d: '12/31', w: '목', mine: false, note: 'Day5 카운트다운 · 15:40 ~ 다음 날 05:00', a: [["おいしくるメロンパン","oisiclemelonpan"],["the奥歯's","okubas"],["クリープハイプ","creephyp"],["Sunny Girl","sunnygirl"],["サバシスター","sabasister"],["SIX LOUNGE","sixlounge"],["シンガーズハイ","singershigh"],["セカンドバッカー","sekandobakka"],["TETORA","tetora"],["Tele","tele"],["10-FEET","10feet"],["なとり","natori"],["ねぐせ。","neguse"],["Hump Back","humpback"],["04 Limited Sazabys","04limitedsazabys"],["Blue Mash","bluemash"],["HEY-SMITH","heysmith"],["Paledusk","paledusk"],["My Hair is Bad","myhairisbad"],["ヤングスキニー","yangskinny"],["reGretGirl","regretgirl"],["LiSA","lisa"],["WurtS","wurts"],["忘れらんねえよ","wasureranneyo"]] }
+  ];
+  const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  let cdjScope = 'mine', cdjView = 'photo';
+  // 사용자가 직접 말한 "꼭 볼 팀" (2026-10-26)
+  const MUST = new Set(['星街すいせい', 'Creepy Nuts', 'NOMELON NOLEMON', 'Eve', 'tuki.', 'amazarashi', 'TAKU INOUE × 超かぐや姫!']);
+  let myPicks = new Set();
+  try { myPicks = new Set(JSON.parse(localStorage.getItem('cdj-picks') || '[]')); } catch (e) {}
+  document.getElementById('cdj-days').addEventListener('click', e => {
+    const c = e.target.closest('.artist'); if (!c) return;
+    const n = c.dataset.name;
+    myPicks.has(n) ? myPicks.delete(n) : myPicks.add(n);
+    try { localStorage.setItem('cdj-picks', JSON.stringify([...myPicks])); } catch (e) {}
+    renderCDJ();
+  });
+  function renderCDJ() {
+    const box = document.getElementById('cdj-days');
+    box.innerHTML = CDJ.filter(x => cdjScope === 'all' || x.mine).map(x => {
+      const picks = x.a.filter(a => myPicks.has(a[0])).length;
+      const cards = [...x.a].sort((p, q) => MUST.has(q[0]) - MUST.has(p[0])).map(([n, f]) => `<div class="artist${MUST.has(n) ? ' must' : myPicks.has(n) ? ' pick' : ''}" data-name="${esc(n)}" role="button" tabindex="0" title="눌러서 보고 싶은 팀 표시"><img src="${IMG}${f}.jpg" alt="${esc(n)}" loading="lazy"><div class="nm">${esc(n)}</div></div>`).join('');
+      return `<div class="dayhead"><h2>${x.d} (${x.w})</h2>${x.mine ? '<span class="chip ok">내 날</span>' : ''}<span class="note">${esc(x.note)} · ${x.a.length}팀${x.a.some(a => MUST.has(a[0])) ? ` · 꼭 ${x.a.filter(a => MUST.has(a[0])).length}팀` : ''}${picks ? ` · 표시 ${picks}팀` : ''}</span></div><div class="lineup${cdjView === 'list' ? ' compact' : ''}${x.mine ? '' : ' off'}">${cards}</div>`;
+    }).join('');
+    document.querySelectorAll('[data-cdj]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.cdj === cdjScope)));
+    document.querySelectorAll('[data-cdjview]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.cdjview === cdjView)));
+  }
+  document.querySelectorAll('[data-cdj]').forEach(b => b.addEventListener('click', () => { cdjScope = b.dataset.cdj; renderCDJ(); }));
+  document.querySelectorAll('[data-cdjview]').forEach(b => b.addEventListener('click', () => { cdjView = b.dataset.cdjview; renderCDJ(); }));
+  renderCDJ();
+
+
+
+
+  const SPOTS = [
+  {
+  "region": "yoko",
+  "sub": "요코하마 · 미나토미라이",
+  "id": "aircabin",
+  "name": "요코하마 에어캐빈",
+  "jp": "YOKOHAMA AIR CABIN",
+  "fit": "매우 잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/Yokohama_Air_Cabin_2.jpg/960px-Yokohama_Air_Cabin_2.jpg",
+  "what": "사쿠라기초역 앞에서 운하파크(아카렌가 창고 근처)까지 바다 위를 건너는 도시형 로프웨이. 곤돌라 안에서 미나토미라이와 항구가 내려다보임",
+  "todo": "해 질 무렵이나 밤에 타면 야경. 내려서 아카렌가 크리스마스 마켓으로 바로 이어짐",
+  "cost": "편도 약 5분 · 편도 약 1,000엔 / 왕복 약 1,800엔 (추정)",
+  "how": "신요코하마 → 사쿠라기초 약 25분, 역 바로 앞",
+  "memo": "강풍이면 운휴. 운영 시간은 공식 사이트 확인",
+  "days": "12/19 · 12/20",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": "https://yokohama-air-cabin.jp/"
+  },
+  {
+  "region": "yoko",
+  "sub": "요코하마 · 미나토미라이",
+  "id": "xmas",
+  "name": "아카렌가 크리스마스 마켓",
+  "jp": "Christmas Market in 横浜赤レンガ倉庫",
+  "fit": "잘 맞음",
+  "img": "https://www.yokohama-akarenga.jp/christmas/assets/img/common/ogp.png",
+  "what": "붉은 벽돌 창고 앞 광장의 독일식 크리스마스 마켓. 큰 트리와 오두막 가게 약 60곳, 바다·미나토미라이 야경이 배경",
+  "todo": "글뤼바인·소시지·디저트, 트리와 야경 구경. 공연 끝나고 들르기 좋음",
+  "cost": "1~2시간 · 입장 무료 (주말·저녁은 입장 예약·유료일 수 있음, 확인)",
+  "how": "에어캐빈 운하파크역 도보 약 5분 / 바샤미치역 도보 약 6분",
+  "memo": "2026년 11/20~12/25. 12/22 ヒグチアイ 공연장(아카렌가 1호관)과 같은 곳",
+  "days": "12/19 · 12/20 · 12/22 · 12/25",
+  "pass": "패스 밖",
+  "visited": true,
+  "link": "https://www.yokohama-akarenga.jp/christmas/"
+  },
+  {
+  "region": "yoko",
+  "sub": "요코하마 · 미나토미라이",
+  "id": "osanbashi",
+  "name": "오산바시 국제여객터미널 옥상",
+  "jp": "大さん橋 くじらのせなか",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Osanbashi_Pier_from_Sea.jpg/960px-Osanbashi_Pier_from_Sea.jpg",
+  "what": "바다로 쭉 뻗은 대형 여객선 부두. 옥상이 나무 데크 언덕(\"고래의 등\")이라 미나토미라이 야경을 정면에서 봄",
+  "todo": "야경 사진, 정박한 크루즈선 구경. 계단 거의 없이 완만한 경사",
+  "cost": "30분~1시간 · 무료",
+  "how": "니혼오도리역 도보 약 7분 / 아카렌가에서 도보 약 10분",
+  "memo": "바닷바람이 세서 방한 필수",
+  "days": "12/19 · 12/20",
+  "pass": "패스 밖",
+  "visited": true,
+  "link": "https://osanbashi.jp/"
+  },
+  {
+  "region": "yoko",
+  "sub": "요코하마 · 미나토미라이",
+  "id": "seabass",
+  "name": "시버스 (수상 버스)",
+  "jp": "シーバス",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0d/Yamashita_Park_Sea_Bass_Terminal.jpg/960px-Yamashita_Park_Sea_Bass_Terminal.jpg",
+  "what": "요코하마역 · 미나토미라이 · 아카렌가 · 야마시타 공원을 잇는 작은 배",
+  "todo": "저녁에 타면 바다에서 야경. 걷는 거리를 줄이면서 이동",
+  "cost": "구간마다 약 10~35분 · 약 700~1,000엔 (추정)",
+  "how": "요코하마역 동쪽 출구 승선장 / 아카렌가·야마시타 공원 승선장",
+  "memo": "배차 30분 안팎, 마지막 편 시간 확인",
+  "days": "12/19 · 12/20",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": "https://www.yokohama-cruising.jp/"
+  },
+  {
+  "region": "yoko",
+  "sub": "요코하마 · 미나토미라이",
+  "id": "portcruise",
+  "name": "요코하마항 크루즈",
+  "jp": "マリーンルージュ・ロイヤルウイング 등",
+  "fit": "조건부",
+  "img": "https://yokohama-cruising.jp/_assets/photograph/img/img-marine02.jpg",
+  "what": "야마시타 공원·오산바시에서 출발해 베이브리지 아래까지 도는 유람선",
+  "todo": "갑판에서 항구·다리·야경. 식사 포함 코스도 있음",
+  "cost": "40~90분 · 약 2,000~4,000엔 (승선만, 추정)",
+  "how": "야마시타 공원 / 오산바시 승선장",
+  "memo": "12월 운항 시간·날짜는 회사마다 달라 확인 필요",
+  "days": "12/20 낮",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": "https://www.yokohama-cruising.jp/"
+  },
+  {
+  "region": "yoko",
+  "sub": "신요코하마",
+  "id": "ramen",
+  "name": "신요코하마 라멘 박물관",
+  "jp": "新横浜ラーメン博物館",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Shinyokohama_ramen_museum.jpg/960px-Shinyokohama_ramen_museum.jpg",
+  "what": "지하에 쇼와 시대 거리를 재현하고 전국 유명 라멘집이 들어와 있는 곳. 박물관보다는 라멘 푸드코트",
+  "todo": "미니 사이즈로 2~3곳 비교해서 먹기",
+  "cost": "1시간 · 입장 약 450엔 + 라멘 한 그릇 약 1,000엔 (추정)",
+  "how": "숙소(신요코하마 고쿠사이)에서 도보 약 5분",
+  "memo": "입국일 점심이나 공연 전 식사로 딱",
+  "days": "12/19 · 12/20",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": "https://www.raumen.co.jp/"
+  },
+  {
+  "region": "south",
+  "sub": "야마가타 · 신조·모가미",
+  "id": "mogamikyo",
+  "name": "모가미강 뱃놀이 (모가미쿄 바쇼 라인) 설경 난방선",
+  "jp": "最上峡芭蕉ライン舟下り（冬季 雪見舟・こたつ舟）",
+  "fit": "매우 잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8e/Tozawa_Mogami_Gorge_Of_Mogami_River_1.JPG/960px-Tozawa_Mogami_Gorge_Of_Mogami_River_1.JPG",
+  "what": "눈 덮인 모가미 협곡을 뱃사공의 민요·해설을 들으며 약 1시간 내려가는 강 유람선. 12~3월은 지붕 있는 난방선(설견선)으로 운항.",
+  "todo": "고구치항→구사나기항 편도 약 1시간 승선, 뱃사공 노래 듣기, 선상에서 설경 감상(도시락 예약 가능). 하선 후 연계 버스로 고구치역 복귀.",
+  "cost": "약 1시간(배) · 겨울 요금 대인 3,200엔(2025-26 겨울 개정가, 패스 밖) + 연계 버스 수백 엔(추정)",
+  "how": "센다이→(센잔선)야마가타→(야마가타 신칸센)신조→(리쿠사이선)고구치역, 편도 약 2시간 40분~3시간(환승 대기 포함 추정). 또는 고고타·나루코 경유 리쿠토선. 철도 전 구간 패스 적용.",
+  "memo": "공식 사이트: 12/1~3/31 겨울 요금, 겨울은 '설견선(雪見舟)' 운항, 코타츠 좌석은 '특별 대절선'으로 안내되는 부분이 있어 정기편 코타츠 여부는 전화 확인 필요(0233-72-2001). 12~3월 영업 9:00~16:30, 날씨로 운휴 가능. 2026-27 시간표 미확인(2025 기준). 리쿠사이선 열차가 하루 수 편뿐이라 시간 맞추기 중요.",
+  "days": "12/21~25 패스 기간",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://www.blf.co.jp/"
+  },
+  {
+  "region": "south",
+  "sub": "야마가타 · 자오",
+  "id": "zaojuhyo",
+  "name": "자오 로프웨이 수빙(樹氷) & 라이트업",
+  "jp": "蔵王ロープウェイ 樹氷高原・地蔵山頂駅（樹氷ライトアップ）",
+  "fit": "조건부",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/Mt.Zao%28Mt.Jizo%29_Juhyo.JPG/960px-Mt.Zao%28Mt.Jizo%29_Juhyo.JPG",
+  "what": "로프웨이 2단(산로쿠선·산초선)으로 해발 1,661m 지조산정역까지 올라 '스노 몬스터' 수빙과 설원 전망을 보는 곳. 시즌 중 야간 라이트업.",
+  "todo": "로프웨이 왕복, 산정역 주변 수빙·전망, 내려와서 자오온천 공동탕(노천) 들르기. 라이트업 날이면 17~21시 야간 수빙.",
+  "cost": "반나절~하루 · 로프웨이 왕복 산로쿠선 2,200엔 + 산초선 4,200엔(2025-26, 패스 밖), 야마가타역→자오온천 버스 왕복 약 2,000엔(추정, 패스 밖)",
+  "how": "센다이→센잔선 야마가타역(약 1시간 10분, 패스)→야마코 버스 자오온천행 약 40~50분(패스 밖). 편도 약 2시간 10분.",
+  "memo": "12월 하순은 수빙이 아직 덜 자란 시기(절정 1~2월), 눈 상태에 따라 '눈 덮인 나무' 수준일 수 있음. 라이트업은 2025-26 시즌 12/27~2/22 중 지정일(17~21시)이어서 패스 기간(12/21~25)과 안 겹칠 가능성 큼. 2026-27 일정은 10월 초 기준 미발표. 야마가타 시내는 가 봤지만 자오 수빙은 새 체험. 강풍 시 산초선 운휴 잦음. 영하 10도 이하 방한 필수.",
+  "days": "12/21~25 패스 기간",
+  "pass": "일부 패스 밖",
+  "visited": true,
+  "link": "https://zao-ropeway.co.jp/"
+  },
+  {
+  "region": "south",
+  "sub": "미야기 · 미야기자오(시로이시)",
+  "id": "miyagizaosnowcat",
+  "name": "미야기자오 수빙 순회 설상차 '와일드 몬스터호'",
+  "jp": "みやぎ蔵王の樹氷めぐり（すみかわスノーパーク 雪上車）",
+  "fit": "조건부",
+  "img": "",
+  "what": "난방 설상차를 타고 미야기 쪽 자오 수빙원까지 올라가는 투어. 걷지 않고 설원 깊숙이 들어가는 게 장점.",
+  "todo": "스미카와 스노파크에서 설상차 탑승(편도 약 40분), 수빙원에서 하차 감상 후 복귀(왕복 약 2시간).",
+  "cost": "약 2시간(투어) · 투어 요금 약 7,000~8,000엔(추정, 패스 밖), 버스 별도(패스 밖)",
+  "how": "센다이→도호쿠 신칸센 시로이시자오역(약 15분, 패스)→버스 약 80분(패스 밖, 시즌 운행·예약제 가능성). 과거 시즌엔 센다이역 직행 버스(약 125분, 예약제)도 있었음.",
+  "memo": "2025-26 시즌 운행 12/20~3/8, 예약 11/1 개시(완전 예약제로 안내됨). 2026-27 일정·버스는 11월 발표 예정. 12월 하순은 수빙이 덜 자란 시기라 '설원 드라이브' 성격일 수 있음. 날씨로 운휴 가능.",
+  "days": "12/21~25 패스 기간",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://zao-sumikawa.jp/"
+  },
+  {
+  "region": "south",
+  "sub": "야마가타 · 신조·모가미",
+  "id": "hijiori",
+  "name": "히지오리 온천 (폭설 온천마을)",
+  "jp": "肘折温泉",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/Hijiori_Onsen_01.JPG/960px-Hijiori_Onsen_01.JPG",
+  "what": "칼데라 분지 안의 오래된 탕치장 온천마을. 일본 유수의 폭설지라 12월 말이면 길 양옆이 눈벽이 되는 '설국' 분위기.",
+  "todo": "공동탕 '가미노유'나 '칼데라 온천관'에서 당일 입욕, 눈 쌓인 온천거리 산책(짧음), 마을 식당에서 점심.",
+  "cost": "반나절 · 입욕 400~500엔, 신조역↔히지오리 버스 왕복 약 1,200~2,000엔(추정, 패스 밖)",
+  "how": "센다이→야마가타→야마가타 신칸센 신조역(약 2시간, 패스)→오쿠라무라 촌영버스 약 55분(패스 밖). 편도 약 3시간. 모가미강 뱃놀이와 같은 날 묶기는 빡빡함.",
+  "memo": "촌영버스는 폭설에도 운행한 이력 있음, 평일 6왕복·주말 4왕복(2018년 기사 기준, 최신 시간표 확인 필요). 칼데라 온천관 12~3월 10:00~16:00. 아침시장은 12/10쯤 종료. 노천탕 여부는 시설별 확인 필요.",
+  "days": "12/21~25 패스 기간",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": ""
+  },
+  {
+  "region": "south",
+  "sub": "후쿠시마 · 오쿠아이즈(JR 다다미선)",
+  "id": "tadamiline",
+  "name": "JR 다다미선 설경 열차 (제1다다미강 교량)",
+  "jp": "JR只見線（第一只見川橋梁）",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/61/Find47_Fukushima-Autumn_leaves_train_%28No._1_Tadami_River_Bridge%2C_Mishima_Town%29-m.jpg/960px-Find47_Fukushima-Autumn_leaves_train_%28No._1_Tadami_River_Bridge%2C_Mishima_Town%29-m.jpg",
+  "what": "아이즈와카마쓰~고이데 135km, 눈 덮인 다다미강 계곡과 철교들을 따라 달리는 비경 노선. 2022년 전 구간 재개통.",
+  "todo": "아이즈와카마쓰→고이데 전 구간 직통 열차(약 4시간 40분)를 타고 차창 설경 감상, 고이데에서 조에쓰선·조에쓰 신칸센으로 귀환. 여유 있으면 아이즈니시카타역 근처 '미치노에키 오제카이도 미시마주쿠' 전망 포인트(도보+언덕 약 20~30분, 겨울엔 미끄러움)에서 철교 촬영.",
+  "cost": "하루 종일 · 추가 비용 없음(전 구간 패스), 식사는 미리 준비(차내 판매 없음)",
+  "how": "센다이→고리야마(신칸센)→반에쓰사이선 아이즈와카마쓰(약 2시간)→다다미선 고이데(약 4시간 40분)→우라사/나가오카에서 신칸센→오미야→센다이. 전부 패스. 총 10시간 이상 소요되는 '열차 자체가 목적'인 날.",
+  "memo": "전 구간 직통은 하루 3왕복(아이즈와카마쓰 06:08·13:05·17:00발 / 2022 재개통 후 시간표, 2026년 8월 시간표 페이지도 같은 시각). 13:05발은 고이데 17:47 도착이라 후반부가 어두움 → 오전편 위해 새벽 출발 필요. 난로·코타츠 등 특별 설비 없는 일반 열차. 폭설 시 운휴 가능. 아이즈와카마쓰 시내는 가 봤음.",
+  "days": "12/21~25 패스 기간",
+  "pass": "패스 범위",
+  "visited": false,
+  "link": ""
+  },
+  {
+  "region": "south",
+  "sub": "후쿠시마 · 후쿠시마 근교",
+  "id": "takayu",
+  "name": "다카유 온천 공동 노천탕 '앗타카유'",
+  "jp": "高湯温泉 共同浴場 あったか湯",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/26/Takayu_Onsen_in_Winter.jpg/960px-Takayu_Onsen_in_Winter.jpg",
+  "what": "아즈마산 중턱의 유백색 유황천 온천마을. 공동탕 '앗타카유'는 모든 탕이 노천이라 설경 노천탕을 저렴하게 즐길 수 있음.",
+  "todo": "앗타카유에서 설견 노천탕, 버스 시간 맞춰 온천마을 잠깐 산책.",
+  "cost": "반나절 · 입욕 약 250~500엔(추정), 후쿠시마역↔다카유 버스 왕복 약 1,800엔(추정, 패스 밖)",
+  "how": "센다이→도호쿠 신칸센 후쿠시마역(약 25분, 패스)→후쿠시마교통 버스 다카유온천행 약 40분(패스 밖). 편도 약 1시간 20분.",
+  "memo": "버스 겨울 운행 여부·편수 미확인(통년 운행으로 알려졌으나 확인 필요). 앗타카유 휴관일·연말 영업 미확인. 후쿠시마 시내는 가 봤음(온천은 새 체험).",
+  "days": "12/21~25 패스 기간",
+  "pass": "일부 패스 밖",
+  "visited": true,
+  "link": ""
+  },
+  {
+  "region": "south",
+  "sub": "야마가타 · 요네자와 쪽",
+  "id": "shirabu",
+  "name": "시라부 온천 (설경 속 폭포탕 료칸)",
+  "jp": "白布温泉",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/AzumaRyokan_Outside.JPG/960px-AzumaRyokan_Outside.JPG",
+  "what": "요네자와 남쪽 산속, 눈에 파묻힌 오래된 온천마을. 400년 전통의 '폭포탕(타키유)'이 유명.",
+  "todo": "료칸 당일 입욕(폭포탕·노천), 근처 덴겐다이 로프웨이(스키장) 타고 설원 전망.",
+  "cost": "반나절 · 당일 입욕 약 800~1,000엔(추정), 요네자와역↔시라부 버스 왕복 약 2,000엔(추정, 패스 밖), 덴겐다이 로프웨이 별도",
+  "how": "센다이→후쿠시마→야마가타 신칸센 요네자와역(약 1시간 10분, 패스)→야마코 버스 약 40~45분(패스 밖). 편도 약 2시간.",
+  "memo": "겨울 버스 운행·당일 입욕 접수 여부는 각 료칸(니시야·히가시야 등) 확인 필요. 요네자와 시내는 가 봤음. 덴겐다이 로프웨이는 겨울 스키장 영업(개장일 적설 의존).",
+  "days": "12/21~25 패스 기간",
+  "pass": "일부 패스 밖",
+  "visited": true,
+  "link": ""
+  },
+  {
+  "region": "south",
+  "sub": "미야기 · 센다이 근교(사쿠나미·아키우)",
+  "id": "sakunami",
+  "name": "사쿠나미 온천 히로세강 강변 노천탕",
+  "jp": "作並温泉（大江戸温泉物語Premium 仙台作並 河畔露天風呂）",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d1/SakunamiOnsen2007-11%2C.jpg/960px-SakunamiOnsen2007-11%2C.jpg",
+  "what": "센다이 도심에서 JR로 40분 남짓, 히로세강 계곡의 바위를 파낸 강변 노천탕이 있는 온천. 설경 노천탕을 가장 가볍게 할 수 있는 곳.",
+  "todo": "강변 바위 노천탕 당일 입욕, 돌아오는 길 센잔선 차창 설경.",
+  "cost": "2~3시간 · 당일 입욕 약 1,500~2,000엔(추정, 패스 밖), 사쿠나미역↔온천 시영버스 약 200엔대(추정)",
+  "how": "센다이→센잔선 사쿠나미역(약 40분, 패스)→센다이 시영버스 약 10분(패스 밖). 편도 약 1시간.",
+  "memo": "2025/4 리뉴얼 오픈 시설, 당일 입욕 7:00~10:00, 15:00~24:00(최종 접수 22:00)로 안내 — 휴무일 불명확하니 확인 필요. 이치노보는 당일 입욕 불가(숙박 전용)로 나옴. 짧은 반나절용이라 빛의 페이젠트와 같은 날 묶기 좋음.",
+  "days": "12/21~25 패스 기간",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": ""
+  },
+  {
+  "region": "south",
+  "sub": "미야기 · 나루코·오사키",
+  "id": "naruko",
+  "name": "나루코 온천 공동탕 & 리쿠토선",
+  "jp": "鳴子温泉（滝の湯・早稲田桟敷湯）",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b3/ViewOfNarukoOnsen.jpg/960px-ViewOfNarukoOnsen.jpg",
+  "what": "미야기 대표 온천마을. 역에서 걸어서 가는 공동탕 '다키노유'(목조 탕옥)와 유황 냄새 나는 눈 덮인 온천거리.",
+  "todo": "다키노유(300엔) 입욕, 온천거리 산책·족욕, 리쿠토선으로 이어서 모가미강 뱃놀이로 가는 루트의 중간 정차지로 활용.",
+  "cost": "2~3시간 · 입욕 300엔(다키노유)",
+  "how": "센다이→도호쿠 신칸센 후루카와역(약 15분)→리쿠토선 나루코온천역(약 45분). 편도 약 1시간 10분, 전부 패스.",
+  "memo": "다키노유 통년 영업 7:30~20:30(연말 시간 변동 가능). 나루코 협곡 산책로는 11월 하순~4월 중순 동계 폐쇄 — 협곡 단풍 명소는 겨울엔 기대 X. 공동탕은 노천이 아닌 실내탕.",
+  "days": "12/21~25 패스 기간",
+  "pass": "패스 범위",
+  "visited": false,
+  "link": "https://www.naruko.gr.jp/"
+  },
+  {
+  "region": "south",
+  "sub": "미야기 · 이시노마키·오시카",
+  "id": "tashirojima",
+  "name": "다시로지마 (고양이 섬) 페리",
+  "jp": "田代島（網地島ライン）",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/Tashirojima.jpg/960px-Tashirojima.jpg",
+  "what": "이시노마키 앞바다의 작은 섬. 사람보다 고양이가 많은 섬으로 유명, 겨울 바다를 가르는 고속선 왕복 자체가 체험.",
+  "todo": "이시노마키항→다시로지마 고속선(약 40분), 섬 니토다 항구 주변 고양이·바다 풍경, 다음 배로 복귀.",
+  "cost": "반나절~하루 · 배 편도 1,250엔(현금만, 패스 밖)",
+  "how": "센다이→센세키·도호쿠라인(직통) 이시노마키역(약 1시간, 패스)→도보 약 15분 이시노마키 중앙 발착소→배. 편도 약 2시간.",
+  "memo": "12월 시간표는 2026-10 기준 공식 사이트 미게시(전화 0225-93-6125). 겨울엔 하루 왕복 편수 적고 강풍 결항 잦음. 섬에 상점·식당 거의 없음(먹을 것 준비). 오래 걷지 않으려면 니토다항 하선이 편함.",
+  "days": "12/21~25 패스 기간",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://ajishimaline.com/"
+  },
+  {
+  "region": "south",
+  "sub": "미야기 · 이시노마키·오시카",
+  "id": "onagawa",
+  "name": "오나가와 — 이시노마키선 종점 바다 온천",
+  "jp": "女川駅・女川温泉ゆぽっぽ",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/JR_East_Onagawa_Station_building%2C_Miyagi_Pref_20240420.jpg/960px-JR_East_Onagawa_Station_building%2C_Miyagi_Pref_20240420.jpg",
+  "what": "JR 이시노마키선 종착역. 역 건물 2층이 온천 '유폿포'이고, 역 앞 프롬나드가 바다(오나가와만)까지 일직선으로 이어지는 '선로 끝 바다 마을'.",
+  "todo": "역 온천 입욕(500엔), 역 앞 산책로 따라 바다까지(5분), 시펄 오나가와에서 점심(조개류 제외 메뉴 선택), 해질녘 항구.",
+  "cost": "반나절 · 온천 500엔(2025-03 정보)",
+  "how": "센다이→센세키·도호쿠라인 이시노마키→이시노마키선 오나가와(약 1시간 30분~2시간). 전부 패스. 다시로지마와 같은 날 묶을 수 있음(시간 빠듯).",
+  "memo": "유폿포 9:00~21:00, 제3수요일 휴관(12/16 해당 → 패스 기간엔 영향 없음, 연말 휴무 확인 필요). 이시노마키선 열차 시간당 1편 이하.",
+  "days": "12/21~25 패스 기간",
+  "pass": "패스 범위",
+  "visited": false,
+  "link": ""
+  },
+  {
+  "region": "south",
+  "sub": "후쿠시마 · 이와키 해안",
+  "id": "shioyazaki",
+  "name": "시오야사키 등대 (올라가는 등대)",
+  "jp": "塩屋埼灯台",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/98/Shioya-zaki_lighthouse_01.jpg/960px-Shioya-zaki_lighthouse_01.jpg",
+  "what": "태평양에 튀어나온 곶 위 흰 등대. 일본에 몇 안 되는 '올라갈 수 있는 등대'로 꼭대기 전망대에서 태평양 수평선을 봄.",
+  "todo": "등대 계단 올라 전망대, 곶 아래 해안 산책, 동지 무렵 일출 방향 바다 감상.",
+  "cost": "2~3시간 · 참관 기부금 300엔, 이와키역↔등대 버스 왕복 약 1,000~1,400엔(추정, 패스 밖)",
+  "how": "센다이→(도호쿠 신칸센 후쿠시마/고리야마 경유 또는 조반선 직통 특급 히타치)이와키역(약 2시간~2시간 30분, 패스)→버스 약 30분+도보(패스 밖). 편도 약 3시간.",
+  "memo": "10~2월 9:00~16:00(최종 입장 15:30), 무휴(강풍 시 휴관). 등대 내부 계단 있음(높이 약 27m). 12월 일몰 16:20쯤이라 등대 위 일몰은 불가 — 곶에서 바라보는 정도. 우쓰노미야 예비 거점에서도 가능.",
+  "days": "12/21~25 패스 기간",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://www.tokokai.org/"
+  },
+  {
+  "region": "south",
+  "sub": "미야기 · 센다이 시내",
+  "id": "sendaipageant",
+  "name": "SENDAI 빛의 페이젠트",
+  "jp": "SENDAI光のページェント",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e1/Sendai_Pageant_of_Starlight_2025b.jpg/960px-Sendai_Pageant_of_Starlight_2025b.jpg",
+  "what": "조젠지도리 느티나무 가로수를 수십만 개 전구로 감싸는 센다이 겨울 대표 일루미네이션.",
+  "todo": "조젠지도리 따라 걷기(왕복 30분 이내로 조절), '스타라이트 윙크'(전체 소등 후 재점등, 18:30·19:00·20:00 예정) 보기.",
+  "cost": "1~2시간 · 무료",
+  "how": "센다이 숙소에서 지하철 난보쿠선 고토다이코엔역 하차 바로(패스 밖, 지하철 약 210엔) 또는 센다이역에서 도보 약 20분.",
+  "memo": "2026 공식: 12/4(금)~12/27(일), 일~목 18:00~21:00, 금·토 및 12/24 18:00~22:00. 스타라이트 윙크 시간은 '조정 중'. 패스 기간 매일 밤 가능, 주말·이브 혼잡. 센다이는 가 봤지만 겨울 행사는 새 체험.",
+  "days": "12/21~25 저녁 (센다이 거점)",
+  "pass": "패스 밖",
+  "visited": true,
+  "link": "https://sendaihikape.jp/"
+  },
+  {
+  "region": "south",
+  "sub": "야마가타 · 쓰루오카·사카타·쇼나이 해안",
+  "id": "kamoyunohama",
+  "name": "가모 수족관(해파리) + 유노하마 일본해 일몰",
+  "jp": "鶴岡市立加茂水族館・湯野浜温泉",
+  "fit": "조건부",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Kamo_Aquarium_20160505.jpg/960px-Kamo_Aquarium_20160505.jpg",
+  "what": "세계 최다급 해파리 전시(지름 5m '해파리 드림시어터')의 수족관과, 바로 옆 일본해 모래사장 온천 유노하마의 바다 일몰.",
+  "todo": "해파리 수조 감상, 데크에서 일본해·등대 풍경, 유노하마 온천 당일 입욕 후 일몰(12월 16:30쯤, 맑은 날 드묾).",
+  "cost": "하루 · 수족관 약 1,500엔(추정, 패스 밖), 쓰루오카역 버스 왕복 약 1,800엔(추정, 패스 밖)",
+  "how": "센다이→야마가타→신조→리쿠사이선 아마루메→우에쓰선 쓰루오카(약 3시간 30분, 패스)→쇼나이교통 버스 약 30~40분(패스 밖). 편도 약 4시간+ — 당일치기로는 무거움.",
+  "memo": "2025/11~2026/3 리뉴얼 휴관 후 재개관(2026-10 공식 홈페이지 영업 표시 확인). 연말연시 영업 미확인. 홈페이지에 산사태 도로 통행금지 공지 있음 — 버스 경로 영향 확인 필요. 겨울 일본해는 흐림·눈이 많아 일몰 볼 확률 낮음. 수족관(전시시설) 성격이라 조건부.",
+  "days": "12/21~25 패스 기간",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://kamo-kurage.jp/"
+  },
+  {
+  "region": "south",
+  "sub": "미야기 · 게센누마",
+  "id": "kesennumaillum",
+  "name": "ONE-LINE 게센누마 일루미네이션",
+  "jp": "ONE-LINE気仙沼イルミネーション",
+  "fit": "조건부",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/Kesennuma_Bay_-_panoramio.jpg/960px-Kesennuma_Bay_-_panoramio.jpg",
+  "what": "게센누마만 해안선을 빛의 선으로 이은 일루미네이션. 항구 야경과 함께.",
+  "todo": "미나미마치 해안 산책로 야간 일루미네이션, 항구 저녁 식사.",
+  "cost": "저녁 2시간 · 무료",
+  "how": "센다이→도호쿠 신칸센 이치노세키→오후나토선 게센누마(약 2시간 30분, 패스)→역에서 해안까지 도보 약 20~25분 또는 버스. 막차 시간 주의.",
+  "memo": "2025 시즌은 '12월 하순~1월 중순(예정)' 17:00~24:00 — 시작일이 12/25 이후면 패스 기간과 안 겹침. 2026 일정 미확인. 센다이 복귀 막차(오후나토선 저녁 편수 적음) 확인 필수.",
+  "days": "12/21~25 패스 기간",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": ""
+  },
+  {
+  "region": "south",
+  "sub": "후쿠시마 · 미나미아이즈(오우치주쿠)",
+  "id": "ouchijuku",
+  "name": "오우치주쿠 설경 + 유노카미온센역 화로 역사",
+  "jp": "大内宿・湯野上温泉駅",
+  "fit": "백업",
+  "img": "https://upload.wikimedia.org/wikipedia/commons/6/61/Ja-fukushima-ohuchijuku-4.jpg",
+  "what": "초가지붕 숙장 마을이 눈에 덮인 풍경, 가는 길의 초가지붕 역 '유노카미온센역'엔 화로(이로리)와 무료 족욕.",
+  "todo": "역 화로 쬐기·족욕, 오우치주쿠 거리 걷기·네기소바(대파로 먹는 소바).",
+  "cost": "하루 · 아이즈철도 왕복 약 1,000~1,500엔(추정, 패스 밖), 역↔오우치주쿠 버스/택시(패스 밖)",
+  "how": "센다이→고리야마→아이즈와카마쓰(약 2시간, 패스)→아이즈철도 유노카미온센(약 40분, 패스 밖)→버스 약 20분. 편도 약 3시간 30분.",
+  "memo": "레트로 버스 '사루유호'의 겨울 운행 미확인(겨울 운휴 가능성 → 택시 필요할 수 있음). 경관 위주 마을이라 취향상 백업. 오우치주쿠 눈축제는 2월이라 해당 없음.",
+  "days": "12/21~25 패스 기간",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": "https://ouchi-juku.com/"
+  },
+  {
+  "region": "south",
+  "sub": "야마가타 · 쓰루오카·쇼나이",
+  "id": "hagurosan",
+  "name": "하구로산 오층탑 설경",
+  "jp": "羽黒山五重塔",
+  "fit": "백업",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ce/Five_tier_pagoda_at_Mt._Haguro_2006-10-29.jpg/960px-Five_tier_pagoda_at_Mt._Haguro_2006-10-29.jpg",
+  "what": "삼나무 숲 속 국보 오층탑이 눈을 이고 서 있는 풍경.",
+  "todo": "즈이신몬에서 오층탑까지만 왕복(편도 약 10~15분, 내리막 돌계단), 2,446단 산정 참배는 생략.",
+  "cost": "반나절 · 무료, 쓰루오카역 버스 왕복 약 1,700엔(추정, 패스 밖)",
+  "how": "센다이→쓰루오카(약 3시간 30분, 패스)→쇼나이교통 버스 하구로센터 약 40분(패스 밖)+도보. 가모 수족관과 같은 날 묶는 경우만.",
+  "memo": "경내 자유·통년이나 눈길 돌계단 미끄러움, 겨울 버스 편수 미확인. 신사·탑 유형이라 백업.",
+  "days": "12/21~25 패스 기간",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://www.dewasanzan.jp/"
+  },
+  {
+  "region": "south",
+  "sub": "미야기 · 센다이 근교(아키우)",
+  "id": "akiuotaki",
+  "name": "아키우 대폭포 + 아키우 온천",
+  "jp": "秋保大滝・秋保温泉",
+  "fit": "백업",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/Akiu_Falls_2008.jpg/960px-Akiu_Falls_2008.jpg",
+  "what": "폭 6m·낙차 55m 폭포를 전망대에서 보는 곳. 센다이 '안방 온천' 아키우와 묶음.",
+  "todo": "폭포 전망대(주차장에서 몇 분), 아키우 온천 당일 입욕.",
+  "cost": "반나절 · 무료(폭포), 버스 왕복 약 1,800엔(추정, 패스 밖), 입욕 약 1,000~1,500엔(추정)",
+  "how": "센다이역 니시구치에서 미야기교통 버스 아키우 대폭포행(토·일·공휴일만) 약 1시간 10~20분, 평일은 JR 센잔선 아야시역에서 시영버스 약 40분(패스 일부).",
+  "memo": "센다이역 직행 버스는 주말·공휴일만(12/21~25는 평일 → 아야시역 경유). 겨울 폭포 아래 산책로(계단) 통행 여부 미확인. 할 일이 적어 백업.",
+  "days": "12/21~25 패스 기간",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": ""
+  },
+  {
+  "region": "north",
+  "sub": "아오모리 · 오다테·히로사키·쓰가루",
+  "id": "tsugaru-stove",
+  "name": "쓰가루 철도 스토브 열차",
+  "jp": "津軽鉄道 ストーブ列車",
+  "fit": "매우 잘 맞음",
+  "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/TsugaruTetsudoStoveTrain.JPG/960px-TsugaruTetsudoStoveTrain.JPG",
+  "what": "구형 객차 안에 석탄 다루마 스토브를 피우고 눈 덮인 쓰가루 평야를 달리는 겨울 한정 열차. 쓰가루고쇼가와라~쓰가루나카사토(약 20km).",
+  "todo": "스토브 옆 자리에서 설원 보기, 차내에서 스토브에 데운 간식(말린 오징어 굽기가 명물이지만 오징어는 안 드시니 다른 간식·사과 주스 등), 가나기에서 내려 되돌아오기. 저녁엔 히로사키 라이트업과 묶기 좋음.",
+  "cost": "열차 왕복 약 2시간(가나기 왕복이면 약 1시간). 패스 밖: 운임(고쇼가와라~나카사토 편도 약 900엔(추정)) + 스토브 열차권 1,000엔(2024-12-01 개정, 공식).",
+  "how": "센다이 → 신아오모리(하야부사 약 1시간 30분) → 오우선 가와베 → 고노선 고쇼가와라(약 1시간 10~20분), 편도 약 3시간~3시간 20분. 고쇼가와라까지 패스 적용, 쓰가루 철도는 패스 밖.",
+  "memo": "공식: 매년 12/1~3/31, 하루 3왕복(낮만). 2025-12-29 연결부 분리 사고로 운휴했다가 2026-04 재개, 공식 사이트에 '2026년 12월 1일 스토브 열차 재시동' 배너(2026-10 확인). 츠가루 프리패스로는 스토브 열차 이용 불가. 정확한 시각은 공식 시각표 확인 필요.",
+  "days": "12/21~25 패스 기간 (히로사키 일루미와 같은 날)",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://tsutetsu.com/stove"
+  },
+  {
+  "region": "north",
+  "sub": "아키타 · 다자와코·뇨토",
+  "id": "nyuto-onsen",
+  "name": "뇨토 온천향 (쓰루노유 등) 설경 노천탕",
+  "jp": "乳頭温泉郷（鶴の湯温泉ほか）",
+  "fit": "매우 잘 맞음",
+  "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Tsurunoyu_onsen_rotenburo.JPG/960px-Tsurunoyu_onsen_rotenburo.JPG",
+  "what": "너도밤나무 숲속 비경 온천 7곳이 모인 온천향. 쓰루노유의 유백색 혼욕 노천탕과 초가 숙소가 눈에 덮이는 겨울 풍경이 대표 이미지.",
+  "todo": "눈 쌓인 노천탕 당일 입욕, 버스 종점 근처 다에노유·가니바·오가마 등 1~2곳 더 들르기.",
+  "cost": "반나절~하루. 패스 밖: 버스 다자와코역↔뇨토 편도 약 900엔(추정), 쓰루노유 입욕 700엔(10:00~15:00 최종접수, 안내 사이트 기준).",
+  "how": "센다이 → 모리오카(하야부사 약 40분) → 다자와코(고마치 약 35분), 편도 약 1시간 20분 + 우고교통 버스 약 40~50분. 신칸센 패스 적용, 버스 패스 밖.",
+  "memo": "쓰루노유 당일 입욕은 월요일 휴무(공휴일이면 다음날) 안내가 있어 12/21(월)은 피할 것. 겨울엔 숙박객 우선·버스 감편, 버스 정류장에서 쓰루노유까지 도로가 떨어져 있어 겨울 접근 방법(숙소 송영 이용 가능 여부)을 전화로 확인 권장. 버스 겨울 시각표 미확인(2025 정보 없음).",
+  "days": "12/22~25 패스 기간",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://www.tsurunoyu.com/"
+  },
+  {
+  "region": "north",
+  "sub": "이와테 · 하나마키·도노·가마이시",
+  "id": "osawa-onsen",
+  "name": "오사와 온천 강변 노천탕",
+  "jp": "大沢温泉（大沢の湯）",
+  "fit": "매우 잘 맞음",
+  "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/%C5%8Csawa_Onsen_%E5%A4%A7%E6%B2%A2%E6%B8%A9%E6%B3%89.jpg/960px-%C5%8Csawa_Onsen_%E5%A4%A7%E6%B2%A2%E6%B8%A9%E6%B3%89.jpg",
+  "what": "하나마키 온천향의 오래된 탕치장. 도요사와강 바로 옆 큰 혼욕 노천탕 '오사와노유'에서 강과 눈 덮인 구부러진 다리를 보며 입욕.",
+  "todo": "설경 강변 노천탕, 목조 탕치 건물 구경, 근처 나마리 온천과 묶어 온천 2곳.",
+  "cost": "반나절. 패스 밖: 입욕 약 600엔, 하나마키역 버스 편도 약 800엔(추정).",
+  "how": "센다이 → 신하나마키(야마비코 약 1시간) → 가마이시선 하나마키역(약 10분) → 이와테현교통 버스 약 30분. 편도 약 1시간 50분~2시간. JR 패스 적용, 버스 패스 밖.",
+  "memo": "통년 영업, 당일 입욕 7:00~20:30 정도(안내 사이트, 2025 기준·최신 확인 필요). 오사와노유는 혼욕(여성 전용 시간대 있는지 확인), 산스이카쿠의 반노천탕은 겨울에 실내탕으로 바뀜. 하나마키역 버스 편수 적음.",
+  "days": "12/21~25 패스 기간 (반나절이라 다른 곳과 묶기 쉬움)",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://www.oosawaonsen.com/"
+  },
+  {
+  "region": "north",
+  "sub": "아키타·아오모리 · 고노선·시라카미 산지 해안",
+  "id": "resort-shirakami",
+  "name": "리조트 시라카미 (고노선 동해 해안 일몰)",
+  "jp": "快速 リゾートしらかみ（五能線）",
+  "fit": "잘 맞음",
+  "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/HB-E300_Resort_Shirakami_Aoike_at_Senj%C5%8Djiki_Station%2C_April_2023_02.jpg/960px-HB-E300_Resort_Shirakami_Aoike_at_Senj%C5%8Djiki_Station%2C_April_2023_02.jpg",
+  "what": "아키타~아오모리를 동해 바닷가를 따라 달리는 전망 관광열차. 큰 창으로 겨울 거친 바다, 시라카미 산지, 해안 일몰을 봄.",
+  "todo": "창가에서 겨울 동해와 일몰 보기(12월 일몰 16시 20분 전후), 차내 쓰가루샤미센 공연 등 이벤트(운행일 따라 다름).",
+  "cost": "열차 약 5시간 + 신칸센 왕복. 지정석 패스로 예약(추가 요금 없음).",
+  "how": "12/25(금)만 가능: ①센다이 → 아키타(고마치 약 2시간 15분) → 5호 아키타 14:00 → 아오모리 19:37 → 신아오모리 → 하야부사로 센다이(약 1시간 30분), 또는 ②센다이 → 아오모리(약 1시간 45분) → 4호 아오모리 13:52 → 아키타 19:01 → 고마치 귀환. 전부 패스 적용.",
+  "memo": "JR동일본 2026년도 운전일 발표(2026-01-20) 기준: 12월 21~24일은 운전 없음, 12/25는 1·4·5호 운전. 해안 구간은 ①(5호)이 해질녘에 해당할 가능성이 높음(통과 시각 추정). 귀가 22시 전후·막차 확인 필요. 2025-26 시즌엔 지정석권 제시로 연선 온천 무료 캠페인이 있었음(2026 미확인). 센조지키 정차 산책은 겨울·일몰 후엔 의미 적음.",
+  "days": "12/25 (패스 마지막 날)",
+  "pass": "패스 범위",
+  "visited": false,
+  "link": "https://www.jreast.co.jp/akita/gonosen/"
+  },
+  {
+  "region": "north",
+  "sub": "아오모리 · 오다테·히로사키·쓰가루",
+  "id": "hirosaki-winter-sakura",
+  "name": "히로사키 공원 '겨울에 피는 벚꽃' 라이트업",
+  "jp": "弘前公園 冬に咲くさくらライトアップ",
+  "fit": "잘 맞음",
+  "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Hirosaki_Castle_in_winter_-_panoramio.jpg/960px-Hirosaki_Castle_in_winter_-_panoramio.jpg",
+  "what": "히로사키 공원 바깥 해자의 벚나무 약 500m에 쌓인 눈을 분홍빛으로 비춰 '눈꽃 벚꽃'처럼 보이게 하는 겨울 라이트업.",
+  "todo": "해 진 뒤 해자 따라 짧게 산책(오테몬 부근), 눈 덮인 히로사키성 야경.",
+  "cost": "약 1시간. 무료.",
+  "how": "센다이 → 신아오모리(약 1시간 30분) → 오우선 히로사키(약 35분), 편도 약 2시간 10분. 역에서 공원까지 버스 약 15분(패스 밖, 약 100~200엔 추정) 또는 도보 약 25~30분. JR 패스 적용.",
+  "memo": "2025-26 시즌: 12/1~2/28, 일몰~21:30, 무료(12/1~7은 조정으로 소등 가능). 2026-27 일정은 아직 미발표(2026-10 기준). 스토브 열차 → 저녁 히로사키 → 신아오모리 귀환 코스로 묶기 좋음. 눈길이라 방한화 필요.",
+  "days": "12/21~25 패스 기간",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://www.hirosakipark.jp/"
+  },
+  {
+  "region": "north",
+  "sub": "이와테 · 하나마키·도노·가마이시",
+  "id": "namari-onsen",
+  "name": "나마리 온천 후지산 료칸 '시로자루노유'",
+  "jp": "鉛温泉 藤三旅館（白猿の湯）",
+  "fit": "잘 맞음",
+  "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Namari_Onsen_Fujisan_Ryokan.jpg/960px-Namari_Onsen_Fujisan_Ryokan.jpg",
+  "what": "깊이 약 1.25m, 서서 들어가는 독특한 옛 탕 '시로자루노유'로 유명한 목조 온천 료칸. 강변 노천탕도 있음.",
+  "todo": "서서 들어가는 탕 체험, 강가 설경, 오사와 온천과 하루에 묶기.",
+  "cost": "1~2시간. 패스 밖: 입욕 약 800엔(안내 사이트, 최신 확인 필요), 버스는 오사와 온천보다 약간 더.",
+  "how": "오사와 온천과 같은 버스(하나마키역발 신나마리 온천행) 약 40분. 센다이에서 편도 약 2시간. JR 패스 적용, 버스 패스 밖.",
+  "memo": "당일 입욕 10:00~20:00 정도(안내 사이트, 확인 필요), 부정기 휴무. 시로자루노유는 혼욕이며 하루 3번 여성 전용 시간 있음. 겨울 영업 자체는 통년.",
+  "days": "12/21~25 패스 기간",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://www.namari-onsen.co.jp/"
+  },
+  {
+  "region": "north",
+  "sub": "아키타 · 다자와코·뇨토",
+  "id": "lake-tazawa",
+  "name": "다자와코 (일본에서 가장 깊은 호수) 겨울 호반",
+  "jp": "田沢湖",
+  "fit": "조건부",
+  "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Lake_Tazawa_in_winter.JPG/960px-Lake_Tazawa_in_winter.JPG",
+  "what": "수심 423m로 겨울에도 얼지 않는 짙은 남색 호수. 설경 속 호수와 석양.",
+  "todo": "뇨토 온천 가는 길에 호반(시로하마 쪽) 들러 호수 보기, 날 좋으면 호수 위 노을.",
+  "cost": "30분~1시간 추가. 버스 패스 밖.",
+  "how": "다자와코역에서 뇨토행 버스로 호반 정류장 약 15분. 센다이에서 편도 약 1시간 40분.",
+  "memo": "유람선은 보통 4~11월이라 12월 운항 안 함(추정, 2026 미확인). 다쓰코상이 있는 서쪽 호안은 호수 일주 버스가 겨울에 줄거나 없어 렌터카·택시 없이는 어려움. 단독 목적지보다 뇨토 온천과 세트로.",
+  "days": "12/22~25 패스 기간 (뇨토와 같은 날)",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": ""
+  },
+  {
+  "region": "north",
+  "sub": "이와테 · 산리쿠 해안·미야코·조도가하마",
+  "id": "jodogahama-sanriku",
+  "name": "조도가하마 + 산리쿠 철도 해안 일주",
+  "jp": "浄土ヶ浜・三陸鉄道リアス線",
+  "fit": "조건부",
+  "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/%E6%B5%84%E5%9C%9F%E3%83%B6%E6%B5%9C%E3%81%AE%E9%A2%A8%E6%99%AF20220625-P1390448.jpg/960px-%E6%B5%84%E5%9C%9F%E3%83%B6%E6%B5%9C%E3%81%AE%E9%A2%A8%E6%99%AF20220625-P1390448.jpg",
+  "what": "흰 바위산과 푸른 바다가 어우러진 산리쿠 해안 대표 절경. 산리쿠 철도 북리아스 구간은 해안 절벽 위 철교(오이시가와 등)를 달림.",
+  "todo": "조도가하마 해변 짧게 산책, 산리쿠 철도로 미야코→구지 해안선 타기, 하치노헤선으로 돌아오며 바다 보기(원형 일주).",
+  "cost": "하루 꼬박(이동 약 8~9시간). 버스(미야코역↔조도가하마) 패스 밖 수백 엔.",
+  "how": "센다이 → 모리오카(40분) → JR 야마다선 미야코(약 2시간 10분~2시간 30분, 하루 몇 편) → 버스 약 20분. 귀로: 산리쿠 철도 미야코→구지(약 1시간 40분) → JR 하치노헤선 구지→하치노헤(약 1시간 50분) → 하야부사 센다이(약 1시간 10분). 산리쿠 철도는 NEW JR EAST PASS 대상(공식 페이지 검색 발췌 기준, 확인 필요).",
+  "memo": "삿파선(푸른 동굴)은 12~2월 운휴로 확인(안내 사이트). 유람선도 겨울 운항 확인 안 됨(보통 봄~가을). 배 없이 '해안 경치 + 열차'로 즐기는 날. 해안이 동쪽이라 일몰은 바다 쪽이 아님. 야마다선 편수가 매우 적어 시각표 맞추기 필수. 가미시 이남·BRT 구간은 취향 대비 효율 낮아 제외.",
+  "days": "12/21~25 패스 기간",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://www.sanrikutetsudou.com/"
+  },
+  {
+  "region": "north",
+  "sub": "아오모리 · 오이라세·도와다",
+  "id": "oirase-icefall-tour",
+  "name": "오이라세 계류 빙폭 라이트업 투어",
+  "jp": "奥入瀬渓流 氷瀑ライトアップツアー（奥入瀬渓流ホテル）",
+  "fit": "조건부",
+  "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Oirase-keiryu.jpg/960px-Oirase-keiryu.jpg",
+  "what": "얼어붙은 폭포(빙폭)와 고드름을 밤에 조명으로 비추는 가이드 투어. 마카도이와·지스지노타키 2곳을 차량으로 돌아봄.",
+  "todo": "야간 빙폭 라이트업(약 1시간), 낮엔 눈 덮인 계류 일부만 짧게.",
+  "cost": "1박 필요. 투어 2,200엔(1시간, 공식) / 5곳 도는 상위 코스 4,950엔. 숙박비 별도(패스 밖).",
+  "how": "센다이 → 하치노헤(하야부사 약 1시간 10분) → 호텔 무료 송영버스 약 1시간 30분(숙박객 예약제). 당일치기 불가.",
+  "memo": "2026-27 시즌 12/25(금)~2027-02-28, 18·19·20·21시(공식). 숙박객 외 참가 가능 여부 미기재(사실상 숙박객용으로 보임). 빙폭은 1~2월에 커지므로 12/25 시작 직후는 작을 수 있음. 일본어 전용, 전날 18시까지 예약. 겨울 노선버스(JR버스 오이라세호) 운행 여부 미확인. 숙소 이동이라 취향상 감점.",
+  "days": "12/25 숙박 (패스 마지막 날) — 단 다음날 도다코엔 이동",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://hoshinoresorts.com/ja/hotels/oirasekeiryu/activities/15457/"
+  },
+  {
+  "region": "north",
+  "sub": "아오모리 · 고노선·시라카미 산지 해안",
+  "id": "furofushi-onsen",
+  "name": "고가네자키 후로후시 온천 바닷가 노천탕",
+  "jp": "黄金崎不老ふ死温泉",
+  "fit": "조건부",
+  "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Furofushi-onsen.jpg/960px-Furofushi-onsen.jpg",
+  "what": "동해 파도가 바로 앞에서 부서지는 갈색 철분천 노천탕. 바다로 지는 해를 보며 입욕하는 사진으로 유명.",
+  "todo": "바닷가 노천탕 입욕, 날씨 좋으면 석양.",
+  "cost": "숙박 권장. 입욕 약 600~1,000엔(추정, 패스 밖).",
+  "how": "고노선 웨스파쓰바키야마역 → 숙소 송영 약 5~10분. 센다이에서 아키타 경유 편도 약 5시간 이상(고노선 보통열차 편수 적음). 당일치기 사실상 불가.",
+  "memo": "당일 입욕객 바닷가 노천탕은 8:00~16:00(접수 15:30) 안내가 있어, 일몰(16시 20분경) 노천탕은 숙박객만 가능할 가능성 큼. 악천후 시 노천탕 폐쇄. 12/25 리조트 시라카미는 이 역 통과 시각이 늦어 입욕 불가. 숙소 이동 필요.",
+  "days": "1박 가능할 때만",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://www.furofushi.com/"
+  },
+  {
+  "region": "north",
+  "sub": "아오모리 · 아오모리 근교",
+  "id": "asamushi-onsen",
+  "name": "아사무시 온천 '유사 아사무시' 무쓰만 전망탕",
+  "jp": "浅虫温泉 道の駅ゆ〜さ浅虫",
+  "fit": "백업",
+  "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Asamushi_Onsen_-Yanagi_no_yu.jpg/960px-Asamushi_Onsen_-Yanagi_no_yu.jpg",
+  "what": "아오모리시 동쪽 바닷가 온천 마을. 역 앞 도로휴게소 5층 전망 대욕장에서 무쓰만과 유노시마 섬을 보며 입욕.",
+  "todo": "바다 보는 전망탕, 해질녘 무쓰만 풍경. 신아오모리 쪽 일정의 짧은 추가.",
+  "cost": "1~2시간. 입욕 360엔(안내 사이트).",
+  "how": "아오모리역에서 아오이모리 철도 약 20분(NEW JR EAST PASS 대상, 확인 필요). 센다이에서 편도 약 2시간 10분.",
+  "memo": "7:00~20:30 정도, 2월 초 점검 휴무만 있음(12월 영업). 노천탕이 아니라 실내 전망탕일 가능성(정보 엇갈림). 아오모리시라 '가 본 도시 안 새 체험'.",
+  "days": "12/21~25 패스 기간 (다른 아오모리 일정 보조)",
+  "pass": "패스 범위",
+  "visited": true,
+  "link": ""
+  },
+  {
+  "region": "north",
+  "sub": "이와테 · 하치만타이·안비",
+  "id": "appi-gondola",
+  "name": "안비 고원 곤돌라 (설원 전망)",
+  "jp": "安比高原 安比ゴンドラ",
+  "fit": "조건부",
+  "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/APPI_Ski_Resort_jan_2023h.jpg/960px-APPI_Ski_Resort_jan_2023h.jpg",
+  "what": "도호쿠 최대급 스키 리조트의 곤돌라로 마에모리산 정상(약 1,300m)까지 올라 이와테산·하치만타이 설원을 내려다봄.",
+  "todo": "곤돌라 왕복 + 정상 설경, 리조트 내 온천·식사.",
+  "cost": "반나절~하루. 패스 밖: 곤돌라 도보 승차권 약 1,500~2,500엔(추정).",
+  "how": "센다이 → 모리오카(40분) → IGR·하나와선 안비고원역(약 1시간~1시간 20분, 편수 적음) → 리조트 셔틀. 편도 약 2시간 30분. 신칸센·JR 패스 적용.",
+  "memo": "스키장은 12월 초~5월 영업(안내 사이트). 스키 안 타는 사람 곤돌라 승차 가능 여부·요금 미확인. 정상 수빙(스노 몬스터)은 보통 1~2월이 제대로라 12월 하순엔 덜 자랐을 수 있음. 정상은 강풍·한파.",
+  "days": "12/21~25 패스 기간",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://www.appi.co.jp/"
+  },
+  {
+  "region": "north",
+  "sub": "이와테 · 산리쿠 해안·미야코·조도가하마",
+  "id": "sanriku-kotatsu",
+  "name": "산리쿠 철도 고타츠 열차",
+  "jp": "三陸鉄道 こたつ列車",
+  "fit": "조건부",
+  "img": "",
+  "what": "객차에 코타츠를 놓고 해안 절경을 달리는 겨울 관광열차(구지~미야코). 요괴 '나모미'가 차내에 등장하는 이벤트.",
+  "todo": "코타츠에 앉아 산리쿠 해안 보기, 차내 도시락(해산물 도시락이 많아 메뉴 확인 필요).",
+  "cost": "약 1시간 40분. 지정석 요금 약 500~1,000엔(추정) + 운임.",
+  "how": "센다이 → 하치노헤 → 하치노헤선 구지(약 1시간 50분) 출발. 조도가하마 일주 코스에 넣는 형태.",
+  "memo": "2025-26 시즌: 2025-12-06~2026-03-08 토·휴일만 운행. 패스 기간 12/21~25는 모두 평일이라 운행 안 할 가능성 큼. 2026-27 운행일은 미발표(2026-10 기준). 평일에도 일반 열차로 같은 해안 경치는 볼 수 있음. 미야코~가마이시 '양식 고타츠 열차'도 토·휴일만.",
+  "days": "토·휴일 한정 → 이번 일정엔 사실상 어려움",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://www.sanrikutetsudou.com/"
+  },
+  {
+  "region": "north",
+  "sub": "아오모리·이와테 · 하치노헤선",
+  "id": "tohoku-emotion",
+  "name": "TOHOKU EMOTION 레스토랑 열차",
+  "jp": "TOHOKU EMOTION（東北エモーション）",
+  "fit": "조건부",
+  "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/TOHOKU_EMOTION_%E2%94%80%E6%9D%B1%E5%8C%97%E3%82%A8%E3%83%A2%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E2%94%80.JPG/960px-TOHOKU_EMOTION_%E2%94%80%E6%9D%B1%E5%8C%97%E3%82%A8%E3%83%A2%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E2%94%80.JPG",
+  "what": "하치노헤~구지 해안선을 달리며 셰프 코스 요리(갈 때 런치, 올 때 디저트)를 내는 레스토랑 열차.",
+  "todo": "태평양 해안 보며 코스 식사.",
+  "cost": "편도 약 2시간. 식사 포함 여행상품 형태라 1인 1만 수천 엔 이상(추정, 패스 밖).",
+  "how": "센다이 → 하치노헤(하야부사 약 1시간 10분) 11시경 출발편. 신칸센 패스 적용.",
+  "memo": "2026년 12월 운행일 미확인(주로 주말 중심 운행). 예약은 JR 예약 사이트·여행사 상품. 메뉴에 조개·오징어가 들어갈 수 있어 사전 확인 필요. 하치노헤는 가 본 도시지만 열차 자체는 새 체험.",
+  "days": "12/21~25 중 운행일이 있으면",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": "https://www.jreast.co.jp/tohokuemotion/"
+  },
+  {
+  "region": "north",
+  "sub": "아오모리 · 쓰가루 반도",
+  "id": "tappi-misaki",
+  "name": "다쓰비자키 (쓰가루 반도 끝)",
+  "jp": "龍飛崎（竜飛岬）",
+  "fit": "백업",
+  "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Tappi_misaki_20210812132102_%2851822171519%29.jpg/960px-Tappi_misaki_20210812132102_%2851822171519%29.jpg",
+  "what": "쓰가루 해협에 튀어나온 혼슈 북서쪽 끝 곶. 등대와 맑은 날 홋카이도가 보이는 '끝점'. 겨울엔 엄청난 강풍.",
+  "todo": "다쓰비자키 등대·전망, 쓰가루 해협 겨울 바다 보기.",
+  "cost": "하루 꼬박. 패스 밖: 대행버스·초에이 버스 운임 수백~1,000엔대(추정).",
+  "how": "센다이 → 신아오모리 → 아오모리 → 쓰가루선 가니타(약 40분) → 대행버스로 민마야 → 소토가하마 초에이 버스 약 30~40분. 편도 약 4시간 30분(추정).",
+  "memo": "쓰가루선 가니타~민마야 구간은 재해로 불통·폐지 예정이라 버스 연결(2025 기준 다쓰비 방면 하루 약 6왕복). '계단 국도'는 겨울 폐쇄 정보 있음. 겨울 강풍·지후부키로 서 있기 힘든 날도. 시간 대비 볼 거리 적어 백업.",
+  "days": "12/21~25 패스 기간 (날씨 좋은 날만)",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": ""
+  },
+  {
+  "region": "north",
+  "sub": "아키타 · 가쿠노다테~오다테 내륙",
+  "id": "akita-nairiku",
+  "name": "아키타 내륙 종관 철도 설경 열차",
+  "jp": "秋田内陸縦貫鉄道",
+  "fit": "백업",
+  "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Akita_Nairiku_Jukan_Line_1.jpg/960px-Akita_Nairiku_Jukan_Line_1.jpg",
+  "what": "가쿠노다테~다카노스 94km를 깊은 산과 눈 덮인 계곡 속으로 달리는 1량 로컬선. 철교 위 설경.",
+  "todo": "창밖 설경, 아니 쪽 온천(아니 마타기 온천 등) 짧게 들르기.",
+  "cost": "가쿠노다테~다카노스 약 2시간 30분. 패스 밖: 전 구간 약 1,700~2,000엔(추정).",
+  "how": "센다이 → 가쿠노다테(고마치 약 1시간 40분) → 내륙선 → 다카노스 → 오우선 → 오다테/히로사키 쪽으로 빠지거나 왕복. 신칸센·JR 패스 적용.",
+  "memo": "통년 운행이지만 폭설 시 운휴 가능. 해설·식사 붙는 관광열차가 아니라 '경치만' 보는 열차라 백업. 가쿠노다테는 가 본 곳(열차는 새 체험). 12월 운행 상황 2026년 정보 미확인.",
+  "days": "12/21~25 패스 기간",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://www.akita-nairiku.com/"
+  },
+  {
+  "region": "north",
+  "sub": "아오모리 · 시모키타 반도·오마",
+  "id": "oma-zaki",
+  "name": "오마자키 (혼슈 최북단)",
+  "jp": "大間崎",
+  "fit": "백업",
+  "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Cape_Oma_20231031.jpg/960px-Cape_Oma_20231031.jpg",
+  "what": "혼슈 최북단 비석과 앞바다 벤텐지마 등대가 있는 '끝점'. 맑으면 홋카이도 하코다테 쪽이 보임.",
+  "todo": "최북단 비석 인증, 쓰가루 해협 바다 보기.",
+  "cost": "1박 권장. 패스 밖: 시모키타역~오마자키 버스 편도 약 2,000엔(추정).",
+  "how": "센다이 → 하치노헤(1시간 10분) → 아오이모리 철도 노헤지 → JR 오미나토선 시모키타(합계 약 1시간 40분) → 시모키타 교통 버스 약 1시간 40분. 편도 약 5시간(추정). 당일치기 사실상 불가.",
+  "memo": "오마자키 레스트하우스는 4월 하순~10월 하순만 영업, 토산물 센터는 겨울 9~17시. 겨울 버스 감편 가능, 2026 시각표 미확인. 참치는 유명하지만 사진 하나에 왕복 10시간이라 백업. 오소레잔·호토케가우라·시리야자키는 겨울 폐쇄라 제외.",
+  "days": "1박 가능할 때만",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": ""
+  },
+  {
+  "region": "west",
+  "sub": "도치기 · 아시카가",
+  "id": "ashikagaillum",
+  "name": "아시카가 플라워파크 '빛의 꽃 정원' 일루미네이션",
+  "jp": "あしかがフラワーパーク 光の花の庭〜Flower Fantasy 2026-27",
+  "fit": "매우 잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1a/Flower_Fantasy_20th_Anniversary_1.jpg/960px-Flower_Fantasy_20th_Anniversary_1.jpg",
+  "what": "일본 3대 일루미네이션으로 꼽히는 꽃 테마 일루미네이션. 2026-27 시즌은 25주년이라 높이 21m 대형 크리스마스트리와 '플라워 로드'가 새로 생김.",
+  "todo": "해 질 무렵(16:30~17:00 점등) 입장해 등나무 터널형 조명·호수 반영·대형 트리 구경, 원내 노점 간식. 1~1.5시간이면 충분.",
+  "cost": "입장 성인 1,500엔(2026-27 시즌, 전년 1,400엔에서 인상) · 체류 1~2시간",
+  "how": "센다이→오야마(도호쿠 신칸센 약 1시간 40분)→JR 료모선 '아시카가 플라워파크역'(약 25분, 역 바로 앞). 편도 약 2시간 15분, 패스 적용. 우쓰노미야 거점이면 오야마까지 15분. 도다코엔에서는 아카바네→우쓰노미야선 오야마→료모선으로 약 1시간 50분, 약 1,700엔(추정, 패스 밖 기간).",
+  "memo": "2026.10.17~2027.2.14 개최(2026-10-14 보도자료). 15:30~20:30, 11/7~1/3은 평일 21:00·주말 21:30까지 연장. 휴원일은 12/31 하루뿐. 크리스마스 주간·주말은 매우 혼잡하니 평일(12/21~24) 추천.",
+  "days": "12/21~25 패스 기간(평일 추천) / 12/27~30 도쿄 거점도 가능(12/31 휴원)",
+  "pass": "패스 범위",
+  "visited": false,
+  "link": "https://www.ashikaga.co.jp/"
+  },
+  {
+  "region": "west",
+  "sub": "군마 · 미나카미",
+  "id": "takaragawa",
+  "name": "다카라가와 온천 (설경 대노천탕)",
+  "jp": "宝川温泉 汪泉閣",
+  "fit": "매우 잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Takaragawa_Onsen_01.jpg/960px-Takaragawa_Onsen_01.jpg",
+  "what": "계곡을 따라 거대한 노천탕 여러 개가 늘어선 군마 산속 온천. 눈 덮인 계곡 노천탕으로 유명하고 당일 입욕 가능.",
+  "todo": "설경 속 계곡 노천탕 순회(입욕용 가운 착용 방식), 계곡 다리·설경 사진.",
+  "cost": "당일 입욕 성인 약 1,500엔(루루부 게재값, 최신 확인 필요) · 10:00~16:00(15시 전 입관 권장) · 미나카미역 버스 편도 약 1,150엔(패스 밖)",
+  "how": "센다이→오미야→다카사키(신칸센)→JR 조에쓰선 미나카미역 → 간에쓰 교통 버스 '宝川温泉' 행 약 35분(또는 '湯の小屋' 행 '宝川入口' 하차 후 전화 송영). 센다이에서 편도 약 4시간(JR 구간 패스 적용, 버스는 패스 밖). 도다코엔에서는 사이쿄선 오미야→다카사키선·조에쓰선 보통열차로 미나카미 약 2시간 40분, 약 2,700엔(추정) + 버스.",
+  "memo": "통년 영업으로 알려져 있으나 겨울 버스 시간표·송영 시각(12/1~3/31 숙소 출발 9:15)은 매년 바뀜. 버스 편수가 적어 시간표 확인 필수. 2026년 겨울 운영 공식 확인 못 함(2025년 기준 정보). 문의 宝川山荘 0278-75-2614.",
+  "days": "12/27~31 도쿄 거점(보통열차로 저렴) / 12/21~25 패스 기간도 가능하나 센다이 출발은 김",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://www.takaragawa.com/"
+  },
+  {
+  "region": "west",
+  "sub": "군마 · 미나카미",
+  "id": "tanigawaropeway",
+  "name": "다니가와다케 로프웨이 (눈 덮인 덴진다이라)",
+  "jp": "谷川岳ロープウェイ",
+  "fit": "매우 잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ad/Tanigawadake_Ropeway.jpg/960px-Tanigawadake_Ropeway.jpg",
+  "what": "다니가와다케 기슭에서 덴진다이라(해발 약 1,300m)까지 올라가는 곤돌라형 로프웨이. 겨울엔 정상역이 스키장이 되어 설원과 설산 전망.",
+  "todo": "로프웨이로 설원 위를 올라가 정상역 전망·설경 사진, 스키 안 해도 왕복 탑승 가능. 원하면 리프트 추가.",
+  "cost": "로프웨이 왕복 약 3,000엔(복수 사이트 기준, 일부 2,100엔 표기는 구정보로 보임) · 정상 체류 1시간 · 미나카미역~로프웨이 버스 약 25분(요금 약 700~800엔 추정, 패스 밖)",
+  "how": "미나카미역 또는 조모코겐역(조에쓰 신칸센)에서 간에쓰 교통 버스로 '谷川岳ロープウェイ' 하차. 센다이 출발 편도 약 3시간 30분~4시간(JR 패스 적용, 버스는 패스 밖). 도다코엔에서 보통열차로 미나카미까지 약 2시간 40분 + 버스.",
+  "memo": "겨울(12~3월) 8:30~16:30 운행, 연간 휴업은 대체로 4월 중순~11월 중순 점검 기간(2025년 기준 정보). 강풍 운휴 잦음. 2025.12.5~2026.3.31에는 버스+로프웨이 '谷川岳バスフリー乗車券'(조모코겐역 출발 2,700엔·미나카미역 1,600엔, 로프웨이 포함 여부 확인 필요) 판매. 다카라가와 온천과 같은 날 묶기 좋음.",
+  "days": "12/27~31 도쿄 거점 / 12/21~25 패스 기간",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://www.tanigawadake-rw.com/"
+  },
+  {
+  "region": "west",
+  "sub": "니가타 · 에치고유자와",
+  "id": "galayuzawa",
+  "name": "가라유자와 (신칸센 역 직결 설산 곤돌라)",
+  "jp": "GALA湯沢（GALA YUZAWA MOUNTAIN FIELD）",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Gala_Yuzawa_03.jpg/960px-Gala_Yuzawa_03.jpg",
+  "what": "JR동일본이 운영하는 스키장으로, 겨울에만 여는 '가라유자와역'이 신칸센 역과 바로 연결. 역 건물에서 곤돌라를 타고 설산 정상 쪽 센터로 올라감.",
+  "todo": "곤돌라로 설원 위를 올라가 눈 놀이·설경 전망, 역 건물 안 온천 'SPA GALA の湯'(추정 운영) 이용. 캐리어 없이 맨몸으로 가능.",
+  "cost": "스키 안 하는 사람용 곤돌라 왕복 요금은 2026-27 시즌 미발표(가을·여름 시즌은 3,000엔) · 반나절",
+  "how": "센다이→오미야 환승→조에쓰 신칸센 '가라유자와'(직통편, 없으면 에치고유자와 환승) 편도 약 2시간 50분, 패스 적용(가라유자와역은 JR동일본 역). 도다코엔에서는 오미야→가라유자와 약 1시간 20분, 신칸센 편도 약 6,500~7,000엔(추정).",
+  "memo": "2026-27 시즌: 12/12~18 관광 영업(활강 불가), 12/19~2027.5.5 스키 영업 예정(보도 기사 기준). 이번 시즌은 남쪽 에어리어와 유자와고원 연결 로프웨이 휴지. 가라유자와역 신칸센은 겨울 한정·편수 적음. 성수기 혼잡 주의.",
+  "days": "12/21~25 패스 기간",
+  "pass": "패스 범위",
+  "visited": false,
+  "link": "https://gala.co.jp/"
+  },
+  {
+  "region": "west",
+  "sub": "니가타 · 에치고유자와",
+  "id": "yuzawakogen",
+  "name": "유자와고원 로프웨이 (대형 로프웨이 설원 공원)",
+  "jp": "湯沢高原ロープウェイ（湯沢高原スキー場・パノラマパーク）",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/Yuzawa_Kogen_Ski_Area.JPG/960px-Yuzawa_Kogen_Ski_Area.JPG",
+  "what": "에치고유자와역에서 걸어서 갈 수 있는 166인승 대형 로프웨이. 겨울엔 산 위가 스키장과 '눈놀이 파크'가 됨.",
+  "todo": "로프웨이로 유자와 온천 마을과 설산 조망, 산 위 눈놀이 파크(썰매 등). 에치고유자와역 안 사케관·온천과 묶기 좋음.",
+  "cost": "겨울 로프웨이+눈놀이 파크 세트 성인 4,500엔(2025-26 시즌), 로프웨이만 왕복 성인 약 3,500엔(2026년 봄 이후 요금, 겨울 확인 필요) · 반나절",
+  "how": "센다이→오미야→에치고유자와(조에쓰 신칸센) 편도 약 2시간 40분, 역에서 도보 약 7분. 패스 적용(로프웨이는 별도 요금). 도다코엔에서는 오미야→에치고유자와 약 1시간 15분, 신칸센 약 6,500엔(추정).",
+  "memo": "2025-26 시즌은 2025.12.13~2026.4.5 영업, 로프웨이 8:40~16:40 무렵(출처마다 다름). 2026-27 시즌 일정은 아직 미확인 → 예년대로면 12월 중순 개장. 이번 시즌은 가라유자와와의 연결 로프웨이가 휴지라 두 곳을 오가려면 셔틀버스.",
+  "days": "12/21~25 패스 기간 / 12/27~31 도쿄 거점",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://www.yuzawakogen.com/"
+  },
+  {
+  "region": "west",
+  "sub": "나가노 · 이이야마·노자와",
+  "id": "nozawaonsen",
+  "name": "노자와 온천 (눈 쌓인 온천 마을 · 무료 공동탕)",
+  "jp": "野沢温泉",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1d/Nozawa_Onsen_01.jpg/960px-Nozawa_Onsen_01.jpg",
+  "what": "폭설 지대의 전통 온천 마을. 마을 곳곳의 공동 목욕탕 '소토유'를 무료(기부함)로 돌아볼 수 있고, 겨울엔 대형 스키장 마을이 됨.",
+  "todo": "소토유(大湯 등) 순례, 온천 증기 '아사가마(麻釜)' 구경, 온천 달걀·노자와나 절임, 설경 골목 산책. 스키장 곤돌라로 설산 조망도 가능.",
+  "cost": "소토유 무료(기부) · 버스 편도 600엔(패스 밖) · 반나절~하루",
+  "how": "센다이→오미야→이이야마(호쿠리쿠 신칸센) 편도 약 3시간, 패스 적용. 이이야마역에서 직통버스 '野沢温泉ライナー' 약 25분, 600엔. 도다코엔에서는 오미야→이이야마 약 1시간 30분, 신칸센 약 8,000엔(추정).",
+  "memo": "확인한 버스 시간표는 2026.3.30~11.30 기간분뿐 → 겨울 시간표 별도 확인 필요(2023-24 겨울에도 운행 기록 있음). 소토유는 주민 관리 탕이라 매우 뜨겁고 비누 사용 금지. 유명 불축제(도소진 마쓰리)는 1/15라 기간 밖.",
+  "days": "12/21~25 패스 기간",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://nozawakanko.jp/"
+  },
+  {
+  "region": "west",
+  "sub": "이바라키 북부 · 다이고",
+  "id": "fukuroda",
+  "name": "후쿠로다 폭포 + 겨울 라이트업 '다이고라이트'",
+  "jp": "袋田の滝・大子来人〜ダイゴライト〜",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/Fukuroda_Falls_38.jpg/960px-Fukuroda_Falls_38.jpg",
+  "what": "4단으로 떨어지는 일본 3대 명폭. 관폭 터널로 폭포 바로 앞 전망대까지 들어가며, 겨울엔 라이트업과 '빛의 터널'을 함. 한겨울(1~2월)엔 일부 결빙.",
+  "todo": "관폭 터널·제1/제2 전망대(엘리베이터)에서 폭포 감상, 해 진 뒤 라이트업, 수군선 로컬 열차 차창.",
+  "cost": "관폭 터널 성인 500엔 · 체류 1.5시간 · 버스 편도 약 200엔(추정, 패스 밖)",
+  "how": "센다이→고리야마(신칸센 약 40분)→JR 수군선 '후쿠로다'역(약 2시간)→버스 약 7분+도보 10분. 편도 약 3시간, JR 패스 적용. 도다코엔에서는 우에노→미토(특급 약 1시간 20분)→수군선 약 1시간 20분, 약 4,000~5,000엔(추정).",
+  "memo": "2025-26 다이고라이트는 2025.11.1~2026.1.12, 12~1월 폭포 라이트업 일몰~19:00. 2026-27 일정은 아직 미발표(예년 패턴이면 12월 하순 포함). 12월 하순엔 결빙은 거의 기대 어려움(1월 하순~2월이 성수). 수군선은 편수가 적어 귀가 열차 확인 필수.",
+  "days": "12/21~25 패스 기간 / 12/27~31 도쿄 거점",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://www.daigo-kanko.jp/fukuroda-falls/daigolight.html"
+  },
+  {
+  "region": "west",
+  "sub": "나가노 · 가루이자와",
+  "id": "karuizawaxmas",
+  "name": "가루이자와 호시노 에어리어 크리스마스 (하루니레 테라스 · 고원교회 캔들 · 톤보노유)",
+  "jp": "軽井沢星野エリア クリスマス（ハルニレテラス・軽井沢高原教会 星降る森のクリスマス・星野温泉 トンボの湯）",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/94/Karuizawa_Kogen_Church%2C_Christmas.jpg/960px-Karuizawa_Kogen_Church%2C_Christmas.jpg",
+  "what": "숲속 상점가 하루니레 테라스와 모미노키 광장의 크리스마스 라이트업, 숲을 랜턴 캔들로 밝히는 가루이자와 고원교회 '별이 내리는 숲의 크리스마스'.",
+  "todo": "낮에 톤보노유 온천 → 해 진 뒤 하루니레 테라스 라이트업 산책 → 19:30 이후 고원교회 캔들 나이트.",
+  "cost": "라이트업 무료, 캔들 나이트 무료(일부 날 추첨 예약제) · 톤보노유 약 1,500엔(추정) · 반나절~저녁",
+  "how": "센다이→오미야→가루이자와(호쿠리쿠 신칸센) 편도 약 2시간 15분, 패스 적용. 가루이자와역 북쪽 출구에서 세이부 관광버스 약 20분 '星野温泉 トンボの湯'(패스 밖, 약 500엔 추정). 도다코엔에서는 오미야→가루이자와 약 1시간, 약 5,500엔(추정).",
+  "memo": "2025년 기준: 하루니레 테라스 11/22~12/25 16:00~22:00, 고원교회 캔들 11/30~12/25 19:30~21:30, 12/21~25와 토요일은 추첨 예약제. 2026년 일정은 미발표지만 같은 패턴이면 12/25에 끝나므로 패스 기간에 맞춰야 함. 캔들 나이트 후 귀가가 늦어 센다이 귀착 약 23~24시.",
+  "days": "12/21~25 패스 기간 (12/25 종료 예상)",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://candle.karuizawachurch.org/christmas/"
+  },
+  {
+  "region": "west",
+  "sub": "나가노 · 유다나카·시가고원",
+  "id": "jigokudani",
+  "name": "지옥계곡 야생원숭이 공원 (온천 원숭이)",
+  "jp": "地獄谷野猿公苑",
+  "fit": "조건부",
+  "img": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Jigokudani_hotspring_in_Nagano_Japan_001.jpg",
+  "what": "야생 일본원숭이가 눈 속에서 온천에 들어가는 세계적으로 유명한 곳. 계곡에 분출하는 온천 증기도 볼 수 있음.",
+  "todo": "설경 속 온천 원숭이 관찰·사진, 계곡 분천 구경. 돌아오는 길에 시부 온천·유다나카 온천.",
+  "cost": "입원 성인 800엔 · 왕복 도보 70분 + 관찰 1시간 · 나가노역~버스 약 40분(요금 미확인, 약 1,500엔 추정, 패스 밖)",
+  "how": "센다이→오미야→나가노(호쿠리쿠 신칸센) 편도 약 2시간 50분, 패스 적용. 나가노역에서 시가고원행 급행버스 약 40분 '스노몽키파크' 하차 후 숲길 도보 약 35분. 또는 나가노 전철(사철, 패스 밖) 유다나카역(약 1,290엔)+버스. 도다코엔에서는 오미야→나가노 약 1시간 10분, 신칸센 약 8,000엔(추정).",
+  "memo": "겨울(11~3월) 9:00~16:00 개원. 편도 30분 넘는 눈길 도보(미끄럼 방지 아이젠 권장)라 '오래 걷기' 조건에 걸림. 원숭이가 없는 날도 있음(공식 SNS 확인). 외국인 관광객 혼잡. 나가노시는 가 봤지만 이곳은 처음.",
+  "days": "12/21~25 패스 기간",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://jigokudani-yaenkoen.co.jp/"
+  },
+  {
+  "region": "west",
+  "sub": "니가타 · 사도섬",
+  "id": "sadotarai",
+  "name": "사도섬 오기 타라이부네 (대야 배)",
+  "jp": "佐渡・小木 たらい舟（力屋観光汽船）",
+  "fit": "조건부",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/99/%E7%9F%A2%E5%B3%B6%E7%B5%8C%E5%B3%B6%E3%81%9F%E3%82%89%E3%81%84%E8%88%9F_-_panoramio.jpg/960px-%E7%9F%A2%E5%B3%B6%E7%B5%8C%E5%B3%B6%E3%81%9F%E3%82%89%E3%81%84%E8%88%9F_-_panoramio.jpg",
+  "what": "동해의 섬 사도에서 커다란 나무 대야 모양 배를 타고 항구 안을 도는 체험. 사도 광산(세계유산)과 묶는 섬 여행.",
+  "todo": "타라이부네 탑승(직접 노 젓기 가능), 페리로 섬 건너기, 사도 광산·료쓰 항구.",
+  "cost": "타라이부네 성인 700엔 · 니가타항~료쓰 제트포일 편도 약 7,000엔·카페리 약 3,000엔(추정, 패스 밖) · 료쓰~오기 버스 약 1시간 30분(추정)",
+  "how": "센다이→오미야→니가타(신칸센) 약 3시간(패스 적용) → 버스로 니가타항 → 사도기선 제트포일 약 1시간 7분(카페리 약 2시간 30분) → 료쓰항에서 오기까지 버스. 당일치기는 사실상 불가, 1박 필요. 나오에쓰~오기 항로는 겨울(11월 하순~3월) 운휴.",
+  "memo": "타라이부네는 통년 운영, 11월 하순~2월 9:00~16:00(니가타 관광 공식 게재). 겨울 동해는 거칠어 결항·운휴가 잦음. 매일 숙소 이동 싫어하는 조건과 맞지 않아 '1박 여유가 있을 때만'. 니가타시는 가 봤지만 사도는 처음.",
+  "days": "12/21~25 패스 기간(1박 시)",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://niigata-kankou.or.jp/spot/8870"
+  },
+  {
+  "region": "west",
+  "sub": "니가타 · 에치고유자와 주변(쓰난·도카마치)",
+  "id": "kiyotsukyo",
+  "name": "기요쓰쿄 협곡 터널 (설경 '빛의 동굴')",
+  "jp": "清津峡渓谷トンネル",
+  "fit": "조건부",
+  "img": "https://upload.wikimedia.org/wikipedia/commons/3/32/Kiyotsukyo_Summer.jpg",
+  "what": "일본 3대 협곡 중 하나를 터널 안 전망대에서 보는 곳. 마지막 전망대의 물웅덩이 거울 반사 '라이트 케이브'가 유명.",
+  "todo": "터널(왕복 약 1.5km) 안 전망대 4곳에서 눈 덮인 주상절리 협곡 감상, 거울 반사 사진.",
+  "cost": "입갱 1,000엔(오프시즌 11/21~4/20) · 체류 1시간 · 직통 투어버스/설국 호설 라이너 별도(마쓰노야마 셔틀 2,500엔, 패스 밖)",
+  "how": "에치고유자와역(조에쓰 신칸센)에서 노선버스 약 25분 '清津峡入口' + 눈길 도보 30분 이상, 또는 겨울 직통 투어버스(터널 바로 앞). 센다이 출발 편도 약 3시간 30분, 도다코엔 출발 약 2시간(신칸센 약 6,500엔 추정).",
+  "memo": "겨울(12~2월) 9:00~15:30 최종 입갱, 정기휴일 없음 단 폭설 시 임시 휴갱. 2025-26 '설국 호설 라이너' 12/27~1/4 매일 운행 → 2026년도 비슷하면 12/27~31에 맞음. 노선버스+눈길 도보는 비추. 2026-27 버스 운행일 미확인.",
+  "days": "12/27~31 도쿄 거점(투어버스 운행일 확인)",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://niigata-kankou.or.jp/traffic/detail_44029.html"
+  },
+  {
+  "region": "west",
+  "sub": "군마 · 시부카와·이카호",
+  "id": "ikaho",
+  "name": "이카호 온천 (돌계단 온천가)",
+  "jp": "伊香保温泉",
+  "fit": "조건부",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/Ikaho_Onsen_03.jpg/960px-Ikaho_Onsen_03.jpg",
+  "what": "365단 돌계단 양옆에 료칸·가게가 늘어선 오래된 온천가. 철분 많은 '황금 온천'과 투명한 '백은 온천' 두 종류.",
+  "todo": "돌계단 온천가 산책, 공동탕(이시단노유) 입욕, 로프웨이로 전망대. 다카사키 일루미네이션과 저녁에 묶기.",
+  "cost": "공동탕 약 510엔(추정) · 버스 편도 약 600엔(추정, 패스 밖) · 반나절",
+  "how": "센다이→오미야→다카사키(신칸센) → JR 조에쓰선 시부카와(약 25분) → 간에쓰 교통 버스 약 25분. 센다이 출발 약 3시간, JR 구간 패스 적용. 도다코엔에서는 보통열차로 시부카와 약 1시간 50분, 약 2,000엔(추정).",
+  "memo": "365단 계단이 핵심이라 '계단 많은 코스' 조건에 걸림(버스로 위쪽까지 올라가 내려오며 보면 부담 감소). 이카호 로프웨이는 '연중무휴(점검·악천후 운휴)'라는 게재만 확인, 2026년 12월 운행 미확인. 12월 특별 라이트업 확인 못 함.",
+  "days": "12/27~31 도쿄 거점",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://www.ikaho-kankou.com/"
+  },
+  {
+  "region": "west",
+  "sub": "니가타 · 야히코",
+  "id": "yahiko",
+  "name": "야히코산 로프웨이 (동해·사도 조망)",
+  "jp": "弥彦山ロープウェイ",
+  "fit": "백업",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/18/Yahiko_Ropeway_-_Niigata_-_2026_Sept_22_various_01.jpg/960px-Yahiko_Ropeway_-_Niigata_-_2026_Sept_22_various_01.jpg",
+  "what": "니가타 평야 해안의 야히코산(634m) 정상으로 올라가는 로프웨이. 맑으면 동해 건너 사도섬과 니가타 평야가 한눈에.",
+  "todo": "로프웨이로 정상 전망대, 날씨 좋으면 동해 쪽 노을 시작 무렵 조망. 야히코 온천 족욕.",
+  "cost": "로프웨이 왕복 약 1,700엔(추정) · 반나절",
+  "how": "센다이→오미야→니가타(신칸센)→JR 에치고선·야히코선 야히코역(약 1시간) 편도 약 4시간, JR 패스 적용. 역에서 로프웨이 산기슭역까지 셔틀버스(겨울 운행 여부 미확인) 또는 오르막 도보 약 30분.",
+  "memo": "12월~3월 초 겨울 단축 영업 9:00~16:30, 화요일 휴무라는 게재(2025년 이전 정보, 출처 간 불일치). 12월 일몰이 16:30 무렵이라 정상 노을은 막차와 겹침. 겨울 동해는 흐린 날이 많음. 센다이에서 멀어 우선순위 낮음.",
+  "days": "12/21~25 패스 기간 (화요일 12/22 피하기)",
+  "pass": "일부 패스 밖",
+  "visited": false,
+  "link": "https://niigata-kankou.or.jp/spot/7484"
+  },
+  {
+  "region": "west",
+  "sub": "나가노~니가타 · 이이야마선",
+  "id": "iiyamaline",
+  "name": "JR 이이야마선 폭설 구간 열차 여행",
+  "jp": "JR飯山線（長野〜十日町〜越後川口）",
+  "fit": "백업",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Trains_at_Morimiyanohara_Station_-_Feb_22%2C_2011.jpg/960px-Trains_at_Morimiyanohara_Station_-_Feb_22%2C_2011.jpg",
+  "what": "치쿠마강·시나노강을 따라 일본 최고 적설 기록 지대(모리미야노하라역 부근)를 지나는 로컬선. 차창 가득한 설국 풍경.",
+  "todo": "이이야마역(신칸센)에서 탑승해 설경 차창 감상, 에치고가와구치에서 조에쓰선으로 돌아오는 순환. 노자와 온천 날에 묶기.",
+  "cost": "패스 범위 내 무료 · 이이야마~에치고가와구치 약 2시간 30분(추정)",
+  "how": "센다이→오미야→이이야마(호쿠리쿠 신칸센) 후 이이야마선, 에치고가와구치→나가오카→조에쓰 신칸센으로 귀환. 전 구간 JR동일본, 패스 적용.",
+  "memo": "관광열차 'Oykot'는 주로 봄~가을 주말 운행이라 12월 평일엔 일반 열차뿐(난로·해설 없음). 편수가 하루 몇 편이라 폭설·운휴 위험. 2026년 12월 시간표 미확인.",
+  "days": "12/21~25 패스 기간",
+  "pass": "패스 범위",
+  "visited": false,
+  "link": ""
+  },
+  {
+  "region": "west",
+  "sub": "니가타 · 에치고유자와",
+  "id": "ponshukan",
+  "name": "에치고유자와역 '폰슈칸' 사케 시음 + 사케 온천",
+  "jp": "越後湯沢駅 ぽんしゅ館（利き酒番所・酒風呂 湯の沢）",
+  "fit": "백업",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Echigo-Yuzawa_Station_2018.jpg/960px-Echigo-Yuzawa_Station_2018.jpg",
+  "what": "에치고유자와역 안에 있는 니가타 사케 테마 시설. 코인으로 니가타 술 100여 종을 맛보고, 역 안 온천(사케탕)에 들어갈 수 있음.",
+  "todo": "코인 사케 시음, 역 안 온천으로 몸 녹이기, 니가타 쌀 주먹밥. 가라유자와·유자와고원 다녀온 뒤 열차 기다리며.",
+  "cost": "시음 코인 약 500~800엔·온천 약 900엔(추정) · 1시간",
+  "how": "에치고유자와역 구내(개찰 밖 CoCoLo 유자와). 센다이 출발 약 2시간 40분, 패스 적용.",
+  "memo": "통년 영업으로 알려짐, 2026년 12월 요금·시간 미확인. 독립 목적지가 아니라 가라유자와·유자와고원 로프웨이의 부속 코스.",
+  "days": "12/21~25 패스 기간 / 12/27~31 도쿄 거점",
+  "pass": "패스 범위",
+  "visited": false,
+  "link": ""
+  },
+  {
+  "region": "west",
+  "sub": "군마 · 다카사키",
+  "id": "takasakiillum",
+  "name": "다카사키 빛의 페전트 (역 앞 일루미네이션)",
+  "jp": "高崎光のページェント",
+  "fit": "백업",
+  "img": "",
+  "what": "다카사키역 동서 보행자 데크와 시내 거리를 약 100만 개 전구로 꾸미는 무료 일루미네이션.",
+  "todo": "미나카미·이카호·가루이자와에서 돌아오는 길에 다카사키 환승 때 역 앞 산책 20~30분.",
+  "cost": "무료 · 30분",
+  "how": "다카사키역(조에쓰·호쿠리쿠 신칸센) 바로 앞. 센다이에서 편도 약 2시간(패스 적용), 도다코엔에서 보통열차 약 1시간 20분(약 1,200엔 추정).",
+  "memo": "2025-26은 2025.10.31~2026.3.1, 12월 중 16:00~24:00 점등. 2026-27 일정 미발표지만 매년 개최. 단독 목적지로는 약하고 환승 김에 보는 용도.",
+  "days": "12/21~25 패스 기간 / 12/27~31 도쿄 거점",
+  "pass": "패스 범위",
+  "visited": false,
+  "link": ""
+  },
+  {
+  "region": "kanto",
+  "sub": "도쿄 23구 · 시부야",
+  "id": "shibuyasky",
+  "name": "시부야 스카이 (옥상 야외 전망대)",
+  "jp": "SHIBUYA SKY（渋谷スクランブルスクエア）",
+  "fit": "매우 잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0d/Shibuya_scramble_square_sky_rooftop_couches_%2848995414602%29.jpg/960px-Shibuya_scramble_square_sky_rooftop_couches_%2848995414602%29.jpg",
+  "what": "지상 약 230m 시부야 스크램블 스퀘어 꼭대기의 유리벽 없는 옥상 전망대. 겨울 맑은 날엔 후지산 실루엣과 일몰, 이어지는 도쿄 야경을 한 번에 볼 수 있다.",
+  "todo": "일몰 30~40분 전 입장 → 후지산 방향 노을 → 야경까지 옥상에서 감상. 12/27 시부야 공연 전 일정으로 딱 맞음.",
+  "cost": "체류 1~1.5시간 · 웹 예매 성인 2,700엔(14:59까지 입장)/3,400엔(15:00 이후), 현장 3,000/3,700엔 (2026년 4월 공식 관광사이트 게재 기준)",
+  "how": "도다코엔 → JR 사이쿄선 직통 시부야 약 25분, 약 400엔(추정). 신요코하마 → 도큐 신요코하마선 직통 시부야 약 35분. 패스 기간 외라 일반 요금.",
+  "memo": "기본 10:00~22:30(최종 입장 21:20), 1/1 휴무. 연말 영업시간은 평소와 다를 수 있음(12/31 시간 미확인). 강풍·비·눈이면 옥상 폐쇄. 옥상엔 가방·모자 반입 불가(46층 로커). 12월 하순 일몰 약 16:30 → 15:30~16:00 입장 시간대가 가장 먼저 매진되니 미리 예매.",
+  "days": "12/27 (시부야 공연 전) / 12/26~31 도쿄 거점 맑은 날",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": "https://www.shibuya-sky.com/"
+  },
+  {
+  "region": "kanto",
+  "sub": "도쿄 23구 · 도쿄역·마루노우치",
+  "id": "marunouchiillum",
+  "name": "마루노우치 일루미네이션 + KITTE 옥상정원",
+  "jp": "丸の内イルミネーション／KITTEガーデン",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/66/Marunouchi_Illumination_2022_%2852646011207%29.jpg/960px-Marunouchi_Illumination_2022_%2852646011207%29.jpg",
+  "what": "마루노우치 나카도리 가로수 약 1.2km를 샴페인골드 전구로 장식하는 겨울 일루미네이션. 크리스마스 이후에도 2월까지 이어져 연말 일정과 겹친다.",
+  "todo": "나카도리 산책(평지·짧게 끊어도 됨) → KITTE 6층 옥상정원(무료 야외)에서 라이트업된 도쿄역 붉은 벽돌 역사 내려다보기.",
+  "cost": "1시간 안팎 · 무료",
+  "how": "도다코엔 → 사이쿄선 아카바네 환승 우에노도쿄라인 도쿄역 약 35분, 약 400엔(추정). 패스 기간 외 일반 요금.",
+  "memo": "2026년 일정 미발표. 2025년은 11/13~2026/2/15 개최 → 2026년도 비슷할 것으로 추정(12/19~31 전 기간 포함 예상). 점등 시간 약 17:00~23:00(추정). KITTE 옥상정원 운영 시간·연말 휴무는 미확인.",
+  "days": "12/19~20 저녁, 12/26~31 저녁 아무 날",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": "https://www.marunouchi.com/"
+  },
+  {
+  "region": "kanto",
+  "sub": "도쿄만 · 히노데·오다이바",
+  "id": "tokyobaycruise",
+  "name": "도쿄만 크루즈 심포니",
+  "jp": "東京湾クルージング シンフォニー（日の出桟橋）",
+  "fit": "매우 잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Rainbow-Bridge_%28%E3%83%AC%E3%82%A4%E3%83%B3%E3%83%9C%E3%83%BC%E3%83%96%E3%83%AA%E3%83%83%E3%82%B8%29_-_panoramio.jpg/960px-Rainbow-Bridge_%28%E3%83%AC%E3%82%A4%E3%83%B3%E3%83%9C%E3%83%BC%E3%83%96%E3%83%AA%E3%83%83%E3%82%B8%29_-_panoramio.jpg",
+  "what": "히노데 잔교에서 출발해 레인보우 브리지·오다이바·게이트 브리지 쪽을 도는 레스토랑 크루즈선. 승선만 하는 요금도 있어 갑판에서 도쿄만 풍경을 볼 수 있다.",
+  "todo": "낮·애프터눈 편으로 바다 위 도쿄 스카이라인 감상 → 유리카모메로 도요스 이동(12/22 공연과 연결). 시간이 맞으면 선셋 편.",
+  "cost": "약 1~2.5시간 · 승선만 1,800엔~, 애프터눈 2,800엔~, 선셋 8,500엔~, 디너 10,000엔~ (마플 게재, 게재일 미상 → 2026년 요금은 공식 확인 필요)",
+  "how": "도다코엔 → 신바시까지 약 40분 → 유리카모메 히노데역 바로 앞. 신요코하마에서는 JR로 하마마쓰초 경유 약 40분. 히노데→도요스는 유리카모메 약 15분. 일반 요금.",
+  "memo": "통년 운항이지만 12/24~25 크리스마스·12/31 특별편은 일반 승선 불가일 수 있음(미확인). 2026/1/1 첫해 크루즈 존재 확인(첫해는 원하지 않으므로 제외). 강풍 시 결항 가능.",
+  "days": "12/22 (도요스 공연 전) / 12/26~30",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": "https://www.symphony-cruise.co.jp/"
+  },
+  {
+  "region": "kanto",
+  "sub": "도쿄만 · 도요스",
+  "id": "toyosusunset",
+  "name": "도요스 구루리 공원 일몰 + 수상버스",
+  "jp": "豊洲ぐるり公園／東京都観光汽船（浅草〜豊洲）",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/Toyosu_Gururi_Park.jpg/960px-Toyosu_Gururi_Park.jpg",
+  "what": "도요스 시장을 둘러싼 바닷가 산책 공원. 레인보우 브리지와 도쿄타워 방향으로 해가 지고, 공연장 도요스 PIT에서 가깝다.",
+  "todo": "아사쿠사에서 수상버스로 스미다강을 내려와 도요스 도착 → 공원 벤치에서 일몰 → 도요스 PIT 공연. (도요스 센캬쿠반라이 족욕·푸드코트도 근처)",
+  "cost": "공원 무료 · 수상버스 아사쿠사~도요스 약 1,000~2,000엔(추정, 배에 따라 다름)",
+  "how": "도다코엔 → 아사쿠사 약 50분 → 수상버스. 또는 유리카모메 시조마에역 바로. 일반 요금.",
+  "memo": "공원은 연중 개방. 도쿄도관광기선(TOKYO CRUISE)의 아사쿠사~도요스 노선 존재는 확인했으나 12월 운항편·요금 미확인. 도쿄 미즈베라인 정기편은 2026/1/18 휴지 후 10/17부터 방재선으로 재개 발표 — 12월 운항 형태 미확인. 해변이라 바람이 매우 차가움.",
+  "days": "12/22 (도요스 PIT 공연 당일 오후)",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": "https://www.tokyo-cruise.co.jp/"
+  },
+  {
+  "region": "kanto",
+  "sub": "도쿄 23구 · 하네다",
+  "id": "hanedadeck",
+  "name": "하네다공항 제3터미널 전망 데크 (야간)",
+  "jp": "羽田空港 第3ターミナル 展望デッキ",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/98/Haneda_Airport_Terminal_3_Observation_Deck.jpg/960px-Haneda_Airport_Terminal_3_Observation_Deck.jpg",
+  "what": "활주로 바로 앞 야외 데크에서 이착륙하는 비행기와 활주로 조명, 맑은 날엔 후지산 실루엣까지 보이는 무료 전망대.",
+  "todo": "해 질 녘~밤 활주로 유도등과 이륙 비행기 감상. 귀국·도착일이나 짧은 저녁 일정에 끼워 넣기 좋음.",
+  "cost": "1시간 · 무료",
+  "how": "도다코엔 → 시나가와 경유 게이큐 약 1시간, 약 700엔(추정). 신요코하마 → 게이큐 직통 약 40분(추정). 일반 요금.",
+  "memo": "제3터미널 데크는 24시간 개방·무료(2026년 4~5월 기사 기준). 야외라 악천후·강풍 시 폐쇄. 연말 특별 휴무 정보 없음.",
+  "days": "12/19 도착일 또는 1/1 귀국 전 / 12/26~31 저녁",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": "https://tokyo-haneda.com/"
+  },
+  {
+  "region": "kanto",
+  "sub": "도쿄 23구 · 롯폰기·시부야 (크리스마스 한정)",
+  "id": "xmasillum",
+  "name": "롯폰기 케야키자카·미드타운·시부야 '푸른 동굴' 크리스마스 일루미네이션",
+  "jp": "けやき坂イルミネーション／MIDTOWN CHRISTMAS／青の洞窟 SHIBUYA",
+  "fit": "조건부",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Roppongi_Hills_Keyakizaka_Illumination_2024_%281%29.jpg/960px-Roppongi_Hills_Keyakizaka_Illumination_2024_%281%29.jpg",
+  "what": "도쿄 대표 크리스마스 일루미네이션. 케야키자카는 흰·파란 LED 가로수 너머 도쿄타워, 미드타운은 비눗방울이 날리는 정원 연출, 푸른 동굴은 공원 가로수 약 900m가 파랗게 빛난다.",
+  "todo": "롯폰기 두 곳은 걸어서 이어 보기(약 10분). 푸른 동굴은 시부야 공원거리~요요기 공원 구간.",
+  "cost": "각 1시간 안팎 · 모두 무료(미드타운 유료 라운지는 별도)",
+  "how": "신요코하마 → 롯폰기 약 40분(추정). 도다코엔 → 롯폰기 약 45분(추정). 일반 요금.",
+  "memo": "모두 12/25에 끝남 → 12/26~31에는 볼 수 없음. 롯폰기힐스 크리스마스 2026: 11/5~12/25 확인. 미드타운 크리스마스 2026: 11/26~12/25, 17:00~23:00 확인. 푸른 동굴은 2025년 12/4~12/25, 17:00~22:00 기준(2026년 개최 미발표). 크리스마스 직전 주말은 혼잡.",
+  "days": "12/19~20 저녁 (신요코하마 거점) / 12/22 이른 저녁",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": "https://www.roppongihills.com/"
+  },
+  {
+  "region": "kanto",
+  "sub": "도쿄 23구 · 12/31 섣달그믐",
+  "id": "nyezojoji",
+  "name": "12/31 조조지 제야의 종 + 도쿄타워",
+  "jp": "増上寺 除夜の鐘／東京タワー",
+  "fit": "조건부",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e9/Tokyo_Tower_path_next_to_Zojoji.jpg/960px-Tokyo_Tower_path_next_to_Zojoji.jpg",
+  "what": "도쿄타워 바로 아래 조조지에서 자정부터 108번 제야의 종을 치는 섣달그믐 행사. 불 밝힌 도쿄타워를 배경으로 새해를 맞는다.",
+  "todo": "23시쯤 도착 → 경내에서 도쿄타워 보며 카운트다운 → 0시 타종 구경. 대안: 시부야 카운트다운(스크램블 교차로 주변, 매우 혼잡).",
+  "cost": "2시간 안팎 · 관람 무료, 종 직접 치기는 사전 '종치기권' 필요(12/1부터 소량 판매, 2025년 기준)",
+  "how": "도다코엔 → 도에이 미타선 오나리몬역(약 50분, 약 500엔 추정) 또는 하마마쓰초 도보 약 10분.",
+  "memo": "2025→2026 섣달그믐 타종 개최 확인(0시 시작, 약 1시간). 2026년 세부 미발표. 섣달그믐 밤 경내·주변 매우 혼잡. 도쿄타워 카운트다운 소등 연출·연말 특별영업은 미확인. JR 섣달그믐 심야 임시열차 운행 여부 미확인 → 도다코엔 귀가 막차 반드시 확인. 시부야 카운트다운은 2025년 개최 확인(인파 극심, 취향과 안 맞을 수 있음).",
+  "days": "12/31 밤",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": "https://www.zojoji.or.jp/"
+  },
+  {
+  "region": "kanto",
+  "sub": "지바 · 보소 반도 서쪽 (노코기리야마)",
+  "id": "nokogiriyama",
+  "name": "노코기리야마 로프웨이 + 도쿄만 페리",
+  "jp": "鋸山ロープウェー／東京湾フェリー（金谷〜久里浜）",
+  "fit": "매우 잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cf/View_of_Nokogiriyama_Ropeway%2C_crossing.jpg/960px-View_of_Nokogiriyama_Ropeway%2C_crossing.jpg",
+  "what": "바다 바로 옆 산으로 올라가는 로프웨이와 도쿄만을 가로지르는 카페리를 한 번에. 산정 전망대에서 도쿄만 너머 후지산, 페리 갑판에선 겨울 일몰을 본다.",
+  "todo": "로프웨이로 산정 전망대(역 근처) → 가나야항까지 걸어 페리 탑승 → 40분 항해 중 갑판에서 후지산·노을 → 구리하마에서 게이큐로 귀가. 산 위 '지옥 들여다보기'는 계단이 많아 선택.",
+  "cost": "반나절~하루 · 로프웨이 왕복 1,200엔(편도 650엔), 페리 성인 편도 1,100엔(관광사이트 게재, 2026년 요금 공식 확인 필요)",
+  "how": "도다코엔 → 도쿄역 → JR 우치보선 하마카나야역 약 2시간 10분, 약 2,500엔(추정), 역에서 로프웨이까지 도보 약 8분. 귀가: 구리하마항 → 게이큐 구리하마 → 요코하마 약 50분. 신요코하마 거점이면 반대 방향(게이큐→구리하마→페리)이 편함. 일반 요금.",
+  "memo": "로프웨이 겨울철(11/16~2/15) 9:00~16:00, 연중무휴, 강풍 시 운휴. 페리는 1일 여러 편 통년 운항(12월 시간표 미확인). 구리하마는 요코스카시(가 봄)이지만 페리는 새로운 체험.",
+  "days": "12/19~20 (신요코하마 거점) / 12/26~30",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": "https://www.mt-nokogiri.co.jp/"
+  },
+  {
+  "region": "kanto",
+  "sub": "지바 · 조시·이누보사키",
+  "id": "inubosaki",
+  "name": "이누보사키 등대 + 조시 전철",
+  "jp": "犬吠埼灯台／銚子電気鉄道",
+  "fit": "매우 잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a5/Cape_Inubo_06.jpg/960px-Cape_Inubo_06.jpg",
+  "what": "간토 최동단 곶 끝에 선 흰 등대에 올라 태평양을 내려다보는 곳. 작은 로컬 열차 조시 전철을 타고 간다.",
+  "todo": "조시 전철 타고 이누보역 → 등대 꼭대기 전망대(나선 계단 약 99단) → 해안 바위 산책 → 근처 온천 숙소 당일 입욕도 가능.",
+  "cost": "하루 · 등대 참관 300엔, 조시 전철 1일권 약 700엔(추정), 도쿄~조시 특급 시오사이 포함 편도 약 4,500엔(추정)",
+  "how": "도다코엔 → 도쿄역 → 특급 시오사이로 조시 약 1시간 50분 → 조시 전철 약 20분 → 이누보역 도보 약 10분. 전체 편도 약 2시간 50분. 일반 요금.",
+  "memo": "참관 10~2월 8:30~16:00(입장 15:30까지). 연말연시 영업(임시 휴무 있음), 악천후·공사 시 휴관 → 연등회(燈光会) 사이트에서 확인. 2026년 연말 일정 자체는 미확인. 1/1 첫해 인파는 해당 없음.",
+  "days": "12/26~30",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": "https://www.tokokai.org/"
+  },
+  {
+  "region": "kanto",
+  "sub": "지바 · 보소 반도 남단 (다테야마)",
+  "id": "nojimazaki",
+  "name": "노지마자키 등대 + 다테야마 만 일몰",
+  "jp": "野島埼灯台（南房総市白浜）",
+  "fit": "조건부",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/17/Nojimasakitodai0.jpg/960px-Nojimasakitodai0.jpg",
+  "what": "보소 반도 최남단 곶의 오를 수 있는 등대. 겨울엔 다테야마 만 너머로 후지산과 일몰을 볼 수 있다.",
+  "todo": "등대 올라 태평양 조망 → 곶 끝 바위 해안 → 다테야마로 돌아와 해변(가가미가우라)에서 후지산 쪽 일몰.",
+  "cost": "하루 · 등대 참관 300엔, 다테야마~노지마자키 버스 왕복 약 1,800엔(추정), 도쿄~다테야마 JR 약 2,700엔(추정)",
+  "how": "도다코엔 → 도쿄역 → JR 우치보선(또는 도쿄역 고속버스) 다테야마 약 2시간 30분 → 닛토버스 '노지마사키토다이구치' 약 35분 + 도보 10분. 편도 약 3시간 20분. 일반 요금.",
+  "memo": "이동이 길어 당일치기로는 빡빡함. 자료전시실 9:00~16:00. 연말 휴무 여부 미확인. 버스 편수 적음(시간표 확인 필요).",
+  "days": "12/26~30 (여유 있는 날)",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": "https://www.tokokai.org/"
+  },
+  {
+  "region": "kanto",
+  "sub": "도쿄만 · 아쿠아라인",
+  "id": "umihotaru",
+  "name": "우미호타루 (도쿄만 한가운데 해상 휴게소)",
+  "jp": "海ほたるパーキングエリア",
+  "fit": "조건부",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/32/UmihotaruPA.JPG/960px-UmihotaruPA.JPG",
+  "what": "도쿄만 아쿠아라인 위 인공섬 휴게소. 사방이 바다인 야외 데크에서 일몰, 후지산, 도쿄·요코하마 쪽 야경을 본다.",
+  "todo": "5층 야외 데크에서 일몰~야경 감상 후 버스로 귀가. 노코기리야마·기사라즈 일정과 엮을 수도 있음.",
+  "cost": "1~2시간 · 입장 무료, 가와사키역~우미호타루 고속버스 편도 약 800엔(추정)",
+  "how": "신요코하마/도다코엔 → JR 가와사키역 → 아쿠아라인 고속버스(가와사키~기사라즈 노선, 우미호타루 정차) 약 25분(추정). 일반 요금.",
+  "memo": "휴게소 자체는 연중무휴(야외 데크는 강풍 시 폐쇄 가능). 우미호타루 정차 버스 편·막차 시간은 미확인 — 막차를 놓치면 돌아올 방법이 없으니 반드시 확인.",
+  "days": "12/19~20 (신요코하마 거점) / 12/26~30",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": "https://www.umihotaru.com/"
+  },
+  {
+  "region": "kanto",
+  "sub": "도쿄 섬 · 이즈오시마",
+  "id": "izuoshima",
+  "name": "이즈오시마 당일치기 (제트선 + 미하라산 화산)",
+  "jp": "伊豆大島／三原山（東海汽船ジェット船）",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/94/Mount_Mihara_%289609570317%29.jpg/960px-Mount_Mihara_%289609570317%29.jpg",
+  "what": "도쿄 다케시바에서 고속 제트선으로 가는 화산섬. 검은 용암 사막과 미하라산 칼데라, 바다 건너 후지산을 볼 수 있다.",
+  "todo": "제트선으로 섬 도착 → 버스로 미하라산 산정구 전망대(칼데라·후지산 조망) → 온천(오시마 온천 호텔 당일 입욕 등) → 오후 배로 귀환. 분화구 가장자리까지는 편도 약 45분 걸어야 해서 선택.",
+  "cost": "하루 · 제트선 편도 약 7,000~9,000엔(추정, 기사상 8,800엔 사례), 섬 버스 약 1,000엔(추정)",
+  "how": "도다코엔 → 다케시바 잔교(하마마쓰초 도보) 약 50분 → 제트선 약 1시간 45분. 신요코하마 거점이면 아타미항 출발 제트선(약 45분, 추정)도 가능. 일반 요금.",
+  "memo": "섬 도착 항(모토마치/오카다)은 당일 아침 바람에 따라 결정(겨울엔 오카다가 많음). 겨울철 결항 잦음. 12월 하순 운항 시간표·당일치기 가능 편성 미확인 → 도카이기선 사이트로 확인 필요. 동백꽃 축제는 1월 말부터라 해당 없음.",
+  "days": "12/19~20 (아타미 경유) / 12/26~30 날씨 좋은 날",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": "https://www.tokaikisen.co.jp/"
+  },
+  {
+  "region": "kanto",
+  "sub": "이즈 반도 북·동부 · 아타미",
+  "id": "hatsushima",
+  "name": "아타미 → 하쓰시마 섬 페리",
+  "jp": "初島（初島リゾートライン）",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ec/Hatsushima_2015-04-23.jpg/960px-Hatsushima_2015-04-23.jpg",
+  "what": "아타미항에서 배로 약 30분, 수도권에서 가장 가까운 작은 섬. 섬 리조트의 바다 보이는 노천탕과 해안 산책이 중심.",
+  "todo": "새 페리 '긴파 긴파(2025/7 취항)' 갑판에서 사가미만 조망 → 섬 해산물 식당 거리(조개·오징어 피해서 주문) → 섬 리조트 온천 → 오후 배로 복귀. 섬 일주는 약 4km라 일부만.",
+  "cost": "반나절~하루 · 페리 왕복 약 2,800엔(추정), 섬 온천 약 1,500엔(추정)",
+  "how": "신요코하마 → 도카이도 신칸센 고다마 아타미 약 30분 → 아타미역에서 버스 약 15분 아타미항. 도다코엔 → 도쿄역 → 신칸센 아타미 약 1시간 40분(전체), 약 4,500엔(추정). 패스 밖(도카이도 신칸센).",
+  "memo": "연중 운항이지만 2026년 요금·12월 시간표 미확인. 아타미 해상 불꽃놀이 2026 겨울 일정 확인: 12/6(일)·12/25(금) 20:20~20:40 — 12/25는 센다이 거점 기간이라 맞추기 어려움. 아타미는 미방문.",
+  "days": "12/19~20 (신요코하마 거점)",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": "https://www.hatsushima.jp/"
+  },
+  {
+  "region": "kanto",
+  "sub": "이즈 반도 북부 · 이즈노쿠니",
+  "id": "izupanorama",
+  "name": "이즈노쿠니 파노라마 파크 로프웨이",
+  "jp": "伊豆パノラマパーク（葛城山ロープウェイ）",
+  "fit": "매우 잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/View_of_Izunokuni_from_Katsuragiyama_Ropeway_%282006%29.jpg/960px-View_of_Izunokuni_from_Katsuragiyama_Ropeway_%282006%29.jpg",
+  "what": "약 7분 로프웨이로 해발 452m 가쓰라기산 정상에 올라, 스루가만 너머 정면으로 후지산을 보는 야외 테라스.",
+  "todo": "산정 테라스(소파석·족욕 등)에서 후지산 감상, 겨울엔 오후 늦게 가면 붉게 물드는 후지산. 내려와서 이즈나가오카 온천 당일 입욕.",
+  "cost": "반나절 · 로프웨이 왕복 약 2,500엔(추정, 2026년 요금 미확인)",
+  "how": "신요코하마 → 고다마 미시마 약 40분 → 이즈하코네철도 이즈나가오카 약 35분 → 버스 약 10분. 편도 약 1시간 40분. 도다코엔에서는 약 2시간 30분. 패스 밖.",
+  "memo": "연말연시 영업(기사 확인). 여름철(2/16~10/15) 9:00~17:30 확인, 겨울철 시간은 미확인(약 9:00~17:00 추정). 강풍·낙뢰 시 운휴. 공식 사이트 주소 확인 실패.",
+  "days": "12/19~20 (신요코하마 거점) / 12/26~30",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": ""
+  },
+  {
+  "region": "kanto",
+  "sub": "이즈 반도 동부 · 이토·이즈고원 (JR 이토선)",
+  "id": "omuroyama",
+  "name": "오무로야마 리프트 + 조가사키 해안 현수교",
+  "jp": "大室山登山リフト／城ヶ崎海岸（門脇吊橋）",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/Omuroyama_-01.jpg/960px-Omuroyama_-01.jpg",
+  "what": "밥공기 모양 휴화산을 리프트로 올라 분화구 둘레에서 후지산·이즈 제도를 보고, 용암이 만든 절벽 해안의 흔들다리를 건너는 하루.",
+  "todo": "리프트(약 6분)로 정상 → 분화구 둘레길 일부(한 바퀴 약 20분, 평탄) → 버스로 조가사키 해안 → 높이 23m 가도와키 현수교와 등대.",
+  "cost": "하루 · 리프트 왕복 1,000엔(다수 게재 기준), 버스 약 1,000엔(추정)",
+  "how": "신요코하마 → 고다마 아타미 → JR 이토선·이즈큐 이즈고원 약 1시간 50분 → 버스 약 20분. 도다코엔에서는 특급 오도리코로 약 2시간 40분, 약 6,000엔(추정). 패스 밖.",
+  "memo": "리프트 겨울철 9:00~16:00~16:15(자료마다 다름). 정기 휴무가 6월·12월 리프트 정비 기간 → 12월 정비 날짜 미확인, 반드시 확인 필요. 강풍 시 운휴. 조가사키는 조가사키카이간역에서 도보 약 20분.",
+  "days": "12/19~20 / 12/26~30 (12월 정비일 확인 후)",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": ""
+  },
+  {
+  "region": "kanto",
+  "sub": "가나가와 · 에노시마",
+  "id": "enoshimaillum",
+  "name": "에노시마 시캔들 '쇼난의 보석' 일루미네이션",
+  "jp": "湘南の宝石（江の島シーキャンドル）",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e4/Enoshima_Lighthouse_130809_1.jpg/960px-Enoshima_Lighthouse_130809_1.jpg",
+  "what": "에노시마 전망등대(시캔들)를 중심으로 섬 정상 정원을 빛으로 덮는 겨울 일루미네이션. 해 질 녘엔 바다 건너 후지산 노을.",
+  "todo": "오후에 섬 도착 → 시캔들 야외 전망층에서 후지산 쪽 일몰 → 점등 후 일루미네이션. 섬 위 계단이 꽤 있어 유료 에스컬레이터(에스카) 이용 권장.",
+  "cost": "반나절 · 시캔들·정원 입장 약 500~1,000엔(추정), 에스카 약 400엔(추정)",
+  "how": "신요코하마 → 요코하마 → JR 후지사와 → 에노덴 에노시마 약 1시간. 도다코엔에서는 오다큐(신주쿠) 가타세에노시마 약 1시간 40분. 일반 요금.",
+  "memo": "후지사와(가 봄) 지역이지만 겨울 야간 일루미네이션은 새로운 체험. 2026-27 시즌 일정 미발표. 2025-26은 11/22~2/28, 17:00~20:00(토일공휴일 21:00까지) 기준.",
+  "days": "12/19~20 (신요코하마 거점) / 12/26~30",
+  "pass": "패스 밖",
+  "visited": true,
+  "link": ""
+  },
+  {
+  "region": "kanto",
+  "sub": "가나가와 · 요코하마·가와사키 (도쿄만)",
+  "id": "factorycruise",
+  "name": "게이힌 공장 야경 크루즈",
+  "jp": "工場夜景ジャングルクルーズ（横浜）／川崎工場夜景屋形船",
+  "fit": "조건부",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e0/Chidori_Canal.jpg/960px-Chidori_Canal.jpg",
+  "what": "요코하마·가와사키 임해 공업지대 운하를 배로 들어가 불 밝힌 플랜트·굴뚝을 바로 앞에서 보는 야간 크루즈.",
+  "todo": "요코하마 아카렌가 잔교 출발 약 90분 코스(갑판에서 촬영), 또는 가와사키 출발 지붕배(야카타부네) 코스.",
+  "cost": "약 1.5시간 · 요코하마 출발 6,000엔~(예약사이트 게재, 시기 미상), 가와사키 지붕배 성인 약 4,000엔(오래된 기사)",
+  "how": "신요코하마 → 사쿠라기초 약 15분 → 아카렌가 잔교 도보. 도다코엔 → 요코하마 약 1시간 10분. 일반 요금.",
+  "memo": "요코하마(가 봄) 출발이지만 공장 야경 크루즈는 새로운 체험. 2026년 12월 운항일·요금 미확인. 가와사키 지붕배는 겨울철 둘째·넷째 토요일만(오래된 기사) → 2026년이면 12/26(넷째 토)이 해당될 수 있음. 주말 만석이 잦아 예약 필수. 겨울 갑판 매우 추움.",
+  "days": "12/19~20 (신요코하마 거점) / 12/26",
+  "pass": "패스 밖",
+  "visited": true,
+  "link": ""
+  },
+  {
+  "region": "kanto",
+  "sub": "야마나시 · 고후 분지 (후지산 전망)",
+  "id": "hottarakashi",
+  "name": "홋타라카시 온천 (후지산·야경 노천탕)",
+  "jp": "ほったらかし温泉（山梨市）",
+  "fit": "조건부",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/%E3%81%BB%E3%81%A3%E3%81%9F%E3%82%89%E3%81%8B%E3%81%97%E6%B8%A9%E6%B3%89.JPG/960px-%E3%81%BB%E3%81%A3%E3%81%9F%E3%82%89%E3%81%8B%E3%81%97%E6%B8%A9%E6%B3%89.JPG",
+  "what": "해발 약 700m 언덕 위 노천탕에서 고후 분지 너머 후지산, 해가 진 뒤엔 분지 야경과 별을 보는 온천. 가와구치코 쪽(가 봄)과 다른 각도의 후지산.",
+  "todo": "오후 늦게 도착 → 노천탕에서 후지산 노을 → 야경·별 보며 한 번 더 입욕 → 귀가.",
+  "cost": "반나절 · 입욕 1회 900엔, 택시 편도 약 2,000엔(추정), 신주쿠~야마나시시 특급 가이지 편도 약 4,000엔(추정)",
+  "how": "도다코엔 → 신주쿠 → 특급 가이지 야마나시시역 약 1시간 40분 → 택시 약 10분. 편도 약 2시간 20분. 일반 요금.",
+  "memo": "택시 필요(취향상 감점 요소) → '조건부'. 영업: 일출 1시간 전~22:00(최종 접수 21:30) 기사 기준, 2026년 연말 영업 미확인. 겨울 야간 매우 추움. 첫해(일출) 목적 아님.",
+  "days": "12/26~30",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": "https://www.hottarakashi-onsen.com/"
+  },
+  {
+  "region": "kanto",
+  "sub": "도쿄만 · 도요스",
+  "id": "senkyaku",
+  "name": "도요스 센캬쿠반라이",
+  "jp": "豊洲 千客万来",
+  "fit": "잘 맞음",
+  "img": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f0/%E8%B1%8A%E6%B4%B2%E5%8D%83%E5%AE%A2%E4%B8%87%E6%9D%A5%E3%81%A8%E7%92%B0%E7%8A%B62%E5%8F%B7%E7%B7%9A.jpg/960px-%E8%B1%8A%E6%B4%B2%E5%8D%83%E5%AE%A2%E4%B8%87%E6%9D%A5%E3%81%A8%E7%92%B0%E7%8A%B62%E5%8F%B7%E7%B7%9A.jpg",
+  "what": "도요스 시장 옆, 에도 거리를 재현한 먹거리 시설. 옥상 전망 족욕(무료)에서 도쿄만이 보임",
+  "todo": "해산물·라멘 저녁, 족욕하며 노을 기다리기 → 도요스 PIT 공연",
+  "cost": "1~2시간 · 족욕 무료 (온천 시설은 유료)",
+  "how": "유리카모메 시조마에역 도보 약 4분 · 도요스 PIT까지 도보 약 15분",
+  "memo": "12/22 tayori 공연 전 코스로 딱",
+  "days": "12/22 (공연 갈 때)",
+  "pass": "패스 밖",
+  "visited": false,
+  "link": "https://www.toyosu-senkyakubanrai.jp/"
+  }
+  ];
+  // 일정: 날짜마다 고정 일정 + 후보 여러 개. 시간은 추정 (열차·버스 시간표는 다음 단계에서 링크·앞뒤 편과 함께 붙임)
+  const DAYS = [
+    { d: '12/19', w: '토', note: '입국일 · 친구와 2인', stay: '新横浜国際ホテル (2인, 결제함)',
+      fixed: [['✈', '김해 08:20 → 나리타 10:25 (에어부산 기준)', '예약 전']],
+      cands: [
+        { k: 'A', tag: 'go', title: 'Mrs. GREEN APPLE (관심 1순위)', steps: [['10:25', '나리타 도착 → 입국·짐'], ['11:30', '나리타 → 신요코하마 (N\'EX 요코하마 경유 또는 게이세이+JR, 약 1시간 40분, 패스 밖)'], ['13:30', '숙소에 짐 → 라멘 박물관 점심'], ['15:30', '신요코하마 → 사쿠라기초 (약 25분)'], ['16:00', '피아 아레나 MM 개장 · 17:00 공연'], ['20:00', '아카렌가 크리스마스 마켓 (21시 무렵까지) → 숙소']], spots: ['ramen', 'xmas'], cost: '티켓 15,000엔 + 교통 약 2,000~4,400엔', note: '표를 구했을 때만' },
+        { k: 'B', tag: 'go', title: '藤井風 도쿄돔 (2순위)', steps: [['13:30', '숙소에 짐 → 라멘 박물관 점심'], ['15:00', '신요코하마 → 스이도바시 (약 50분)'], ['16:00', '도쿄돔 개장 · 18:00 공연'], ['21:00', '도쿄 → 신요코하마 (약 50분)']], spots: ['ramen'], cost: '티켓 별도 · 교통 약 1,000엔', note: '' },
+        { k: 'C', tag: 'go', title: 'りりあ。 시모키타자와 (3순위)', steps: [['13:30', '숙소에 짐 → 점심'], ['16:00', '시모키타자와 레코드숍·거리'], ['17:30', 'ADRIFT 개장 · 18:00 공연'], ['20:30', '시모키타자와 → 신요코하마 (약 50분)']], spots: ['ramen'], cost: '티켓 별도', note: '사이트에 🎫 표시된 공연' },
+        { k: 'D', tag: 'go', title: 'YOASOBI 도쿄 가든시어터 (4순위)', steps: [['13:30', '숙소에 짐'], ['15:30', '아리아케 쪽으로 · 도요스 구루리 공원 노을'], ['17:00', '개장 · 18:00 공연'], ['21:00', '숙소로 (약 1시간)']], spots: ['toyosusunset'], cost: '티켓 별도', note: '' },
+        { k: 'E', tag: 'nogo', title: '공연 없음 · 미나토미라이 야경', steps: [['13:30', '숙소에 짐 → 라멘 박물관'], ['15:30', '사쿠라기초 → 요코하마 에어캐빈 (바다 위 로프웨이)'], ['16:00', '아카렌가 크리스마스 마켓'], ['17:00', '오산바시 옥상에서 노을·야경'], ['18:30', '시버스로 요코하마역 → 숙소']], spots: ['aircabin', 'xmas', 'osanbashi', 'seabass'], cost: '약 2,000~3,000엔', note: '' },
+        { k: 'F', tag: 'nogo', title: '공연 없음 · 도쿄 크리스마스 일루미네이션', steps: [['15:00', '신요코하마 → 롯폰기'], ['16:30', '롯폰기 케야키자카·미드타운 일루미'], ['18:30', '시부야 \'푸른 동굴\''], ['20:30', '숙소로']], spots: ['xmasillum'], cost: '교통 약 1,000엔', note: '이 일루미들은 12/25에 끝남' }
+      ] },
+    { d: '12/20', w: '일', note: '친구와 2인', stay: '新横浜国際ホテル (2인)',
+      fixed: [['🎤', 'tuki. × 星街すいせい · K아레나 요코하마 · 개장 16:00 / 시작 17:30', '결제함 9,900엔']],
+      cands: [
+        { k: 'A', tag: '', title: '미나토미라이 낮 (12/19에 공연 갔다면)', steps: [['11:00', '사쿠라기초 → 에어캐빈'], ['12:00', '아카렌가 크리스마스 마켓 점심'], ['14:00', '시버스로 요코하마역'], ['15:30', 'K아레나 (요코하마역 도보 약 10분) · 굿즈']], spots: ['aircabin', 'xmas', 'seabass'], cost: '약 2,000~3,000엔', note: '' },
+        { k: 'B', tag: '', title: '요코하마항 크루즈', steps: [['11:00', '야마시타 공원'], ['12:00', '항구 크루즈 (40~90분)'], ['14:00', '오산바시 → 요코하마역'], ['15:30', 'K아레나']], spots: ['portcruise', 'osanbashi'], cost: '약 2,000~4,000엔', note: '운항 시간 확인 필요' },
+        { k: 'C', tag: '', title: '노코기리야마 로프웨이 + 도쿄만 페리 (아침 일찍)', steps: [['08:00', '신요코하마 → 구리하마 (약 1시간 10분)'], ['09:30', '도쿄만 페리 (약 40분)'], ['10:30', '노코기리야마 로프웨이 → 산정 전망'], ['12:30', '페리로 돌아와 요코하마 (약 2시간)'], ['15:30', 'K아레나']], spots: ['nokogiriyama'], cost: '로프웨이·페리 약 3,500엔 + 교통', note: '공연 전이라 시간이 빠듯함' },
+        { k: 'D', tag: '', title: '이즈노쿠니 파노라마 파크 (후지산 로프웨이)', steps: [['08:30', '신요코하마 → 미시마 (고다마, 약 40분, 도카이도 신칸센이라 패스 밖)'], ['09:30', '버스 → 로프웨이 → 산정에서 후지산'], ['13:00', '미시마 → 신요코하마'], ['15:30', 'K아레나']], spots: ['izupanorama'], cost: '로프웨이 약 2,500엔 + 신칸센 왕복 약 9,000엔 (추정)', note: '맑은 날만' },
+        { k: 'E', tag: '', title: '아타미 → 하쓰시마 섬', steps: [['08:30', '신요코하마 → 아타미 (약 25분)'], ['09:30', '하쓰시마 페리 (약 30분)'], ['10:00', '섬 한 바퀴·바다 전망'], ['13:00', '아타미 → 신요코하마'], ['15:30', 'K아레나']], spots: ['hatsushima'], cost: '페리 약 2,600엔 + 신칸센 왕복 약 7,000엔 (추정)', note: '' }
+      ] },
+    { d: '12/21', w: '월', pass: 1, note: '이동일 · 패스 1일차', stay: '東横INN 仙台西口広瀬通 (또는 宇都宮駅前1)',
+      fixed: [['🚄', '신요코하마 → (JR 요코하마선·도카이도선) 도쿄 → 하야부사 → 센다이 (약 2시간 30분, 패스)', '이동']],
+      cands: [
+        { k: 'A', tag: '', title: '센다이 도착 → 사쿠나미 강변 노천탕 → 페이젠트', steps: [['09:30', '신요코하마 출발'], ['12:30', '센다이 도착 · 짐 맡기기 · 규탕 점심'], ['14:00', '센잔선 사쿠나미 (약 30분)'], ['14:40', '강변 노천탕 당일 입욕'], ['17:00', '센다이 복귀'], ['18:00', 'SENDAI 빛의 페이젠트 (일~목 21시까지)']], spots: ['sakunami', 'sendaipageant'], cost: '입욕료 약 1,000엔 (추정)', note: '' },
+        { k: 'B', tag: '', title: '센다이 도착 → 아키우 대폭포 → 페이젠트', steps: [['12:30', '센다이 도착 · 점심'], ['13:30', '버스로 아키우 대폭포 (약 1시간 20분, 패스 밖)'], ['16:30', '센다이 복귀'], ['18:00', '빛의 페이젠트']], spots: ['akiuotaki', 'sendaipageant'], cost: '버스 왕복 약 2,000엔 (추정)', note: '' },
+        { k: 'C', tag: '', title: '센다이 도착 → 오나가와 바다 온천', steps: [['12:30', '센다이 도착 · 점심'], ['13:30', '센세키토호쿠 라인·이시노마키선 오나가와 (약 1시간 30분)'], ['15:00', '역 안 온천 + 바닷가 노을'], ['18:30', '센다이 복귀 → 페이젠트']], spots: ['onagawa', 'sendaipageant'], cost: '온천 약 500엔', note: '' },
+        { k: 'D', tag: '', title: '우쓰노미야 거점이면 · 아시카가 플라워파크 일루미네이션', steps: [['11:30', '도쿄 → 오야마 (신칸센)'], ['12:30', '료모선 도미타·아시카가플라워파크역 (패스)'], ['16:30', '일루미네이션 (해 지고)'], ['19:30', '우쓰노미야 숙소로']], spots: ['ashikagaillum'], cost: '입장 약 1,500엔', note: '센다이 거점이면 다른 날로' }
+      ] },
+    { d: '12/22', w: '화', pass: 1, note: '패스 2일차', stay: '도쿄 1박 (공연 시) / 센다이',
+      fixed: [],
+      cands: [
+        { k: 'A', tag: 'go', title: 'tayori 도요스 PIT 19:00 (1순위)', steps: [['11:00', '센다이 → 도쿄 (하야부사 약 1시간 30분)'], ['13:30', '도쿄 1박 숙소에 짐'], ['15:00', '도요스 센캬쿠반라이 족욕·이른 저녁'], ['16:20', '도요스 구루리 공원 노을'], ['18:00', '개장 · 19:00 공연'], ['21:00', '도쿄 숙소 (센다이 막차 21:36은 앙코르 포기)']], spots: ['senkyaku', 'toyosusunset'], cost: '도쿄 1박 2인 10,800엔', note: '' },
+        { k: 'B', tag: 'go', title: 'ヒグチアイ × 奥華子 18:45 요코하마 (2순위)', steps: [['12:00', '센다이 → 도쿄 → 사쿠라기초'], ['16:00', '아카렌가 크리스마스 마켓'], ['18:45', '공연 (아카렌가 1호관)'], ['21:00', '요코하마 → 도쿄 → 센다이 막차 21:36 빠듯 → 도쿄 1박']], spots: ['xmas'], cost: '', note: '피아 선행 11/3까지' },
+        { k: 'C', tag: 'nogo', title: '모가미강 뱃놀이 + 나루코 온천', steps: [['07:30', '센다이 → 후루카와 → 리쿠우토선 → 신조 (약 3시간)'], ['10:50', '리쿠우사이선 후루쿠치 → 설경 난방선 (약 1시간)'], ['13:30', '신조 → 나루코온센 공동탕'], ['17:30', '센다이 복귀 → 페이젠트']], spots: ['mogamikyo', 'naruko'], cost: '배 3,200엔 + 입욕 약 500엔', note: '배 시간에 열차를 맞춰야 함' },
+        { k: 'D', tag: 'nogo', title: '뇨토 온천 + 다자와코', steps: [['08:00', '센다이 → 고마치 다자와코 (약 1시간 10분)'], ['09:30', '버스 약 50분 → 쓰루노유 등 설경 노천탕'], ['14:00', '다자와코 호반'], ['17:00', '센다이 복귀']], spots: ['nyuto-onsen', 'lake-tazawa'], cost: '버스 약 1,900엔 + 입욕 약 800엔 (추정)', note: '' },
+        { k: 'E', tag: 'nogo', title: '하나마키 강변 노천탕 (오사와·나마리)', steps: [['09:00', '센다이 → 신하나마키 (약 1시간)'], ['10:30', '송영·노선버스 → 오사와 온천'], ['13:00', '나마리 온천'], ['17:00', '센다이 복귀']], spots: ['osawa-onsen', 'namari-onsen'], cost: '입욕 약 1,500엔 + 버스 (추정)', note: '반나절 코스라 여유' },
+        { k: 'F', tag: 'nogo', title: '다다미선 설경 열차', steps: [['07:00', '센다이 → 고리야마 → 아이즈와카마쓰'], ['10:00', '다다미선 (설국 협곡·다리)'], ['13:00', '아이즈카와구치 근처 → 되돌아옴'], ['18:00', '센다이 복귀']], spots: ['tadamiline'], cost: '패스 범위', note: '하루 몇 편 안 돼서 시간표가 핵심' }
+      ] },
+    { d: '12/23', w: '수', pass: 1, note: '패스 3일차', stay: '센다이 (2인)',
+      fixed: [],
+      cands: [
+        { k: 'A', tag: '', title: '뇨토 온천 + 다자와코', steps: [['08:00', '센다이 (도쿄 1박 했으면 도쿄 06:32 → 다자와코 직행 약 3시간)'], ['09:30', '다자와코 → 버스 → 설경 노천탕'], ['14:00', '다자와코 호반'], ['17:00', '센다이 복귀']], spots: ['nyuto-onsen', 'lake-tazawa'], cost: '버스·입욕 약 2,700엔 (추정)', note: '눈 와도 좋은 날' },
+        { k: 'B', tag: '', title: '모가미강 뱃놀이 + 히지오리 온천', steps: [['07:30', '센다이 → 신조 (약 3시간)'], ['10:50', '모가미강 설경 난방선'], ['13:30', '신조 → 버스 → 히지오리 온천 (폭설 온천 마을)'], ['18:30', '센다이 복귀']], spots: ['mogamikyo', 'hijiori'], cost: '배 3,200엔 + 버스·입욕', note: '히지오리 버스는 하루 몇 편' },
+        { k: 'C', tag: '', title: '쓰가루 스토브 열차 + 히로사키 겨울 벚꽃 라이트업', steps: [['07:00', '센다이 → 하야부사 신아오모리 (약 1시간 30분) → 히로사키'], ['11:00', '고노선 → 고쇼가와라 → 스토브 열차'], ['15:00', '히로사키로 돌아옴'], ['17:00', '히로사키 공원 겨울 벚꽃 라이트업'], ['19:30', '신아오모리 → 센다이 (밤 늦게)']], spots: ['tsugaru-stove', 'hirosaki-winter-sakura'], cost: '스토브 열차권 1,000엔 + 쓰가루 철도 운임', note: '긴 하루' },
+        { k: 'D', tag: '', title: '에치고유자와 · 가라유자와 곤돌라', steps: [['08:00', '센다이 → 오미야 → 조에쓰 신칸센 가라유자와 (약 2시간 30분)'], ['11:00', '역 직결 곤돌라 → 설원 전망'], ['14:00', '에치고유자와역 폰슈칸 사케 시음'], ['17:00', '센다이 복귀']], spots: ['galayuzawa', 'ponshukan'], cost: '곤돌라 요금 확인 필요', note: '' },
+        { k: 'E', tag: '', title: '오나가와 + 다시로지마 (고양이 섬)', steps: [['08:00', '센다이 → 이시노마키'], ['09:30', '페리 → 다시로지마'], ['13:00', '이시노마키 → 오나가와 온천'], ['17:00', '센다이 복귀']], spots: ['tashirojima', 'onagawa'], cost: '페리 왕복 약 2,500엔 (추정)', note: '겨울 페리 시간 확인' }
+      ] },
+    { d: '12/24', w: '목', pass: 1, note: '패스 4일차 · 크리스마스이브', stay: '센다이 (2인)',
+      fixed: [],
+      cands: [
+        { k: 'A', tag: '', title: '하나마키 온천 (반나절) + 이브 페이젠트', steps: [['09:00', '센다이 → 신하나마키'], ['10:30', '오사와 온천 강변 노천탕'], ['15:00', '센다이 복귀'], ['18:00', '빛의 페이젠트 (12/24는 22시까지)']], spots: ['osawa-onsen', 'sendaipageant'], cost: '', note: '' },
+        { k: 'B', tag: '', title: '가루이자와 크리스마스', steps: [['10:00', '센다이 → 오미야 → 가루이자와 (약 2시간 30분)'], ['13:00', '호시노 에어리어 · 하루니레 테라스'], ['16:30', '일루미·고원교회 캔들나이트 (추첨 예약일 수 있음)'], ['19:30', '센다이로']], spots: ['karuizawaxmas'], cost: '톤보노유 입욕 등 별도', note: '버스는 패스 밖' },
+        { k: 'C', tag: '', title: '아시카가 플라워파크 일루미네이션', steps: [['13:00', '센다이 → 오야마 (약 1시간 40분)'], ['15:30', '료모선 → 플라워파크'], ['16:30', '일루미네이션'], ['19:30', '오야마 → 센다이']], spots: ['ashikagaillum'], cost: '입장 약 1,500엔', note: '' },
+        { k: 'D', tag: '', title: '다다미선 설경 열차', steps: [['07:00', '센다이 → 아이즈와카마쓰'], ['10:00', '다다미선'], ['18:00', '센다이 복귀']], spots: ['tadamiline'], cost: '패스 범위', note: '12/22에 안 갔으면' },
+        { k: 'E', tag: '', title: '후쿠로다 폭포 + 다이고라이트', steps: [['10:00', '센다이 → 고리야마 → 스이군선 후쿠로다 (약 3시간)'], ['13:30', '후쿠로다 폭포'], ['16:30', '라이트업'], ['20:30', '센다이 복귀']], spots: ['fukuroda'], cost: '폭포 관람 약 300엔 + 버스', note: '라이트업 날짜 확인 필요' }
+      ] },
+    { d: '12/25', w: '금', pass: 1, note: '패스 5일차', stay: '센다이 (2인)',
+      fixed: [],
+      cands: [
+        { k: 'A', tag: 'go', title: 'UVERworld 낮 공연 + なるみや', steps: [['09:00', '센다이 → 도쿄 (약 1시간 30분)'], ['13:00', '부도칸 개장 · 14:00 UVERworld'], ['16:30', '구단시타 → 사쿠라기초 (약 50분)'], ['17:15', '요코하마 랜드마크 홀 개장 · 18:00 なるみや'], ['21:24', 'やまびこ223 / 21:36 はやぶさ43으로 센다이']], spots: ['xmas'], cost: '', note: 'UVERworld 표가 있을 때' },
+        { k: 'B', tag: 'go', title: 'なるみや만 + 아카렌가 마켓 마지막 날', steps: [['11:00', '센다이 → 요코하마'], ['14:00', '아카렌가 크리스마스 마켓 (마지막 날)'], ['17:15', '개장 · 18:00 なるみや'], ['21:24', '센다이로']], spots: ['xmas'], cost: '', note: '' },
+        { k: 'C', tag: 'nogo', title: '리조트 시라카미 5호 (동해 노을)', steps: [['09:30', '센다이 → 고마치 아키타 (약 2시간 20분)'], ['14:00', '리조트 시라카미 5호 (아키타 14:00 → 아오모리 19:37)'], ['16:30', '해안 노을'], ['20:00', '신아오모리 → 센다이 (밤 늦게)']], spots: ['resort-shirakami'], cost: '패스 + 지정석 무료', note: '12/21~24 운행 없음, 12/25는 1·4·5호 운행 · 강풍 운휴 잦음' },
+        { k: 'D', tag: 'nogo', title: '쓰가루 스토브 열차 + 히로사키 라이트업', steps: [['07:00', '센다이 → 신아오모리 → 히로사키'], ['11:00', '스토브 열차'], ['17:00', '히로사키 겨울 벚꽃'], ['20:00', '센다이로']], spots: ['tsugaru-stove', 'hirosaki-winter-sakura'], cost: '스토브 열차권 1,000엔', note: '12/23에 안 갔으면' }
+      ] },
+    { d: '12/26', w: '토', note: 'CDJ · 친구와 헤어짐 · 패스 밖', stay: '東横INN 戸田公園 (혼자)',
+      fixed: [['🚄', '아침 센다이 → 도쿄 → 게이요선 가이힌마쿠하리 (신칸센 약 11,400엔 + 약 600엔, 패스 밖)', '이동'], ['🎤', 'COUNTDOWN JAPAN Day1 · 마쿠하리 멧세 · 입장 9:30 / 12:00~20:40 · 꼭: 星街すいせい · Creepy Nuts · NOMELON NOLEMON', '결제함']],
+      cands: [
+        { k: 'A', tag: '', title: 'CDJ 끝까지', steps: [['07:30', '센다이 출발 (캐리어는 CDJ 클로크·코인락커)'], ['09:30', '입장'], ['20:40', '종료 → 도다코엔 (약 80분, 역 혼잡 20~30분)']], spots: [], cost: '', note: '타임테이블은 12월 초' },
+        { k: 'B', tag: '', title: 'CDJ 18시 퇴장 → 山田庵巳 원맨 19:30', steps: [['18:00', 'CDJ 퇴장'], ['19:15', '신코엔지 STAXFRED'], ['19:30', '원맨 (3,500엔 + 1드링크)'], ['22:00', '도다코엔']], spots: [], cost: '3,500엔 + 드링크', note: '메일 예약 필요 · 타임테이블 보고 결정' }
+      ] },
+    { d: '12/27', w: '일', note: '혼자', stay: '東横INN 戸田公園',
+      fixed: [['🎤', 'ロクデナシ · LINE CUBE SHIBUYA · 개장 16:00 / 시작 17:00', '결제함 9,380엔']],
+      cands: [
+        { k: 'A', tag: '', title: '시부야 스카이 → 공연', steps: [['11:00', '도다코엔 → 시부야 (약 30분)'], ['12:00', '시부야 스카이 (낮 시간대 예약)'], ['13:30', '시모키타자와 레코드숍·팝업'], ['15:30', '굿즈 줄'], ['17:00', '공연 → 토리키조쿠']], spots: ['shibuyasky'], cost: '시부야 스카이 약 2,700~3,400엔', note: '' },
+        { k: 'B', tag: '', title: '마루노우치 KITTE 옥상 → 공연', steps: [['11:00', '도쿄역 KITTE 옥상 정원 (무료 전망)'], ['13:00', '점심'], ['15:00', '시부야 굿즈 줄'], ['17:00', '공연']], spots: ['marunouchiillum'], cost: '무료', note: '' },
+        { k: 'C', tag: '', title: '느긋하게 쉬고 공연만', steps: [['12:00', '늦잠·빨래'], ['15:00', '시부야로'], ['17:00', '공연']], spots: [], cost: '', note: 'CDJ 다음 날 회복용' }
+      ] },
+    { d: '12/28', w: '월', note: '자유 · 혼자 · 패스 밖', stay: '東横INN 戸田公園',
+      fixed: [],
+      cands: [
+        { k: 'A', tag: '', title: '조시 전철 + 이누보사키 등대', steps: [['08:30', '도다코엔 → 도쿄 → 소부선 조시 (약 2시간 30분)'], ['11:30', '조시 전철'], ['12:30', '이누보사키 등대·해안'], ['16:00', '조시 → 도쿄']], spots: ['inubosaki'], cost: '교통 약 6,000~8,000엔 (추정)', note: '' },
+        { k: 'B', tag: '', title: '노코기리야마 로프웨이 + 도쿄만 페리', steps: [['08:00', '도다코엔 → 구리하마 (약 2시간)'], ['10:30', '페리 → 가나야'], ['11:30', '로프웨이 → 산정'], ['14:00', '페리로 돌아옴'], ['16:30', '노을 보며 귀가']], spots: ['nokogiriyama'], cost: '로프웨이·페리 약 3,500엔 + 교통', note: '' },
+        { k: 'C', tag: '', title: '다카라가와 온천 + 다니가와다케 로프웨이', steps: [['07:30', '도다코엔 → 다카사키 → 미나카미 (보통열차 약 2시간 30분)'], ['10:30', '다니가와다케 로프웨이 (눈 덮인 덴진다이라)'], ['13:30', '버스 → 다카라가와 온천 대노천탕'], ['17:00', '미나카미 → 도다코엔']], spots: ['tanigawaropeway', 'takaragawa'], cost: '로프웨이 약 3,000엔 + 입욕 약 2,000엔 + 교통 (추정)', note: '겨울 버스 확인 필요' },
+        { k: 'D', tag: '', title: '이즈노쿠니 파노라마 파크 (후지산)', steps: [['08:00', '도다코엔 → 미시마'], ['10:30', '로프웨이 → 후지산 전망'], ['14:00', '돌아옴']], spots: ['izupanorama'], cost: '교통 약 4,000~8,000엔 (추정)', note: '맑은 날만' },
+        { k: 'E', tag: '', title: '에노시마 노을 + 일루미네이션', steps: [['13:00', '도다코엔 → 후지사와 (약 1시간 20분)'], ['15:00', '에노시마 섬'], ['16:20', '시캔들 전망대에서 노을'], ['17:00', '湘南の宝石'], ['20:00', '귀가']], spots: ['enoshimaillum'], cost: '약 2,500엔', note: '후지사와는 가 봄 (새로운 체험)' }
+      ] },
+    { d: '12/29', w: '화', note: 'CDJ · 혼자', stay: '東横INN 戸田公園',
+      fixed: [['🎤', 'COUNTDOWN JAPAN Day3 · 마쿠하리 멧세 · 12:00~ · 꼭: Eve · tuki. · amazarashi · TAKU INOUE × 超かぐや姫!', '결제함']],
+      cands: [
+        { k: 'A', tag: '', title: 'CDJ 하루', steps: [['08:00', '도다코엔 출발 (약 80분)'], ['09:30', '입장'], ['20:40', '종료 → 숙소 22시 반~23시']], spots: [], cost: '', note: '' }
+      ] },
+    { d: '12/30', w: '수', note: '자유 · 혼자', stay: '東横INN 戸田公園',
+      fixed: [],
+      cands: [
+        { k: 'A', tag: '', title: '회복·굿즈·짐 정리', steps: [['오전', '늦잠·빨래'], ['오후', '굿즈·쇼핑'], ['저녁', '마루노우치 일루미네이션']], spots: ['marunouchiillum'], cost: '', note: '' },
+        { k: 'B', tag: '', title: '도쿄만 선셋 크루즈', steps: [['14:00', '히노데 부두'], ['15:30', '심포니 선셋 크루즈'], ['18:00', '하네다 3터미널 전망 데크 야경 (선택)']], spots: ['tokyobaycruise', 'hanedadeck'], cost: '크루즈 약 3,000~10,000엔 (추정)', note: '' },
+        { k: 'C', tag: '', title: '12/28에 안 간 당일치기', steps: [['', '12/28 후보 중 하나']], spots: [], cost: '', note: '' }
+      ] },
+    { d: '12/31', w: '목', note: '마지막 날 · 숙소 예비', stay: '東横INN 戸田公園 (예비 · 확정 아님)',
+      fixed: [],
+      cands: [
+        { k: 'A', tag: '', title: '에노시마 석양 라이브 + 일루미네이션', steps: [['12:30', '도다코엔 → 후지사와'], ['15:30', '湯木慧 Enoshima Sunset Live (BLUE Enoshima) 또는 노을'], ['17:00', '湘南の宝石 (12/31 17:00~20:00)'], ['21:00', '도다코엔 (다음 날 아침 일찍)']], spots: ['enoshimaillum'], cost: '약 2,500엔 + 공연', note: '' },
+        { k: 'B', tag: '', title: '조조지 제야의 종 + 도쿄타워', steps: [['22:00', '조조지'], ['24:00', '제야의 종·도쿄타워'], ['01:00', '심야 운행·막차 확인 필요']], spots: ['nyezojoji'], cost: '무료', note: '다음 날 비행기라 무리하지 않기' },
+        { k: 'C', tag: '', title: '조용히 짐 정리', steps: [['', '짐 정리·이른 취침']], spots: [], cost: '', note: '' }
+      ] },
+    { d: '1/1', w: '금', note: '귀국 · 설날', stay: '—',
+      fixed: [['✈', '나리타 11:25 → 김해 13:55 (에어부산 기준, 제주 10:15편도 있음)', '예약 전'], ['🚃', '도다코엔 7시 반쯤 → 아카바네 → 도쿄 → N\'EX → 나리타 (휴일 시간표, 약 3,000엔)', '이동']],
+      cands: [] }
+  ];
+  // ===== 관광 렌더링 =====
+  const SPOT = Object.fromEntries(SPOTS.map(s => [s.id, s]));
+  const REGION = { yoko: '요코하마 (12/19~20)', south: '남부 도호쿠 · 미야기·야마가타·후쿠시마', north: '북부 도호쿠 · 이와테·아키타·아오모리', west: '니가타·나가노·북간토', kanto: '도쿄·간토 근교 (12/26~31)' };
+  const FITCLS = { '매우 잘 맞음': 'ok', '잘 맞음': 'info', '조건부': 'warn', '백업': '' };
+  const PASSCLS = { '패스 범위': 'pass', '일부 패스 밖': '', '패스 밖': '' };
+  const spotState = { region: 'all', passOnly: false, goodOnly: false, hideVisited: false };
+  function spotCard(s) {
+    return `<article class="spot" id="spot-${s.id}">
+      ${s.img ? `<img src="${s.img}" alt="${esc(s.name)}" loading="lazy">` : '<div class="noimg">사진 없음</div>'}
+      <div class="body">
+        <div class="top"><h3>${esc(s.name)}</h3><span class="chip ${FITCLS[s.fit] || ''}">${esc(s.fit)}</span></div>
+        <div class="jp">${esc(s.jp)} · ${esc(s.sub)}</div>
+        <p><b>뭐 하는 곳</b> ${esc(s.what)}</p>
+        <p><b>할 것</b> ${esc(s.todo)}</p>
+        <p><b>시간·비용</b> ${esc(s.cost)}</p>
+        <p><b>가는 법</b> ${esc(s.how)}</p>
+        <p class="memo"><b>메모</b> ${esc(s.memo)}</p>
+        <div class="foot"><span><span class="chip ${PASSCLS[s.pass] || ''}">${esc(s.pass || '')}</span>${s.visited ? ' <span class="chip">가 본 지역</span>' : ''}</span>${s.link ? `<a href="${s.link}" target="_blank" rel="noopener">공식 ↗</a>` : ''}</div>
+        <div class="note">어울리는 날: ${esc(s.days)}</div>
+      </div>
+    </article>`;
+  }
+  function renderSpots() {
+    const f = spotState;
+    const list = SPOTS.filter(s => (f.region === 'all' || s.region === f.region) && (!f.passOnly || s.pass === '패스 범위') && (!f.goodOnly || s.fit === '매우 잘 맞음' || s.fit === '잘 맞음') && (!f.hideVisited || !s.visited));
+    const html = Object.keys(REGION).filter(r => f.region === 'all' || f.region === r).map(r => {
+      const inR = list.filter(s => s.region === r); if (!inR.length) return '';
+      const subs = [...new Set(inR.map(s => s.sub))];
+      return `<h2 class="region">${REGION[r]} <span class="note">${inR.length}곳</span></h2>` + subs.map(sb => `<h3 class="subarea">${esc(sb)}</h3><div class="spots">${inR.filter(s => s.sub === sb).map(spotCard).join('')}</div>`).join('');
+    }).join('');
+    document.getElementById('spot-list').innerHTML = html || '<p class="note">조건에 맞는 곳이 없어요.</p>';
+    document.getElementById('spot-count').textContent = `${list.length}곳 / 전체 ${SPOTS.length}곳`;
+    document.querySelectorAll('[data-spotarea]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.spotarea === f.region)));
+    ['passOnly', 'goodOnly', 'hideVisited'].forEach(k => { const b = document.querySelector(`[data-spotflag="${k}"]`); if (b) b.setAttribute('aria-pressed', String(f[k])); });
+  }
+  document.querySelectorAll('[data-spotarea]').forEach(b => b.addEventListener('click', () => { spotState.region = b.dataset.spotarea; renderSpots(); }));
+  document.querySelectorAll('[data-spotflag]').forEach(b => b.addEventListener('click', () => { const k = b.dataset.spotflag; spotState[k] = !spotState[k]; renderSpots(); }));
+  renderSpots();
+
+  // ===== 일정 렌더링 =====
+  const TAGTXT = { go: '공연 갈 때', nogo: '공연 안 갈 때' };
+  function spotMini(id) {
+    const s = SPOT[id]; if (!s) return '';
+    return `<a class="mini-spot" href="#spots" data-spot="${s.id}">${s.img ? `<img src="${s.img}" alt="${esc(s.name)}" loading="lazy">` : '<div class="noimg">사진 없음</div>'}<span><b>${esc(s.name)}</b><br><span class="note">${esc(s.what)}</span></span></a>`;
+  }
+  function candHTML(c) {
+    const photos = (c.spots || []).filter(id => SPOT[id]);
+    return `<div class="cand ${c.tag || ''}">
+      <div class="cand-h"><span class="ck">${c.k}</span><b>${esc(c.title)}</b>${c.tag ? `<span class="chip ${c.tag === 'go' ? 'gig' : 'info'}">${TAGTXT[c.tag]}</span>` : ''}</div>
+      <ol class="steps">${c.steps.map(([t, x]) => `<li><span class="t">${esc(t)}</span><span>${esc(x)}</span></li>`).join('')}</ol>
+      ${c.cost || c.note ? `<div class="note">${c.cost ? '비용: ' + esc(c.cost) : ''}${c.cost && c.note ? ' · ' : ''}${esc(c.note || '')}</div>` : ''}
+      ${photos.length ? `<details class="fold"><summary>사진·설명 (${photos.length})</summary><div class="mini-spots">${photos.map(spotMini).join('')}</div></details>` : ''}
+      <details class="fold"><summary>열차·버스 시간표</summary><p class="note">다음 단계에서 구간별 시간표 링크와 앞뒤 편(이전 편 / 이 편 / 다음 편)을 넣을 예정. 위 시간은 추정.</p></details>
+    </div>`;
+  }
+  function dayHTML(x, i) {
+    return `<article class="day2${x.pass ? ' passday' : ''}" data-i="${i}">
+      <header><h3>${x.d} (${x.w})</h3><span class="note">${esc(x.note)}${x.pass ? ' · <span class="chip pass">패스</span>' : ''}</span></header>
+      ${x.fixed.length ? `<div class="fixed">${x.fixed.map(([ic, tx, st]) => `<div class="fx"><span class="ic">${ic}</span><span>${esc(tx)}</span>${st ? `<span class="chip ${/결제|예약함/.test(st) ? 'ok' : /예약 전/.test(st) ? 'warn' : ''}">${esc(st)}</span>` : ''}</div>`).join('')}</div>` : '<div class="fixed empty note">고정 일정 없음</div>'}
+      ${x.cands.length ? `<div class="cands-h">후보 ${x.cands.length}개</div><div class="cands">${x.cands.map(candHTML).join('')}</div>` : ''}
+      <div class="stay">숙소: ${esc(x.stay)}</div>
+    </article>`;
+  }
+  (function () {
+    const sub = document.getElementById('plan-sub');
+    const ov = document.getElementById('plan-overview');
+    const box = document.getElementById('plan-days');
+    const nav = document.getElementById('plan-daynav');
+    const label = document.getElementById('plan-daylabel');
+    sub.innerHTML = '<button type="button" role="tab" data-i="-1">개요<small>전체</small></button>' + DAYS.map((x, i) => `<button type="button" role="tab" data-i="${i}" class="${x.pass ? 'pass' : ''}">${x.d}<small>${x.w}</small></button>`).join('');
+    ov.innerHTML = `<div class="mini">${DAYS.map((x, i) => `<div class="row${x.pass ? ' passday' : ''}" data-i="${i}"><div class="d">${x.d} <small>${x.w}</small></div><div class="t">${x.fixed.filter(f => f[0] === '🎤').map(f => `<b>${esc(f[1].split(' · ')[0])}</b>`).join(' · ')}${x.fixed.some(f => f[0] === '🎤') && x.cands.length ? ' · ' : ''}${x.cands.length ? `<span class="note">후보: ${x.cands.map(c => c.k + ' ' + esc(c.title.split(' (')[0])).join(' / ')}</span>` : ''}</div><div class="s">${esc(x.stay.split(' (')[0])}</div></div>`).join('')}</div>`;
+    box.innerHTML = DAYS.map(dayHTML).join('');
+    const days = [...box.children];
+    let cur = -1;
+    function view(i) {
+      cur = i;
+      sub.querySelectorAll('button').forEach(b => b.setAttribute('aria-selected', String(+b.dataset.i === i)));
+      ov.hidden = i !== -1; nav.hidden = i === -1;
+      days.forEach((el, k) => el.hidden = k !== i);
+      if (i !== -1) {
+        label.textContent = `${DAYS[i].d} (${DAYS[i].w})`;
+        nav.querySelector('[data-step="-1"]').disabled = i === 0;
+        nav.querySelector('[data-step="1"]').disabled = i === DAYS.length - 1;
+        const b = sub.querySelector(`[data-i="${i}"]`); if (b) b.scrollIntoView({ block: 'nearest', inline: 'center' });
+      }
+    }
+    window.openPlanDay = i => { show('plan'); view(i); };
+    sub.addEventListener('click', e => { const b = e.target.closest('button'); if (b) view(+b.dataset.i); });
+    nav.addEventListener('click', e => { const b = e.target.closest('button[data-step]'); if (b) view(Math.max(0, Math.min(DAYS.length - 1, cur + +b.dataset.step))); });
+    ov.addEventListener('click', e => { const r = e.target.closest('.row'); if (r) view(+r.dataset.i); });
+    document.querySelectorAll('#home .mini .row').forEach((r, i) => { r.style.cursor = 'pointer'; r.addEventListener('click', () => window.openPlanDay(Math.min(i, DAYS.length - 1))); });
+    // 사진 카드 누르면 관광 탭의 그 장소로
+    box.addEventListener('click', e => {
+      const a = e.target.closest('a.mini-spot'); if (!a) return;
+      e.preventDefault(); e.stopPropagation();
+      spotState.region = 'all'; spotState.passOnly = spotState.goodOnly = spotState.hideVisited = false; renderSpots();
+      show('spots');
+      const el = document.getElementById('spot-' + a.dataset.spot); if (el) { el.scrollIntoView({ block: 'center' }); el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1600); }
+    }, true);
+    view(-1);
+  })();
+  show(location.hash.slice(1));
+})();
+</script>
+</body>
+</html>
