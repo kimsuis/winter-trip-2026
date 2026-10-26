@@ -520,7 +520,7 @@ table.legs td { font-size: 13px; }
     if (el.dataset.due && new Date(el.dataset.due + 'T23:59:59') < today) el.classList.add('done');
   });
   const home = document.getElementById('home-todo');
-  items.filter(el => !el.classList.contains('done')).slice(0, 3).forEach(el => home.appendChild(el.cloneNode(true)));
+  items.filter(el => !el.classList.contains('done')).sort((p, q) => (p.dataset.due || '9') < (q.dataset.due || '9') ? -1 : 1).slice(0, 3).forEach(el => home.appendChild(el.cloneNode(true)));
 
   // CDJ 라인업
   const IMG = 'https://fesapp.jp/nx/app/cdj2627/images/artists/detail/';
