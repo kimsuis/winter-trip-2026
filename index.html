@@ -217,6 +217,7 @@ table.legs td { font-size: 13px; }
   <button role="tab" data-tab="plan">일정</button>
   <button role="tab" data-tab="spots">관광</button>
   <button role="tab" data-tab="stay">숙소</button>
+  <button role="tab" data-tab="flight">항공</button>
   <button role="tab" data-tab="move">교통</button>
   <button role="tab" data-tab="gigs">공연</button>
   <button role="tab" data-tab="cdj">CDJ</button>
@@ -229,7 +230,8 @@ table.legs td { font-size: 13px; }
   <div class="grid">
     <a class="card stat" href="#budget"><div class="k">예산 (1인)</div><div class="v">약 51만 원 + $108.5 + 약 18만 엔</div><div class="s">항공 · 숙박 · 패스 · 교통 · 공연 (추정 포함, 식비 제외)</div></a>
     <a class="card stat" href="#stay"><div class="k">숙소</div><div class="v">필요한 숙소 다 잡음</div><div class="s">센다이·우쓰노미야 중 하나 취소 · 12/31은 예비</div></a>
-    <a class="card stat" href="#move"><div class="k">교통</div><div class="v">항공 예약 전 · 패스 5일권</div><div class="s">12/19 에어부산 08:20 · 1/1 귀국 · 패스 12/21~25</div></a>
+    <a class="card stat" href="#flight"><div class="k">항공</div><div class="v">예약 전 · 1인 약 51만 원</div><div class="s">12/19 에어부산 08:20 → 1/1 11:25 귀국</div></a>
+    <a class="card stat" href="#move"><div class="k">교통</div><div class="v">JR EAST PASS 5일권</div><div class="s">12/21~25 · 패스 밖 이동은 교통 탭</div></a>
     <a class="card stat" href="#gigs"><div class="k">공연</div><div class="v">결제 4 · 관심 9</div><div class="s">CDJ 2일 · tuki.×스이세이 · ロクデナシ 결제함</div></a>
   </div>
 
@@ -365,7 +367,7 @@ table.legs td { font-size: 13px; }
 </section>
 
 <!-- ===== 교통 ===== -->
-<section class="panel" id="move" role="tabpanel">
+<section class="panel" id="flight" role="tabpanel">
   <h2>항공 <span class="chip warn">예약 전</span></h2>
   <div class="scroll"><table>
     <thead><tr><th>항공사</th><th>12/19 김해 → 나리타</th><th>1/1 나리타 → 김해</th><th class="price">1인 합계</th></tr></thead>
@@ -376,7 +378,16 @@ table.legs td { font-size: 13px; }
     </tbody>
   </table></div>
   <p class="note">편도 가격은 10/26 구글 항공권 조회 (12/31 귀국 왕복 536,060원보다 쌈). 수하물 별도일 수 있음. 인천·하네다·후쿠오카 경유는 KTX·신칸센 비용 때문에 더 비쌈 (항공.md).</p>
+  <h2>예약할 때 확인</h2>
+  <ul class="tight">
+    <li>편도 두 장: 12/19 김해 → 나리타 + 1/1 나리타 → 김해 (2인, 친구 귀국일 확인)</li>
+    <li>위탁 수하물 포함 운임인지 (굿즈 생각하면 15kg 이상)</li>
+    <li>여권 영문 이름 그대로 입력</li>
+    <li>1/1 나리타 이동: 도다코엔 07:50 → 닛포리 스카이라이너 08:25 → 09:09 공항 (교통 탭·일정 탭 1/1 참고)</li>
+  </ul>
+</section>
 
+<section class="panel" id="move" role="tabpanel">
   <h2>JR EAST PASS 5일권 <span class="chip pass">12/21~25</span></h2>
   <div class="grid">
     <div class="card"><h3>기본</h3><ul class="tight">
