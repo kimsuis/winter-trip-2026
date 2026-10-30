@@ -178,6 +178,12 @@ table.legs td { font-size: 13px; }
 .picked { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
 .picked .chip { font-size: 13px; padding: 6px 10px; white-space: normal; }
 .callout { background: var(--warn-soft); color: var(--text); border-radius: 10px; padding: 10px 12px; font-size: 14px; }
+
+.todo-sec { margin-bottom: 18px; }
+.todo-sec h3 { font-size: 16px; margin: 8px 0; }
+.todo-sec.urgent { background: var(--bad-soft, #f8e3e1); border-radius: 12px; padding: 10px 12px; }
+.date-h { font-weight: 700; font-size: 14px; margin: 12px 0 6px; color: var(--accent); }
+#todo-dated .item { margin-bottom: 8px; }
 /* CDJ */
 .cdj-head { display: grid; grid-template-columns: 160px 1fr; gap: 14px; align-items: center; }
 .cdj-head img { width: 100%; border-radius: 12px; border: 1px solid var(--line); display: block; }
@@ -299,16 +305,20 @@ table.legs td { font-size: 13px; }
 <!-- ===== 할 일 ===== -->
 <section class="panel" id="todo" role="tabpanel">
   <h2>할 일 · 마감</h2>
-  <div class="todo" id="todo-list">
-    <div class="item" data-due="2026-10-26" data-key="1"><div class="when">지금</div><div>귀국일(12/31 또는 1/1) 정하고 김해↔나리타 왕복 예약 (2인, 왕복이 편도 두 장보다 쌈, 11월 유류할증료 인상 전 추천). 위탁 수하물 포함 여부 확인 · 여권 영문 이름 그대로 · 친구 귀국일 확인</div></div>
+  <div class="todo-sec urgent"><h3>🔴 긴급 <span class="note">마감 7일 안 · 오늘 기준 자동</span></h3><div class="todo" id="todo-urgent"></div></div>
+  <div class="todo-sec"><h3>📅 날짜별 마감</h3><div id="todo-dated"></div></div>
+  <div class="todo-sec"><h3>📋 할 일 <span class="note">날짜 제한 없음 · 코스 정하면 하기</span></h3><div class="todo" id="todo-general"></div></div>
+  <details class="fold"><summary>끝난 것</summary><div class="todo" id="todo-done"></div></details>
+  <div class="todo" id="todo-list" hidden>
+    <div class="item" data-due="2026-10-31" data-key="1" data-urgent="1"><div class="when">10/31까지<small>11월 유류할증료 인상 전</small></div><div>귀국일(12/31 또는 1/1) 정하고 김해↔나리타 왕복 예약 (2인, 왕복이 편도 두 장보다 쌈, 11월 유류할증료 인상 전 추천). 위탁 수하물 포함 여부 확인 · 여권 영문 이름 그대로 · 친구 귀국일 확인</div></div>
     <div class="item" data-due="2026-10-30" data-key="nrm1"><div class="when">10/30 20:00<small>일본 시간 · 선착순</small></div><div><b>なるみや 12/25 일반 발매</b> (e+ ~12/24 · ローチケ ~12/17) · 투어 전 공연 매진이었으니 시작하자마자</div></div>
     <div class="item done"><div class="when">10/26 완료</div><div>CDJ 12/26·12/29 결제 · tuki.×星街すいせい 결제 · ロクデナシ 결제</div></div>
     <div class="item done"><div class="when">10/26 완료</div><div>新横浜国際ホテル 2박 KB 쿠폰 결제 (US$217) → 확인 메일에서 취소 규정 확인</div></div>
-    <div class="item" data-due="2026-12-10" data-key="c1"><div class="when">전화 확인<small>12/23 뇨토 갈 거면</small></div><div><b>쓰루노유</b> 0187-46-2139 · 당일 입욕 손님도 アルパこまくさ 정류장 마중(送迎)이 되는지, 당일 입욕 시간 · 말할 문장: 「12月23日に日帰り入浴で伺いたいです。アルパこまくさ10時14分着のバスですが、送迎はお願いできますか？日帰り入浴は何時から何時までですか？」</div></div>
-    <div class="item" data-due="2026-12-10" data-key="c2"><div class="when">전화 확인<small>12/22 모가미강 갈 거면</small></div><div><b>모가미쿄 바쇼 라인</b> 0233-72-2001 (<a href="https://www.blf.co.jp/" target="_blank" rel="noopener">공식</a>) · 12:50 배를 탄 뒤 내리는 곳(草薙)에서 후루쿠치역으로 돌아가는 버스 시간, 고타쓰 배인지 · 말할 문장: 「12月22日の12時50分の便に2名で乗りたいです。下船後、古口駅に戻るバスは何時ですか？こたつ舟ですか？」</div></div>
-    <div class="item" data-due="2026-12-10" data-key="c3"><div class="when">사이트 확인<small>12/21 사쿠나미 갈 거면</small></div><div><b>大江戸温泉物語Premium 仙台作並</b> 공식 사이트 공지 · 강변 노천탕(河原の岩風呂)이 열려 있는지 (2026-08 폭우로 닫혔다는 정보가 있음) · 닫혀 있으면 湯の原ホテル(11~16시, 화·수 휴무)로 변경</div></div>
+    <div class="item" data-type="general" data-key="c1"><div class="when">전화 확인<small>12/23 뇨토 갈 거면</small></div><div><b>쓰루노유</b> 0187-46-2139 · 당일 입욕 손님도 アルパこまくさ 정류장 마중(送迎)이 되는지, 당일 입욕 시간 · 말할 문장: 「12月23日に日帰り入浴で伺いたいです。アルパこまくさ10時14分着のバスですが、送迎はお願いできますか？日帰り入浴は何時から何時までですか？」</div></div>
+    <div class="item" data-type="general" data-key="c2"><div class="when">전화 확인<small>12/22 모가미강 갈 거면</small></div><div><b>모가미쿄 바쇼 라인</b> 0233-72-2001 (<a href="https://www.blf.co.jp/" target="_blank" rel="noopener">공식</a>) · 12:50 배를 탄 뒤 내리는 곳(草薙)에서 후루쿠치역으로 돌아가는 버스 시간, 고타쓰 배인지 · 말할 문장: 「12月22日の12時50分の便に2名で乗りたいです。下船後、古口駅に戻るバスは何時ですか？こたつ舟ですか？」</div></div>
+    <div class="item" data-type="general" data-key="c3"><div class="when">사이트 확인<small>12/21 사쿠나미 갈 거면</small></div><div><b>大江戸温泉物語Premium 仙台作並</b> 공식 사이트 공지 · 강변 노천탕(河原の岩風呂)이 열려 있는지 (2026-08 폭우로 닫혔다는 정보가 있음) · 닫혀 있으면 湯の原ホテル(11~16시, 화·수 휴무)로 변경</div></div>
     <div class="item" data-due="2026-12-23" data-key="c4"><div class="when">7일 전까지 예약<small>12/30 크루즈 갈 거면</small></div><div><b>심포니 선셋 크루즈</b> (<a href="https://www.symphony-cruise.co.jp/" target="_blank" rel="noopener">공식</a>) · 최소 인원 20명 미만이면 7일 전에 운항 취소되니 미리 예약</div></div>
-    <div class="item" data-due="2026-12-21" data-key="c5"><div class="when">사이트 확인<small>12/28 미나카미 갈 거면</small></div><div><b>関越交通 버스</b> 겨울 시간표 (미나카미역 ↔ 다니가와다케 로프웨이 ↔ 다카라가와 입구) · 돌아오는 버스가 16:30 하나뿐이라 택시를 쓸지 결정</div></div>
+    <div class="item" data-type="general" data-key="c5"><div class="when">사이트 확인<small>12/28 미나카미 갈 거면</small></div><div><b>関越交通 버스</b> 겨울 시간표 (미나카미역 ↔ 다니가와다케 로프웨이 ↔ 다카라가와 입구) · 돌아오는 버스가 16:30 하나뿐이라 택시를 쓸지 결정</div></div>
     <div class="item" data-due="2026-11-27" data-key="c6"><div class="when">예약<small>12/27 시부야 스카이</small></div><div>웹 시간 지정권 13:30~14:30 슬롯 (보통 4주 전부터 판매)</div></div>
     <div class="item" data-due="2026-11-02" data-key="cdj2"><div class="when">11/2 16:00<small>일본 시간</small></div><div><b>CDJ 2차 추첨</b> (Jフェス 앱) · 12/31 카운트다운(15:40~05:00, なとり·LiSA·Aimer·WurtS 등)이나 12/30(『ユイカ』·緑黄色社会)도 갈 거면 신청 · 결과 11/6 16:00, 입금 11/6~11/9 · 12/31 카운트다운 가면 1/1 귀국 + 끝나고 바로 나리타 (12/31 숙소 불필요)</div></div>
     <div class="item" data-due="2026-11-03" data-key="7"><div class="when">11/3 23:59</div><div>ヒグチアイ × 奥華子 12/22 피아 2차 선행 마감 (tayori 2순위라 tayori 표 상황 보고)</div></div>
@@ -2248,6 +2258,36 @@ table.legs td { font-size: 13px; }
     catch (err) { window.prompt('아래 내용을 복사하세요', text); }
   });
   renderPicked();
+
+  // ===== 할 일: 긴급 / 날짜별 / 일반 =====
+  (function () {
+    const src = [...document.querySelectorAll('#todo-list .item')];
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const W = ['일', '월', '화', '수', '목', '금', '토'];
+    const urgent = [], dated = [], general = [], done = [];
+    src.forEach(el => {
+      const c = el.cloneNode(true);
+      if (el.classList.contains('done')) return done.push(c);
+      if (el.dataset.type === 'general' || !el.dataset.due) return general.push(c);
+      const d = new Date(el.dataset.due + 'T00:00:00'); const left = Math.round((d - today) / 864e5);
+      c.dataset.left = left;
+      const tag = left < 0 ? '지남' : left === 0 ? '오늘' : left === 1 ? '내일' : `D-${left}`;
+      c.querySelector('.when').insertAdjacentHTML('afterbegin', `<span class="chip ${left <= 1 ? 'bad' : left <= 7 ? 'warn' : ''}">${tag}</span> `);
+      (el.dataset.urgent || left <= 7 ? urgent : dated).push(c);
+    });
+    const byDue = (a, b) => (a.dataset.due || '') < (b.dataset.due || '') ? -1 : 1;
+    urgent.sort(byDue).forEach(c => document.getElementById('todo-urgent').appendChild(c));
+    if (!urgent.length) document.getElementById('todo-urgent').innerHTML = '<p class="note">지금 급한 건 없어요.</p>';
+    const box = document.getElementById('todo-dated');
+    let cur = '';
+    dated.sort(byDue).forEach(c => {
+      const d = new Date(c.dataset.due + 'T00:00:00'); const key = `${d.getMonth() + 1}/${d.getDate()} (${W[d.getDay()]})`;
+      if (key !== cur) { cur = key; box.insertAdjacentHTML('beforeend', `<div class="date-h">${key}</div>`); }
+      box.appendChild(c);
+    });
+    general.forEach(c => document.getElementById('todo-general').appendChild(c));
+    done.forEach(c => document.getElementById('todo-done').appendChild(c));
+  })();
 
   show(location.hash.slice(1));
 })();
